@@ -1,8 +1,7 @@
-/** @jsx React.DOM */
 'use strict'
-var React = require('react')
-var SelectPopover   = require("react-select-popover"),
-var GamesToPlay = require('./GamesToPlay')
+// var React = require('react')
+var SelectPopover  = require("react-select-popover")
+var GamesToPlay = require('./GamesToPlay.jsx')
 module.exports = React.createClass({
 
     getInitialState: function() {

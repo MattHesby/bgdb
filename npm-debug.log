@@ -1,0 +1,29 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'c:\\Program Files\\nodejs\\node.exe',
+1 verbose cli   'c:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js',
+1 verbose cli   'run',
+1 verbose cli   'dev' ]
+2 info using npm@1.4.28
+3 info using node@v0.10.32
+4 verbose run-script [ 'predev', 'dev', 'postdev' ]
+5 info predev basic-property-grid@0.1.0
+6 info dev basic-property-grid@0.1.0
+7 verbose unsafe-perm in lifecycle true
+8 info basic-property-grid@0.1.0 Failed to exec dev script
+9 error basic-property-grid@0.1.0 dev: `./node_modules/webpack/bin/webpack.js --progress --colors --watch`
+9 error Exit status 1
+10 error Failed at the basic-property-grid@0.1.0 dev script.
+10 error This is most likely a problem with the basic-property-grid package,
+10 error not with npm itself.
+10 error Tell the author that this fails on your system:
+10 error     ./node_modules/webpack/bin/webpack.js --progress --colors --watch
+10 error You can get their info via:
+10 error     npm owner ls basic-property-grid
+10 error There is likely additional logging output above.
+11 error System Windows_NT 6.1.7601
+12 error command "c:\\Program Files\\nodejs\\node.exe" "c:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js" "run" "dev"
+13 error cwd c:\Users\Matthew Hesby\desktop\bgdb
+14 error node -v v0.10.32
+15 error npm -v 1.4.28
+16 error code ELIFECYCLE
+17 verbose exit [ 1, true ]

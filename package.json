@@ -7,12 +7,13 @@
     "test": "run start",
     "start": "npm run serve | npm run dev",
     "serve": "./node_modules/.bin/http-server -p 8080",
-    "dev": "webpack-dev-server --progress --colors --port 8090"
+    "dev": "./node_modules/webpack/bin/webpack.js --progress --colors --watch"
   },
   "author": "MJH",
   "license": "ISC",
   "dependencies": {
-    "react": "~0.11.2"
+    "react-dom": "^0.14.0",
+    "react-select-popover": "0.0.4"
   },
   "devDependencies": {
     "http-server": "~0.7.1",

@@ -1,7 +1,14 @@
-/** @jsx React.DOM */
 'use strict'
+
+console.log('foo')
+console.log("bar")
+
 var React = require('react')
-var Hello = require('./Hello')
-var GamesToPlay = require('./GamesToPlay')
-var BGDisplay = require('./BGDisplay')
-React.renderComponent(<BGDisplay />, document.getElementById('content'))
+var ReactDOM = require('react-dom')
+// window.ReactDOM = ReactDOM;
+
+
+// var Hello = require('./Hello.jsx')
+// var GamesToPlay = require('./GamesToPlay.jsx')
+var BGDisplay = require('./BGDisplay.jsx')
+ReactDOM.render(<BGDisplay />, document.getElementById('content'))
