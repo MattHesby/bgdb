@@ -2,4 +2,6 @@
 'use strict'
 var React = require('react')
 var Hello = require('./Hello')
-React.renderComponent(<Hello />, document.getElementById('content'))
+var GamesToPlay = require('./GamesToPlay')
+var BGDisplay = require('./BGDisplay')
+React.renderComponent(<BGDisplay />, document.getElementById('content'))

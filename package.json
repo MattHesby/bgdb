@@ -1,6 +1,6 @@
 {
-  "name": "bgdb",
-  "version": "1.0.0",
+  "name": "basic-property-grid",
+  "version": "0.1.0",
   "description": "Boardgame Database",
   "main": "index.js",
   "scripts": {
@@ -12,24 +12,13 @@
   "author": "MJH",
   "license": "ISC",
   "dependencies": {
-    "react": "^0.14.0"
-  },
-  "devDependencies": {
-    "http-server": "^0.8.5",
-    "jsx-loader": "^0.13.2",
-    "webpack": "^1.12.2",
-    "webpack-dev-server": "^1.12.1"
-  },
-    "name": "basic-property-grid",
-    "version": "0.1.0",
-    "main": "index.js",
-    "dependencies": {
     "react": "~0.11.2"
   },
-    "devDependencies": {
-    "webpack": "~1.4.4",
-    "webpack-dev-server": "~1.6.5",
+  "devDependencies": {
+    "http-server": "~0.7.1",
     "jsx-loader": "~0.11.2",
-    "http-server": "~0.7.1"
+    "react-onclickoutside": "^4.0.1",
+    "webpack": "~1.4.4",
+    "webpack-dev-server": "~1.6.5"
   }
 }
