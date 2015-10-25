@@ -45,16 +45,9 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-
-	console.log('foo');
-	console.log("bar");
-
 	var React = __webpack_require__(3);
 	var ReactDOM = __webpack_require__(2);
 	// window.ReactDOM = ReactDOM;
-
-	// var Hello = require('./Hello.jsx')
-	// var GamesToPlay = require('./GamesToPlay.jsx')
 	var BGDisplay = __webpack_require__(1);
 	ReactDOM.render(React.createElement(BGDisplay, null), document.getElementById('content'));
 
@@ -165,179 +158,183 @@
 	            null,
 	            React.createElement(
 	                'div',
-	                { className: 'container' },
+	                { className: 'selection' },
 	                React.createElement(
-	                    'p',
-	                    null,
-	                    ' How Many Players? '
-	                ),
-	                React.createElement(
-	                    'select',
-	                    { defaultValue: this.state.gNumPlayers,
-	                        onChange: this.handlePlayers
-	                    },
+	                    'div',
+	                    { className: 'container' },
 	                    React.createElement(
-	                        'option',
-	                        { value: 'Any' },
-	                        ' Any '
+	                        'p',
+	                        null,
+	                        ' How Many Players? '
 	                    ),
 	                    React.createElement(
-	                        'option',
-	                        { value: '1' },
-	                        ' 1 '
-	                    ),
-	                    React.createElement(
-	                        'option',
-	                        { value: '2' },
-	                        ' 2 '
-	                    ),
-	                    React.createElement(
-	                        'option',
-	                        { value: '3' },
-	                        ' 3 '
-	                    ),
-	                    React.createElement(
-	                        'option',
-	                        { value: '4' },
-	                        ' 4 '
-	                    ),
-	                    React.createElement(
-	                        'option',
-	                        { value: '5' },
-	                        ' 5 '
-	                    ),
-	                    React.createElement(
-	                        'option',
-	                        { value: '6' },
-	                        ' 6 '
-	                    ),
-	                    React.createElement(
-	                        'option',
-	                        { value: 'more' },
-	                        ' more '
+	                        'select',
+	                        { defaultValue: this.state.gNumPlayers,
+	                            onChange: this.handlePlayers
+	                        },
+	                        React.createElement(
+	                            'option',
+	                            { value: 'Any' },
+	                            ' Any '
+	                        ),
+	                        React.createElement(
+	                            'option',
+	                            { value: '1' },
+	                            ' 1 '
+	                        ),
+	                        React.createElement(
+	                            'option',
+	                            { value: '2' },
+	                            ' 2 '
+	                        ),
+	                        React.createElement(
+	                            'option',
+	                            { value: '3' },
+	                            ' 3 '
+	                        ),
+	                        React.createElement(
+	                            'option',
+	                            { value: '4' },
+	                            ' 4 '
+	                        ),
+	                        React.createElement(
+	                            'option',
+	                            { value: '5' },
+	                            ' 5 '
+	                        ),
+	                        React.createElement(
+	                            'option',
+	                            { value: '6' },
+	                            ' 6 '
+	                        ),
+	                        React.createElement(
+	                            'option',
+	                            { value: 'more' },
+	                            ' more '
+	                        )
 	                    )
-	                )
-	            ),
-	            React.createElement(
-	                'div',
-	                { className: 'container' },
-	                React.createElement(
-	                    'p',
-	                    null,
-	                    ' Complexity? '
 	                ),
 	                React.createElement(
-	                    'select',
-	                    { defaultValue: this.state.gDifficulty,
-	                        onChange: this.handleDifficulty
-	                    },
+	                    'div',
+	                    { className: 'container' },
 	                    React.createElement(
-	                        'option',
-	                        { value: 'Any' },
-	                        ' Any '
+	                        'p',
+	                        null,
+	                        ' Complexity? '
 	                    ),
 	                    React.createElement(
-	                        'option',
-	                        { value: '1' },
-	                        ' very easy '
-	                    ),
-	                    React.createElement(
-	                        'option',
-	                        { value: '2' },
-	                        ' easy '
-	                    ),
-	                    React.createElement(
-	                        'option',
-	                        { value: '3' },
-	                        ' medium '
-	                    ),
-	                    React.createElement(
-	                        'option',
-	                        { value: '4' },
-	                        ' hard '
-	                    ),
-	                    React.createElement(
-	                        'option',
-	                        { value: '5' },
-	                        ' very hard '
+	                        'select',
+	                        { defaultValue: this.state.gDifficulty,
+	                            onChange: this.handleDifficulty
+	                        },
+	                        React.createElement(
+	                            'option',
+	                            { value: 'Any' },
+	                            ' Any '
+	                        ),
+	                        React.createElement(
+	                            'option',
+	                            { value: '1' },
+	                            ' very easy '
+	                        ),
+	                        React.createElement(
+	                            'option',
+	                            { value: '2' },
+	                            ' easy '
+	                        ),
+	                        React.createElement(
+	                            'option',
+	                            { value: '3' },
+	                            ' medium '
+	                        ),
+	                        React.createElement(
+	                            'option',
+	                            { value: '4' },
+	                            ' hard '
+	                        ),
+	                        React.createElement(
+	                            'option',
+	                            { value: '5' },
+	                            ' very hard '
+	                        )
 	                    )
-	                )
-	            ),
-	            React.createElement(
-	                'div',
-	                { className: 'container' },
-	                React.createElement(
-	                    'p',
-	                    null,
-	                    ' Genre? '
 	                ),
 	                React.createElement(
-	                    'select',
-	                    { defaultValue: this.state.gGenre,
-	                        onChange: this.handleGenre
-	                    },
-	                    GENRES
-	                )
-	            ),
-	            React.createElement(
-	                'div',
-	                { className: 'container' },
-	                React.createElement(
-	                    'p',
-	                    null,
-	                    ' Length? '
-	                ),
-	                React.createElement(
-	                    'select',
-	                    { defaultValue: this.state.gLength,
-	                        onChange: this.handleLength },
+	                    'div',
+	                    { className: 'container' },
 	                    React.createElement(
-	                        'option',
-	                        { value: 'Any' },
-	                        ' Any '
+	                        'p',
+	                        null,
+	                        ' Genre? '
 	                    ),
 	                    React.createElement(
-	                        'option',
-	                        { value: '30' },
-	                        ' 30min or less '
-	                    ),
-	                    React.createElement(
-	                        'option',
-	                        { value: '60' },
-	                        ' 30min - 1hr '
-	                    ),
-	                    React.createElement(
-	                        'option',
-	                        { value: '90' },
-	                        ' 1hr - 2hr '
-	                    ),
-	                    React.createElement(
-	                        'option',
-	                        { value: '240' },
-	                        ' 2hr - 4hr '
-	                    ),
-	                    React.createElement(
-	                        'option',
-	                        { value: '300' },
-	                        ' 4hr + '
+	                        'select',
+	                        { defaultValue: this.state.gGenre,
+	                            onChange: this.handleGenre
+	                        },
+	                        GENRES
 	                    )
-	                )
-	            ),
-	            React.createElement(
-	                'div',
-	                { className: 'container' },
-	                React.createElement(
-	                    'p',
-	                    null,
-	                    ' Mechanics? '
 	                ),
-	                React.createElement(Select, {
-	                    name: 'form-field-name',
-	                    value: 'Any',
-	                    options: MECHANICS,
-	                    onChange: this.handleMechanics,
-	                    multi: true
-	                })
+	                React.createElement(
+	                    'div',
+	                    { className: 'container' },
+	                    React.createElement(
+	                        'p',
+	                        null,
+	                        ' Length? '
+	                    ),
+	                    React.createElement(
+	                        'select',
+	                        { defaultValue: this.state.gLength,
+	                            onChange: this.handleLength },
+	                        React.createElement(
+	                            'option',
+	                            { value: 'Any' },
+	                            ' Any '
+	                        ),
+	                        React.createElement(
+	                            'option',
+	                            { value: '30' },
+	                            ' 30min or less '
+	                        ),
+	                        React.createElement(
+	                            'option',
+	                            { value: '60' },
+	                            ' 30min - 1hr '
+	                        ),
+	                        React.createElement(
+	                            'option',
+	                            { value: '90' },
+	                            ' 1hr - 2hr '
+	                        ),
+	                        React.createElement(
+	                            'option',
+	                            { value: '240' },
+	                            ' 2hr - 4hr '
+	                        ),
+	                        React.createElement(
+	                            'option',
+	                            { value: '300' },
+	                            ' 4hr + '
+	                        )
+	                    )
+	                ),
+	                React.createElement(
+	                    'div',
+	                    { className: 'container' },
+	                    React.createElement(
+	                        'p',
+	                        null,
+	                        ' Mechanics? '
+	                    ),
+	                    React.createElement(Select, {
+	                        name: 'form-field-name',
+	                        value: 'Any',
+	                        options: MECHANICS,
+	                        onChange: this.handleMechanics,
+	                        multi: true
+	                    })
+	                )
 	            ),
 	            React.createElement(
 	                'div',
@@ -400,8 +397,8 @@
 	    },
 	    render: function render() {
 	        var tempGames = JSON.parse(JSON.stringify(this.props.bgObj));
-	        var viableGameTitles = [];
-	        var viableGameDescriptions = [];
+	        var viableGameTitles = ["Game"];
+	        var viableGameDescriptions = ["Description"];
 
 	        for (var game in this.props.bgObj) {
 	            if (this.props.bgObj.hasOwnProperty(game)) {
@@ -447,8 +444,13 @@
 	            null,
 	            React.createElement(
 	                "div",
-	                null,
+	                { className: "column" },
 	                viableGameTitles
+	            ),
+	            React.createElement(
+	                "div",
+	                { className: "column" },
+	                viableGameDescriptions
 	            )
 	        );
 	    }

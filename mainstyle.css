@@ -8,9 +8,21 @@ body{
 	margin: 10px;
 	padding: 10px;
 }
-/*
+
 .gameTitle{
-	display: inline-block;
-	border: 2px solid black;
-	width:700px;
-}*/
+	vertical-align:top;
+	height: 70px;
+	/*border-top: 2px solid black;*/
+	border-bottom: 2px solid black;
+}
+
+
+.column{
+	vertical-align:top;
+	width:350px;
+	display:inline-block;
+}
+
+.selection{
+	border-bottom:2px solid black;
+}

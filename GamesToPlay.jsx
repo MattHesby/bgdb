@@ -27,8 +27,8 @@ module.exports = React.createClass({
     },
     render: function() {
         var tempGames = JSON.parse(JSON.stringify(this.props.bgObj));
-        var viableGameTitles = [];
-        var viableGameDescriptions= [];
+        var viableGameTitles = ["Game"];
+        var viableGameDescriptions= ["Description"];
 
         for (var game in this.props.bgObj) {
             if (this.props.bgObj.hasOwnProperty(game)) {
@@ -58,10 +58,12 @@ module.exports = React.createClass({
         }
 
         return(<div>
-                <div>
+                <div className="column">
                   {viableGameTitles}
                 </div>
-
+                <div className="column">
+                  {viableGameDescriptions}
+                </div>
             </div>)
     }
 })

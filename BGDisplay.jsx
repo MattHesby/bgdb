@@ -110,8 +110,8 @@ module.exports = React.createClass({
         var selectPlaceholder = "Choose Game Mechanics";
 
         return (
-
-        <div>
+        <div>  
+          <div className="selection">
             <div className="container">
               <p> How Many Players? </p>
               <select defaultValue={this.state.gNumPlayers}
@@ -174,7 +174,7 @@ module.exports = React.createClass({
               multi={true}
               />
             </div>
-
+        </div>
             <div>
               <GamesToPlay bgObj={this.state.bgObj} genre={this.state.gGenre} mechanics={this.state.gMechanics}  players={this.state.gNumPlayers} difficulty={this.state.gDifficulty} gLength={this.state.gLength} />
             </div>
