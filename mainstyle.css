@@ -1,0 +1,16 @@
+body{
+	background-color: grey
+}
+
+.container{
+	display:inline-block;
+	border: 2px solid black;
+	margin: 10px;
+	padding: 10px;
+}
+/*
+.gameTitle{
+	display: inline-block;
+	border: 2px solid black;
+	width:700px;
+}*/

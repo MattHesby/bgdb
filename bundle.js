@@ -66,7 +66,7 @@
 	// Add Description, minPlayer => minPlayers, difficulty is 1 - 5, length is in minutes, gameplay mechanics
 	'use strict';
 
-	var BgArray = ['{"id":1,"title":"Carcassonne","info":{"difficulty":1,"description":"Carcassonne is a tile-placement game in which the players draw and place a tile with a piece of southern French landscape on it. The tile might feature a city, a road, a cloister, grassland or some combination thereof, and it must be placed adjacent to tiles that have already been played, in such a way that cities are connected to cities, roads to roads, etcetera. Having placed a tile, the player can then decide to place one of his meeples on one of the areas on it: on the city as a knight, on the road as a robber, on a cloister as a monk, or on the grass as a farmer. When that area is complete, that meeple scores points for its owner.","genre":"Abstract","mechanics":"placement, area control"},"players":{"min":2,"max":5},"time":{"minutes":120,"hours":2}}', '{"id":2,"title":"asdf","info":{"difficulty":5,"description":"asdf","genre":"asdf","mechanics":"asdf"},"players":{"min":2,"max":3},"time":{"minutes":60,"hours":1.0}}'];
+	var BgArray = ['{"id":1,"title":"Carcassonne","info":{"difficulty":1,"description":"Carcassonne is a tile-placement game in which the players draw and place a tile with landscape on it.The player can then decide to place one of his meeples on one of the areas on it.","genre":"Abstract","mechanics":"placement, area control"},"players":{"min":2,"max":5},"time":{"minutes":120,"hours":2}}', '{"id":2,"title":"asdf","info":{"difficulty":5,"description":"asdf","genre":"asdf","mechanics":"asdf"},"players":{"min":2,"max":3},"time":{"minutes":60,"hours":1.0}}'];
 	// var incBgObj = '{"game1":{"title":"Catan","maxPlayers":2,"minPlayer":6,"difficulty":"medium","length":"normal"},"game2":{"title":"Galaxy","maxPlayers":4,"minPlayers":5,"difficulty":"hard","length":"long"},"game3":{"title":"Trucker","maxPlayers":2,"minPlayers":4,"difficulty":"medium","length":"normal"}}'
 	var boardGameObj = [];
 	for (var i = 0; i < BgArray.length; i++) {
@@ -86,6 +86,8 @@
 
 	'use strict';
 	var React = __webpack_require__(3);
+	var ReactDOM = __webpack_require__(2);
+	var Select = __webpack_require__(168);
 	var SelectPopover = __webpack_require__(7);
 	var GamesToPlay = __webpack_require__(4);
 	module.exports = React.createClass({
@@ -114,21 +116,47 @@
 	    handleGenre: function handleGenre(e) {
 	        this.setState({ gGenre: e.target.value });
 	    },
-	    handleMechanics: function handleMechanics(obj) {
-	        console.log("EVENT", obj.event); // "added" or "removed"
-	        console.log("ITEM", obj.item); // item that has been added/removed { label: '...', value: '...' }
-	        console.log("VALUE", obj.value); // [{label: '...', value: '...'}, {label: '...', value: '...'}]
-	        var temp = [];
-	        for (i = 0; i < obj.value.length; i++) {
-	            temp.push(obj.value[i].value);
-	        }
-	        console.log(temp);
-	        this.setState({ gMechanics: temp });
+	    handleMechanics: function handleMechanics(val) {
+
+	        this.setState({ gMechanics: val });
 	    },
 
 	    render: function render() {
 
+	        //sets up Genre Options
+	        var GENRES = ["Any"];
+	        for (var game in this.state.bgObj) {
+	            if (boardGameObj.hasOwnProperty(game)) {
+	                var curGame = boardGameObj[game];
+	                GENRES.push(curGame.info.genre);
+	            }
+	        }
+	        console.log("THIS IS!" + GENRES);
+	        for (var i = 0; i < GENRES.length; i++) {
+	            GENRES[i] = React.createElement(
+	                'option',
+	                { value: GENRES[i] },
+	                ' ',
+	                GENRES[i],
+	                ' '
+	            );
+	        }
+
+	        // Sets up Mechanics Options
 	        var MECHANICS = [{ label: "Any", value: "Any" }, { label: "Area Control", value: "area-control" }, { label: "Worker Placement", value: "worker-placement" }, { label: "Trading", value: "trading" }];
+
+	        //
+	        // var MECHANICS = [{label: "Any", value: "Any"}];
+	        // for (var game in this.state.bgObj) {
+	        //     if (boardGameObj.hasOwnProperty(game)) {
+	        //         var curGame = boardGameObj[game];
+	        //         MECHANICS.push(curGame.info.mechanics);
+	        //     }
+	        // }
+	        // for (var i = 0; i < MECHANICS.length; i++) {
+	        //     MECHANICS[i] = {label: {MECHANICS[i]}, value: [MECHANICS[i] }
+	        // }
+
 	        var selectFieldName = "my-select";
 	        var selectPlaceholder = "Choose Game Mechanics";
 
@@ -137,107 +165,107 @@
 	            null,
 	            React.createElement(
 	                'div',
-	                null,
+	                { className: 'container' },
 	                React.createElement(
-	                    'div',
+	                    'p',
 	                    null,
-	                    React.createElement(
-	                        'p',
-	                        null,
-	                        ' How Many Players? '
-	                    ),
-	                    React.createElement(
-	                        'select',
-	                        { defaultValue: this.state.gNumPlayers,
-	                            onChange: this.handlePlayers
-	                        },
-	                        React.createElement(
-	                            'option',
-	                            { value: 'Any' },
-	                            ' Any '
-	                        ),
-	                        React.createElement(
-	                            'option',
-	                            { value: '1' },
-	                            ' 1 '
-	                        ),
-	                        React.createElement(
-	                            'option',
-	                            { value: '2' },
-	                            ' 2 '
-	                        ),
-	                        React.createElement(
-	                            'option',
-	                            { value: '3' },
-	                            ' 3 '
-	                        ),
-	                        React.createElement(
-	                            'option',
-	                            { value: '4' },
-	                            ' 4 '
-	                        ),
-	                        React.createElement(
-	                            'option',
-	                            { value: '5' },
-	                            ' 5 '
-	                        ),
-	                        React.createElement(
-	                            'option',
-	                            { value: '6' },
-	                            ' 6 '
-	                        ),
-	                        React.createElement(
-	                            'option',
-	                            { value: 'more' },
-	                            ' more '
-	                        )
-	                    )
+	                    ' How Many Players? '
 	                ),
 	                React.createElement(
-	                    'div',
-	                    null,
+	                    'select',
+	                    { defaultValue: this.state.gNumPlayers,
+	                        onChange: this.handlePlayers
+	                    },
 	                    React.createElement(
-	                        'p',
-	                        null,
-	                        ' Complexity? '
+	                        'option',
+	                        { value: 'Any' },
+	                        ' Any '
 	                    ),
 	                    React.createElement(
-	                        'select',
-	                        { defaultValue: this.state.gDifficulty,
-	                            onChange: this.handleDifficulty
-	                        },
-	                        React.createElement(
-	                            'option',
-	                            { value: 'Any' },
-	                            ' Any '
-	                        ),
-	                        React.createElement(
-	                            'option',
-	                            { value: '1' },
-	                            ' very easy '
-	                        ),
-	                        React.createElement(
-	                            'option',
-	                            { value: '2' },
-	                            ' easy '
-	                        ),
-	                        React.createElement(
-	                            'option',
-	                            { value: '3' },
-	                            ' medium '
-	                        ),
-	                        React.createElement(
-	                            'option',
-	                            { value: '4' },
-	                            ' hard '
-	                        ),
-	                        React.createElement(
-	                            'option',
-	                            { value: '5' },
-	                            ' very hard '
-	                        )
+	                        'option',
+	                        { value: '1' },
+	                        ' 1 '
+	                    ),
+	                    React.createElement(
+	                        'option',
+	                        { value: '2' },
+	                        ' 2 '
+	                    ),
+	                    React.createElement(
+	                        'option',
+	                        { value: '3' },
+	                        ' 3 '
+	                    ),
+	                    React.createElement(
+	                        'option',
+	                        { value: '4' },
+	                        ' 4 '
+	                    ),
+	                    React.createElement(
+	                        'option',
+	                        { value: '5' },
+	                        ' 5 '
+	                    ),
+	                    React.createElement(
+	                        'option',
+	                        { value: '6' },
+	                        ' 6 '
+	                    ),
+	                    React.createElement(
+	                        'option',
+	                        { value: 'more' },
+	                        ' more '
 	                    )
+	                )
+	            ),
+	            React.createElement(
+	                'div',
+	                { className: 'container' },
+	                React.createElement(
+	                    'p',
+	                    null,
+	                    ' Complexity? '
 	                ),
+	                React.createElement(
+	                    'select',
+	                    { defaultValue: this.state.gDifficulty,
+	                        onChange: this.handleDifficulty
+	                    },
+	                    React.createElement(
+	                        'option',
+	                        { value: 'Any' },
+	                        ' Any '
+	                    ),
+	                    React.createElement(
+	                        'option',
+	                        { value: '1' },
+	                        ' very easy '
+	                    ),
+	                    React.createElement(
+	                        'option',
+	                        { value: '2' },
+	                        ' easy '
+	                    ),
+	                    React.createElement(
+	                        'option',
+	                        { value: '3' },
+	                        ' medium '
+	                    ),
+	                    React.createElement(
+	                        'option',
+	                        { value: '4' },
+	                        ' hard '
+	                    ),
+	                    React.createElement(
+	                        'option',
+	                        { value: '5' },
+	                        ' very hard '
+	                    )
+	                )
+	            ),
+	            React.createElement(
+	                'div',
+	                { className: 'container' },
 	                React.createElement(
 	                    'p',
 	                    null,
@@ -248,6 +276,21 @@
 	                    { defaultValue: this.state.gGenre,
 	                        onChange: this.handleGenre
 	                    },
+	                    GENRES
+	                )
+	            ),
+	            React.createElement(
+	                'div',
+	                { className: 'container' },
+	                React.createElement(
+	                    'p',
+	                    null,
+	                    ' Length? '
+	                ),
+	                React.createElement(
+	                    'select',
+	                    { defaultValue: this.state.gLength,
+	                        onChange: this.handleLength },
 	                    React.createElement(
 	                        'option',
 	                        { value: 'Any' },
@@ -255,129 +298,52 @@
 	                    ),
 	                    React.createElement(
 	                        'option',
-	                        { value: 'easy' },
-	                        ' easy '
-	                    ),
-	                    '/*MAKE OPTIONS ACCORDING TO AVAILABLE THINGS*/'
-	                ),
-	                React.createElement(
-	                    'div',
-	                    null,
-	                    React.createElement(
-	                        'p',
-	                        null,
-	                        ' Length? '
+	                        { value: '30' },
+	                        ' 30min or less '
 	                    ),
 	                    React.createElement(
-	                        'select',
-	                        { defaultValue: this.state.gLength,
-	                            onChange: this.handleLength },
-	                        React.createElement(
-	                            'option',
-	                            { value: 'Any' },
-	                            ' Any '
-	                        ),
-	                        React.createElement(
-	                            'option',
-	                            { value: '30' },
-	                            ' 30min or less '
-	                        ),
-	                        React.createElement(
-	                            'option',
-	                            { value: '60' },
-	                            ' 30min - 1hr '
-	                        ),
-	                        React.createElement(
-	                            'option',
-	                            { value: '90' },
-	                            ' 1hr - 2hr '
-	                        ),
-	                        React.createElement(
-	                            'option',
-	                            { value: '240' },
-	                            ' 2hr - 4hr '
-	                        ),
-	                        React.createElement(
-	                            'option',
-	                            { value: '300' },
-	                            ' 4hr + '
-	                        )
+	                        'option',
+	                        { value: '60' },
+	                        ' 30min - 1hr '
+	                    ),
+	                    React.createElement(
+	                        'option',
+	                        { value: '90' },
+	                        ' 1hr - 2hr '
+	                    ),
+	                    React.createElement(
+	                        'option',
+	                        { value: '240' },
+	                        ' 2hr - 4hr '
+	                    ),
+	                    React.createElement(
+	                        'option',
+	                        { value: '300' },
+	                        ' 4hr + '
 	                    )
-	                ),
-	                React.createElement(
-	                    'div',
-	                    null,
-	                    React.createElement(
-	                        'p',
-	                        null,
-	                        ' Mechanics? '
-	                    ),
-	                    React.createElement(SelectPopover, {
-	                        options: MECHANICS,
-	                        name: selectFieldName,
-	                        selectPlaceholder: selectPlaceholder,
-	                        onChange: this.handleMechanics
-	                    })
 	                )
 	            ),
-	            React.createElement(GamesToPlay, { bgObj: this.state.bgObj, genre: this.state.gGenre, mechanics: this.state.gMechanics, players: this.state.gNumPlayers, difficulty: this.state.gDifficulty, gLength: this.state.gLength })
-	        );
-	    }
-	});
-
-	/*
-	 *
-	 * Props: bgObj, genre, mechanics, players, difficulty, gLength
-	 *
-	 */
-	var GamesToPlay = React.createClass({
-	    displayName: 'GamesToPlay',
-
-	    getInitialState: function getInitialState() {
-
-	        return {};
-	    },
-	    render: function render() {
-	        var tempGames = JSON.parse(JSON.stringify(this.props.bgObj));
-	        var viableGameTitles = [];
-	        var viableGameDescriptions = [];
-
-	        for (var game in this.props.bgObj) {
-	            if (boardGameObj.hasOwnProperty(game)) {
-	                var curGame = boardGameObj[game];
-	                console.log(curGame.time.minutes);
-	                console.log(this.props.gLength);
-	                console.log(curGame.time.minutes <= this.props.gLength + 20);
-	                // Handles Player #
-	                if (curGame.players.min <= this.props.players && curGame.players.max >= this.props.players || this.props.players === "Any") {
-	                    // Handles Length
-	                    if (this.props.gLength == 'Any' || this.props.gLength == 30 && curGame.time.minutes <= 30 || this.props.gLength == 60 && curGame.time.minutes >= 30 && curGame.time.minutes <= 60 || this.props.gLength == 90 && curGame.time.minutes >= 60 && curGame.time.minutes <= 120 || this.props.gLength == 240 && curGame.time.minutes >= 120 && curGame.time.minutes <= 240 || this.props.gLength == 300 && curGame.time.minutes >= 240) {
-	                        // Handles Difficulty
-	                        if (this.props.difficulty == curGame.info.difficulty || this.props.difficulty === 'Any') {
-	                            // Handles Genre
-	                            if (this.props.genre === curGame.info.genre || this.props.genre === 'Any') {
-	                                viableGameTitles.push(curGame.title);
-	                                viableGameDescriptions.push(curGame.info.description);
-	                            }
-	                        }
-	                    }
-	                }
-	            }
-	        }
-	        for (var i = 0; i < viableGameTitles.length; i++) {
-	            viableGameTitles[i] = React.createElement(
-	                'li',
-	                { style: dataBlock },
-	                '  ',
-	                viableGameTitles[i],
-	                ' '
-	            );
-	            console.log(viableGameTitles[i]);
-	        }
-	        return React.createElement(
-	            'div',
-	            null,
-	            viableGameTitles
+	            React.createElement(
+	                'div',
+	                { className: 'container' },
+	                React.createElement(
+	                    'p',
+	                    null,
+	                    ' Mechanics? '
+	                ),
+	                React.createElement(Select, {
+	                    name: 'form-field-name',
+	                    value: 'Any',
+	                    options: MECHANICS,
+	                    onChange: this.handleMechanics,
+	                    multi: true
+	                })
+	            ),
+	            React.createElement(
+	                'div',
+	                null,
+	                React.createElement(GamesToPlay, { bgObj: this.state.bgObj, genre: this.state.gGenre, mechanics: this.state.gMechanics, players: this.state.gNumPlayers, difficulty: this.state.gDifficulty, gLength: this.state.gLength })
+	            )
 	        );
 	    }
 	});
@@ -416,8 +382,14 @@
 	};
 	/////////////////////////////////////////////
 
+	/*
+	 *
+	 * Props: bgObj, genre, mechanics, players, difficulty, gLength
+	 *
+	 */
 	'use strict';
 	var React = __webpack_require__(3);
+	var ReactDOM = __webpack_require__(2);
 	var SelectPopover = __webpack_require__(7);
 	module.exports = React.createClass({
 	    displayName: "exports",
@@ -432,33 +404,52 @@
 	        var viableGameDescriptions = [];
 
 	        for (var game in this.props.bgObj) {
-	            if (boardGameObj.hasOwnProperty(game)) {
-	                var curGame = boardGameObj[game];
+	            if (this.props.bgObj.hasOwnProperty(game)) {
+	                var curGame = this.props.bgObj[game];
 	                console.log(curGame.time.minutes);
 	                console.log(this.props.gLength);
 	                console.log(curGame.time.minutes <= this.props.gLength + 20);
-	                if (curGame.players.min <= this.props.players && curGame.players.max >= this.props.players || this.props.players === "any") {
-	                    // if(( ) || () || () || () || () ){
-	                    viableGameTitles.push(curGame.title);
-	                    viableGameDescriptions.push(curGame.info.description);
-	                    // }
+	                // Handles Player #
+	                if (curGame.players.min <= this.props.players && curGame.players.max >= this.props.players || this.props.players === "Any") {
+	                    // Handles Length
+	                    if (this.props.gLength == 'Any' || this.props.gLength == 30 && curGame.time.minutes <= 30 || this.props.gLength == 60 && curGame.time.minutes >= 30 && curGame.time.minutes <= 60 || this.props.gLength == 90 && curGame.time.minutes >= 60 && curGame.time.minutes <= 120 || this.props.gLength == 240 && curGame.time.minutes >= 120 && curGame.time.minutes <= 240 || this.props.gLength == 300 && curGame.time.minutes >= 240) {
+	                        // Handles Difficulty
+	                        if (this.props.difficulty == curGame.info.difficulty || this.props.difficulty === 'Any') {
+	                            // Handles Genre
+	                            if (this.props.genre === curGame.info.genre || this.props.genre === 'Any') {
+	                                viableGameTitles.push(curGame.title);
+	                                viableGameDescriptions.push(curGame.info.description);
+	                            }
+	                        }
+	                    }
 	                }
 	            }
 	        }
 	        for (var i = 0; i < viableGameTitles.length; i++) {
 	            viableGameTitles[i] = React.createElement(
-	                "li",
-	                { style: dataBlock },
+	                "div",
+	                { className: "gameTitle" },
 	                "  ",
 	                viableGameTitles[i],
 	                " "
 	            );
-	            console.log(viableGameTitles[i]);
+	            viableGameDescriptions[i] = React.createElement(
+	                "div",
+	                { className: "gameTitle" },
+	                "  ",
+	                viableGameDescriptions[i],
+	                " "
+	            );
 	        }
+
 	        return React.createElement(
 	            "div",
 	            null,
-	            viableGameTitles
+	            React.createElement(
+	                "div",
+	                null,
+	                viableGameTitles
+	            )
 	        );
 	    }
 	});
@@ -20456,6 +20447,1302 @@
 
 	module.exports = toArray;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(26)))
+
+/***/ },
+/* 168 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* disable some rules until we refactor more completely; fixing them now would
+	   cause conflicts with some open PRs unnecessarily. */
+	/* eslint react/jsx-sort-prop-types: 0, react/sort-comp: 0, react/prop-types: 0 */
+
+	'use strict';
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	var React = __webpack_require__(3);
+	var ReactDOM = __webpack_require__(2);
+	var Input = __webpack_require__(173);
+	var classes = __webpack_require__(172);
+	var Value = __webpack_require__(169);
+	var SingleValue = __webpack_require__(170);
+	var Option = __webpack_require__(171);
+
+	var requestId = 0;
+
+	var Select = React.createClass({
+
+		displayName: 'Select',
+
+		propTypes: {
+			addLabelText: React.PropTypes.string, // placeholder displayed when you want to add a label on a multi-value input
+			allowCreate: React.PropTypes.bool, // whether to allow creation of new entries
+			asyncOptions: React.PropTypes.func, // function to call to get options
+			autoload: React.PropTypes.bool, // whether to auto-load the default async options set
+			backspaceRemoves: React.PropTypes.bool, // whether backspace removes an item if there is no text input
+			cacheAsyncResults: React.PropTypes.bool, // whether to allow cache
+			className: React.PropTypes.string, // className for the outer element
+			clearAllText: React.PropTypes.string, // title for the "clear" control when multi: true
+			clearValueText: React.PropTypes.string, // title for the "clear" control
+			clearable: React.PropTypes.bool, // should it be possible to reset value
+			delimiter: React.PropTypes.string, // delimiter to use to join multiple values
+			disabled: React.PropTypes.bool, // whether the Select is disabled or not
+			filterOption: React.PropTypes.func, // method to filter a single option  (option, filterString)
+			filterOptions: React.PropTypes.func, // method to filter the options array: function ([options], filterString, [values])
+			ignoreCase: React.PropTypes.bool, // whether to perform case-insensitive filtering
+			inputProps: React.PropTypes.object, // custom attributes for the Input (in the Select-control) e.g: {'data-foo': 'bar'}
+			isLoading: React.PropTypes.bool, // whether the Select is loading externally or not (such as options being loaded)
+			labelKey: React.PropTypes.string, // path of the label value in option objects
+			matchPos: React.PropTypes.string, // (any|start) match the start or entire string when filtering
+			matchProp: React.PropTypes.string, // (any|label|value) which option property to filter on
+			multi: React.PropTypes.bool, // multi-value input
+			name: React.PropTypes.string, // field name, for hidden <input /> tag
+			newOptionCreator: React.PropTypes.func, // factory to create new options when allowCreate set
+			noResultsText: React.PropTypes.string, // placeholder displayed when there are no matching search results
+			onBlur: React.PropTypes.func, // onBlur handler: function (event) {}
+			onChange: React.PropTypes.func, // onChange handler: function (newValue) {}
+			onFocus: React.PropTypes.func, // onFocus handler: function (event) {}
+			onInputChange: React.PropTypes.func, // onInputChange handler: function (inputValue) {}
+			onOptionLabelClick: React.PropTypes.func, // onCLick handler for value labels: function (value, event) {}
+			optionComponent: React.PropTypes.func, // option component to render in dropdown
+			optionRenderer: React.PropTypes.func, // optionRenderer: function (option) {}
+			options: React.PropTypes.array, // array of options
+			placeholder: React.PropTypes.string, // field placeholder, displayed when there's no value
+			searchable: React.PropTypes.bool, // whether to enable searching feature or not
+			searchingText: React.PropTypes.string, // message to display whilst options are loading via asyncOptions
+			searchPromptText: React.PropTypes.string, // label to prompt for search input
+			singleValueComponent: React.PropTypes.func, // single value component when multiple is set to false
+			value: React.PropTypes.any, // initial field value
+			valueComponent: React.PropTypes.func, // value component to render in multiple mode
+			valueKey: React.PropTypes.string, // path of the label value in option objects
+			valueRenderer: React.PropTypes.func // valueRenderer: function (option) {}
+		},
+
+		getDefaultProps: function getDefaultProps() {
+			return {
+				addLabelText: 'Add "{label}"?',
+				allowCreate: false,
+				asyncOptions: undefined,
+				autoload: true,
+				backspaceRemoves: true,
+				cacheAsyncResults: true,
+				className: undefined,
+				clearAllText: 'Clear all',
+				clearValueText: 'Clear value',
+				clearable: true,
+				delimiter: ',',
+				disabled: false,
+				ignoreCase: true,
+				inputProps: {},
+				isLoading: false,
+				labelKey: 'label',
+				matchPos: 'any',
+				matchProp: 'any',
+				name: undefined,
+				newOptionCreator: undefined,
+				noResultsText: 'No results found',
+				onChange: undefined,
+				onInputChange: undefined,
+				onOptionLabelClick: undefined,
+				optionComponent: Option,
+				options: undefined,
+				placeholder: 'Select...',
+				searchable: true,
+				searchingText: 'Searching...',
+				searchPromptText: 'Type to search',
+				singleValueComponent: SingleValue,
+				value: undefined,
+				valueComponent: Value,
+				valueKey: 'value'
+			};
+		},
+
+		getInitialState: function getInitialState() {
+			return {
+				/*
+	    * set by getStateFromValue on componentWillMount:
+	    * - value
+	    * - values
+	    * - filteredOptions
+	    * - inputValue
+	    * - placeholder
+	    * - focusedOption
+	   */
+				isFocused: false,
+				isLoading: false,
+				isOpen: false,
+				options: this.props.options
+			};
+		},
+
+		componentWillMount: function componentWillMount() {
+			var _this = this;
+
+			this._optionsCache = {};
+			this._optionsFilterString = '';
+			this._closeMenuIfClickedOutside = function (event) {
+				if (!_this.state.isOpen) {
+					return;
+				}
+				var menuElem = ReactDOM.findDOMNode(_this.refs.selectMenuContainer);
+				var controlElem = ReactDOM.findDOMNode(_this.refs.control);
+
+				var eventOccuredOutsideMenu = _this.clickedOutsideElement(menuElem, event);
+				var eventOccuredOutsideControl = _this.clickedOutsideElement(controlElem, event);
+
+				// Hide dropdown menu if click occurred outside of menu
+				if (eventOccuredOutsideMenu && eventOccuredOutsideControl) {
+					_this.setState({
+						isOpen: false
+					}, _this._unbindCloseMenuIfClickedOutside);
+				}
+			};
+			this._bindCloseMenuIfClickedOutside = function () {
+				if (!document.addEventListener && document.attachEvent) {
+					document.attachEvent('onclick', _this._closeMenuIfClickedOutside);
+				} else {
+					document.addEventListener('click', _this._closeMenuIfClickedOutside);
+				}
+			};
+			this._unbindCloseMenuIfClickedOutside = function () {
+				if (!document.removeEventListener && document.detachEvent) {
+					document.detachEvent('onclick', _this._closeMenuIfClickedOutside);
+				} else {
+					document.removeEventListener('click', _this._closeMenuIfClickedOutside);
+				}
+			};
+			this.setState(this.getStateFromValue(this.props.value));
+		},
+
+		componentDidMount: function componentDidMount() {
+			if (this.props.asyncOptions && this.props.autoload) {
+				this.autoloadAsyncOptions();
+			}
+		},
+
+		componentWillUnmount: function componentWillUnmount() {
+			clearTimeout(this._blurTimeout);
+			clearTimeout(this._focusTimeout);
+			if (this.state.isOpen) {
+				this._unbindCloseMenuIfClickedOutside();
+			}
+		},
+
+		componentWillReceiveProps: function componentWillReceiveProps(newProps) {
+			var _this2 = this;
+
+			var optionsChanged = false;
+			if (JSON.stringify(newProps.options) !== JSON.stringify(this.props.options)) {
+				optionsChanged = true;
+				this.setState({
+					options: newProps.options,
+					filteredOptions: this.filterOptions(newProps.options)
+				});
+			}
+			if (newProps.value !== this.state.value || newProps.placeholder !== this.props.placeholder || optionsChanged) {
+				var setState = function setState(newState) {
+					_this2.setState(_this2.getStateFromValue(newProps.value, newState && newState.options || newProps.options, newProps.placeholder));
+				};
+				if (this.props.asyncOptions) {
+					this.loadAsyncOptions(newProps.value, {}, setState);
+				} else {
+					setState();
+				}
+			}
+		},
+
+		componentDidUpdate: function componentDidUpdate() {
+			var _this3 = this;
+
+			if (!this.props.disabled && this._focusAfterUpdate) {
+				clearTimeout(this._blurTimeout);
+				clearTimeout(this._focusTimeout);
+				this._focusTimeout = setTimeout(function () {
+					if (!_this3.isMounted()) return;
+					_this3.getInputNode().focus();
+					_this3._focusAfterUpdate = false;
+				}, 50);
+			}
+			if (this._focusedOptionReveal) {
+				if (this.refs.focused && this.refs.menu) {
+					var focusedDOM = ReactDOM.findDOMNode(this.refs.focused);
+					var menuDOM = ReactDOM.findDOMNode(this.refs.menu);
+					var focusedRect = focusedDOM.getBoundingClientRect();
+					var menuRect = menuDOM.getBoundingClientRect();
+
+					if (focusedRect.bottom > menuRect.bottom || focusedRect.top < menuRect.top) {
+						menuDOM.scrollTop = focusedDOM.offsetTop + focusedDOM.clientHeight - menuDOM.offsetHeight;
+					}
+				}
+				this._focusedOptionReveal = false;
+			}
+		},
+
+		focus: function focus() {
+			this.getInputNode().focus();
+		},
+
+		clickedOutsideElement: function clickedOutsideElement(element, event) {
+			var eventTarget = event.target ? event.target : event.srcElement;
+			while (eventTarget != null) {
+				if (eventTarget === element) return false;
+				eventTarget = eventTarget.offsetParent;
+			}
+			return true;
+		},
+
+		getStateFromValue: function getStateFromValue(value, options, placeholder) {
+			var _this4 = this;
+
+			if (!options) {
+				options = this.state.options;
+			}
+			if (!placeholder) {
+				placeholder = this.props.placeholder;
+			}
+
+			// reset internal filter string
+			this._optionsFilterString = '';
+
+			var values = this.initValuesArray(value, options);
+			var filteredOptions = this.filterOptions(options, values);
+
+			var focusedOption;
+			var valueForState = null;
+			if (!this.props.multi && values.length) {
+				focusedOption = values[0];
+				valueForState = values[0][this.props.valueKey];
+			} else {
+				focusedOption = this.getFirstFocusableOption(filteredOptions);
+				valueForState = values.map(function (v) {
+					return v[_this4.props.valueKey];
+				}).join(this.props.delimiter);
+			}
+
+			return {
+				value: valueForState,
+				values: values,
+				inputValue: '',
+				filteredOptions: filteredOptions,
+				placeholder: !this.props.multi && values.length ? values[0][this.props.labelKey] : placeholder,
+				focusedOption: focusedOption
+			};
+		},
+
+		getFirstFocusableOption: function getFirstFocusableOption(options) {
+
+			for (var optionIndex = 0; optionIndex < options.length; ++optionIndex) {
+				if (!options[optionIndex].disabled) {
+					return options[optionIndex];
+				}
+			}
+		},
+
+		initValuesArray: function initValuesArray(values, options) {
+			var _this5 = this;
+
+			if (!Array.isArray(values)) {
+				if (typeof values === 'string') {
+					values = values === '' ? [] : this.props.multi ? values.split(this.props.delimiter) : [values];
+				} else {
+					values = values !== undefined && values !== null ? [values] : [];
+				}
+			}
+			return values.map(function (val) {
+				if (typeof val === 'string' || typeof val === 'number') {
+					for (var key in options) {
+						if (options.hasOwnProperty(key) && options[key] && (options[key][_this5.props.valueKey] === val || typeof options[key][_this5.props.valueKey] === 'number' && options[key][_this5.props.valueKey].toString() === val)) {
+							return options[key];
+						}
+					}
+					return { value: val, label: val };
+				} else {
+					return val;
+				}
+			});
+		},
+
+		setValue: function setValue(value, focusAfterUpdate) {
+			if (focusAfterUpdate || focusAfterUpdate === undefined) {
+				this._focusAfterUpdate = true;
+			}
+			var newState = this.getStateFromValue(value);
+			newState.isOpen = false;
+			this.fireChangeEvent(newState);
+			this.setState(newState);
+		},
+
+		selectValue: function selectValue(value) {
+			if (!this.props.multi) {
+				this.setValue(value);
+			} else if (value) {
+				this.addValue(value);
+			}
+			this._unbindCloseMenuIfClickedOutside();
+		},
+
+		addValue: function addValue(value) {
+			this.setValue(this.state.values.concat(value));
+		},
+
+		popValue: function popValue() {
+			this.setValue(this.state.values.slice(0, this.state.values.length - 1));
+		},
+
+		removeValue: function removeValue(valueToRemove) {
+			this.setValue(this.state.values.filter(function (value) {
+				return value !== valueToRemove;
+			}));
+		},
+
+		clearValue: function clearValue(event) {
+			// if the event was triggered by a mousedown and not the primary
+			// button, ignore it.
+			if (event && event.type === 'mousedown' && event.button !== 0) {
+				return;
+			}
+			event.stopPropagation();
+			event.preventDefault();
+			this.setValue(null);
+		},
+
+		resetValue: function resetValue() {
+			this.setValue(this.state.value === '' ? null : this.state.value);
+		},
+
+		getInputNode: function getInputNode() {
+			var input = this.refs.input;
+			return this.props.searchable ? input : ReactDOM.findDOMNode(input);
+		},
+
+		fireChangeEvent: function fireChangeEvent(newState) {
+			if (newState.value !== this.state.value && this.props.onChange) {
+				this.props.onChange(newState.value, newState.values);
+			}
+		},
+
+		handleMouseDown: function handleMouseDown(event) {
+			// if the event was triggered by a mousedown and not the primary
+			// button, or if the component is disabled, ignore it.
+			if (this.props.disabled || event.type === 'mousedown' && event.button !== 0) {
+				return;
+			}
+			event.stopPropagation();
+			event.preventDefault();
+
+			// for the non-searchable select, close the dropdown when button is clicked
+			if (this.state.isOpen && !this.props.searchable) {
+				this.setState({
+					isOpen: false
+				}, this._unbindCloseMenuIfClickedOutside);
+				return;
+			}
+
+			if (this.state.isFocused) {
+				this.setState({
+					isOpen: true
+				}, this._bindCloseMenuIfClickedOutside);
+			} else {
+				this._openAfterFocus = true;
+				this.getInputNode().focus();
+			}
+		},
+
+		handleMouseDownOnMenu: function handleMouseDownOnMenu(event) {
+			// if the event was triggered by a mousedown and not the primary
+			// button, or if the component is disabled, ignore it.
+			if (this.props.disabled || event.type === 'mousedown' && event.button !== 0) {
+				return;
+			}
+			event.stopPropagation();
+			event.preventDefault();
+		},
+
+		handleMouseDownOnArrow: function handleMouseDownOnArrow(event) {
+			// if the event was triggered by a mousedown and not the primary
+			// button, or if the component is disabled, ignore it.
+			if (this.props.disabled || event.type === 'mousedown' && event.button !== 0) {
+				return;
+			}
+			// If not focused, handleMouseDown will handle it
+			if (!this.state.isOpen) {
+				return;
+			}
+			event.stopPropagation();
+			event.preventDefault();
+			this.setState({
+				isOpen: false
+			}, this._unbindCloseMenuIfClickedOutside);
+		},
+
+		handleInputFocus: function handleInputFocus(event) {
+			var _this6 = this;
+
+			var newIsOpen = this.state.isOpen || this._openAfterFocus;
+			this.setState({
+				isFocused: true,
+				isOpen: newIsOpen
+			}, function () {
+				if (newIsOpen) {
+					_this6._bindCloseMenuIfClickedOutside();
+				} else {
+					_this6._unbindCloseMenuIfClickedOutside();
+				}
+			});
+			this._openAfterFocus = false;
+			if (this.props.onFocus) {
+				this.props.onFocus(event);
+			}
+		},
+
+		handleInputBlur: function handleInputBlur(event) {
+			var _this7 = this;
+
+			this._blurTimeout = setTimeout(function () {
+				if (_this7._focusAfterUpdate || !_this7.isMounted()) return;
+				_this7.setState({
+					isFocused: false,
+					isOpen: false
+				});
+			}, 50);
+			if (this.props.onBlur) {
+				this.props.onBlur(event);
+			}
+		},
+
+		handleKeyDown: function handleKeyDown(event) {
+			if (this.props.disabled) return;
+			switch (event.keyCode) {
+				case 8:
+					// backspace
+					if (!this.state.inputValue && this.props.backspaceRemoves) {
+						event.preventDefault();
+						this.popValue();
+					}
+					return;
+				case 9:
+					// tab
+					if (event.shiftKey || !this.state.isOpen || !this.state.focusedOption) {
+						return;
+					}
+					this.selectFocusedOption();
+					break;
+				case 13:
+					// enter
+					if (!this.state.isOpen) return;
+					this.selectFocusedOption();
+					break;
+				case 27:
+					// escape
+					if (this.state.isOpen) {
+						this.resetValue();
+					} else if (this.props.clearable) {
+						this.clearValue(event);
+					}
+					break;
+				case 38:
+					// up
+					this.focusPreviousOption();
+					break;
+				case 40:
+					// down
+					this.focusNextOption();
+					break;
+				case 188:
+					// ,
+					if (this.props.allowCreate && this.props.multi) {
+						event.preventDefault();
+						event.stopPropagation();
+						this.selectFocusedOption();
+					} else {
+						return;
+					}
+					break;
+				default:
+					return;
+			}
+			event.preventDefault();
+		},
+
+		// Ensures that the currently focused option is available in filteredOptions.
+		// If not, returns the first available option.
+		_getNewFocusedOption: function _getNewFocusedOption(filteredOptions) {
+			for (var key in filteredOptions) {
+				if (filteredOptions.hasOwnProperty(key) && filteredOptions[key] === this.state.focusedOption) {
+					return filteredOptions[key];
+				}
+			}
+			return this.getFirstFocusableOption(filteredOptions);
+		},
+
+		handleInputChange: function handleInputChange(event) {
+			// assign an internal variable because we need to use
+			// the latest value before setState() has completed.
+			this._optionsFilterString = event.target.value;
+
+			if (this.props.onInputChange) {
+				this.props.onInputChange(event.target.value);
+			}
+
+			if (this.props.asyncOptions) {
+				this.setState({
+					isLoading: true,
+					inputValue: event.target.value
+				});
+				this.loadAsyncOptions(event.target.value, {
+					isLoading: false,
+					isOpen: true
+				}, this._bindCloseMenuIfClickedOutside);
+			} else {
+				var filteredOptions = this.filterOptions(this.state.options);
+				this.setState({
+					isOpen: true,
+					inputValue: event.target.value,
+					filteredOptions: filteredOptions,
+					focusedOption: this._getNewFocusedOption(filteredOptions)
+				}, this._bindCloseMenuIfClickedOutside);
+			}
+		},
+
+		autoloadAsyncOptions: function autoloadAsyncOptions() {
+			var _this8 = this;
+
+			this.setState({
+				isLoading: true
+			});
+			this.loadAsyncOptions(this.props.value || '', { isLoading: false }, function () {
+				// update with new options but don't focus
+				_this8.setValue(_this8.props.value, false);
+			});
+		},
+
+		loadAsyncOptions: function loadAsyncOptions(input, state, callback) {
+			if (input === undefined) input = '';
+
+			var _this9 = this;
+
+			var thisRequestId = this._currentRequestId = requestId++;
+			if (this.props.cacheAsyncResults) {
+				for (var i = 0; i <= input.length; i++) {
+					var cacheKey = input.slice(0, i);
+					if (this._optionsCache[cacheKey] && (input === cacheKey || this._optionsCache[cacheKey].complete)) {
+						var options = this._optionsCache[cacheKey].options;
+						var filteredOptions = this.filterOptions(options);
+						var newState = {
+							options: options,
+							filteredOptions: filteredOptions,
+							focusedOption: this._getNewFocusedOption(filteredOptions)
+						};
+						for (var key in state) {
+							if (state.hasOwnProperty(key)) {
+								newState[key] = state[key];
+							}
+						}
+						this.setState(newState);
+						if (callback) callback.call(this, newState);
+						return;
+					}
+				}
+			}
+
+			var optionsResponseHandler = function optionsResponseHandler(err, data) {
+				if (err) throw err;
+				if (_this9.props.cacheAsyncResults) {
+					_this9._optionsCache[input] = data;
+				}
+				if (thisRequestId !== _this9._currentRequestId) {
+					return;
+				}
+				var filteredOptions = _this9.filterOptions(data.options);
+				var newState = {
+					options: data.options,
+					filteredOptions: filteredOptions,
+					focusedOption: _this9._getNewFocusedOption(filteredOptions)
+				};
+				for (var key in state) {
+					if (state.hasOwnProperty(key)) {
+						newState[key] = state[key];
+					}
+				}
+				_this9.setState(newState);
+				if (callback) callback.call(_this9, newState);
+			};
+
+			var asyncOpts = this.props.asyncOptions(input, optionsResponseHandler);
+
+			if (asyncOpts && typeof asyncOpts.then === 'function') {
+				asyncOpts.then(function (data) {
+					optionsResponseHandler(null, data);
+				}, function (err) {
+					optionsResponseHandler(err);
+				});
+			}
+		},
+
+		filterOptions: function filterOptions(options, values) {
+			var filterValue = this._optionsFilterString;
+			var exclude = (values || this.state.values).map(function (i) {
+				return i.value;
+			});
+			if (this.props.filterOptions) {
+				return this.props.filterOptions.call(this, options, filterValue, exclude);
+			} else {
+				var filterOption = function filterOption(op) {
+					if (this.props.multi && exclude.indexOf(op[this.props.valueKey]) > -1) return false;
+					if (this.props.filterOption) return this.props.filterOption.call(this, op, filterValue);
+					var valueTest = String(op[this.props.valueKey]);
+					var labelTest = String(op[this.props.labelKey]);
+					if (this.props.ignoreCase) {
+						valueTest = valueTest.toLowerCase();
+						labelTest = labelTest.toLowerCase();
+						filterValue = filterValue.toLowerCase();
+					}
+					return !filterValue || this.props.matchPos === 'start' ? this.props.matchProp !== 'label' && valueTest.substr(0, filterValue.length) === filterValue || this.props.matchProp !== 'value' && labelTest.substr(0, filterValue.length) === filterValue : this.props.matchProp !== 'label' && valueTest.indexOf(filterValue) >= 0 || this.props.matchProp !== 'value' && labelTest.indexOf(filterValue) >= 0;
+				};
+				return (options || []).filter(filterOption, this);
+			}
+		},
+
+		selectFocusedOption: function selectFocusedOption() {
+			if (this.props.allowCreate && !this.state.focusedOption) {
+				return this.selectValue(this.state.inputValue);
+			}
+
+			if (this.state.focusedOption) {
+				return this.selectValue(this.state.focusedOption);
+			}
+		},
+
+		focusOption: function focusOption(op) {
+			this.setState({
+				focusedOption: op
+			});
+		},
+
+		focusNextOption: function focusNextOption() {
+			this.focusAdjacentOption('next');
+		},
+
+		focusPreviousOption: function focusPreviousOption() {
+			this.focusAdjacentOption('previous');
+		},
+
+		focusAdjacentOption: function focusAdjacentOption(dir) {
+			this._focusedOptionReveal = true;
+			var ops = this.state.filteredOptions.filter(function (op) {
+				return !op.disabled;
+			});
+			if (!this.state.isOpen) {
+				this.setState({
+					isOpen: true,
+					inputValue: '',
+					focusedOption: this.state.focusedOption || ops[dir === 'next' ? 0 : ops.length - 1]
+				}, this._bindCloseMenuIfClickedOutside);
+				return;
+			}
+			if (!ops.length) {
+				return;
+			}
+			var focusedIndex = -1;
+			for (var i = 0; i < ops.length; i++) {
+				if (this.state.focusedOption === ops[i]) {
+					focusedIndex = i;
+					break;
+				}
+			}
+			var focusedOption = ops[0];
+			if (dir === 'next' && focusedIndex > -1 && focusedIndex < ops.length - 1) {
+				focusedOption = ops[focusedIndex + 1];
+			} else if (dir === 'previous') {
+				if (focusedIndex > 0) {
+					focusedOption = ops[focusedIndex - 1];
+				} else {
+					focusedOption = ops[ops.length - 1];
+				}
+			}
+			this.setState({
+				focusedOption: focusedOption
+			});
+		},
+
+		unfocusOption: function unfocusOption(op) {
+			if (this.state.focusedOption === op) {
+				this.setState({
+					focusedOption: null
+				});
+			}
+		},
+
+		buildMenu: function buildMenu() {
+			var _this10 = this;
+
+			var focusedValue = this.state.focusedOption ? this.state.focusedOption[this.props.valueKey] : null;
+			var renderLabel = this.props.optionRenderer;
+			if (!renderLabel) renderLabel = function (op) {
+				return op[_this10.props.labelKey];
+			};
+			if (this.state.filteredOptions.length > 0) {
+				focusedValue = focusedValue == null ? this.state.filteredOptions[0] : focusedValue;
+			}
+			// Add the current value to the filtered options in last resort
+			var options = this.state.filteredOptions;
+			if (this.props.allowCreate && this.state.inputValue.trim()) {
+				var inputValue = this.state.inputValue;
+				options = options.slice();
+				var newOption = this.props.newOptionCreator ? this.props.newOptionCreator(inputValue) : {
+					value: inputValue,
+					label: inputValue,
+					create: true
+				};
+				options.unshift(newOption);
+			}
+			var ops = Object.keys(options).map(function (key) {
+				var op = options[key];
+				var isSelected = this.state.value === op[this.props.valueKey];
+				var isFocused = focusedValue === op[this.props.valueKey];
+				var optionClass = classes({
+					'Select-option': true,
+					'is-selected': isSelected,
+					'is-focused': isFocused,
+					'is-disabled': op.disabled
+				});
+				var ref = isFocused ? 'focused' : null;
+				var mouseEnter = this.focusOption.bind(this, op);
+				var mouseLeave = this.unfocusOption.bind(this, op);
+				var mouseDown = this.selectValue.bind(this, op);
+				var optionResult = React.createElement(this.props.optionComponent, {
+					key: 'option-' + op[this.props.valueKey],
+					className: optionClass,
+					renderFunc: renderLabel,
+					mouseEnter: mouseEnter,
+					mouseLeave: mouseLeave,
+					mouseDown: mouseDown,
+					click: mouseDown,
+					addLabelText: this.props.addLabelText,
+					option: op,
+					ref: ref
+				});
+				return optionResult;
+			}, this);
+
+			if (ops.length) {
+				return ops;
+			} else {
+				var noResultsText, promptClass;
+				if (this.isLoading()) {
+					promptClass = 'Select-searching';
+					noResultsText = this.props.searchingText;
+				} else if (this.state.inputValue || !this.props.asyncOptions) {
+					promptClass = 'Select-noresults';
+					noResultsText = this.props.noResultsText;
+				} else {
+					promptClass = 'Select-search-prompt';
+					noResultsText = this.props.searchPromptText;
+				}
+
+				return React.createElement(
+					'div',
+					{ className: promptClass },
+					noResultsText
+				);
+			}
+		},
+
+		handleOptionLabelClick: function handleOptionLabelClick(value, event) {
+			if (this.props.onOptionLabelClick) {
+				this.props.onOptionLabelClick(value, event);
+			}
+		},
+
+		isLoading: function isLoading() {
+			return this.props.isLoading || this.state.isLoading;
+		},
+
+		render: function render() {
+			var selectClass = classes('Select', this.props.className, {
+				'Select--multi': this.props.multi,
+				'is-searchable': this.props.searchable,
+				'is-open': this.state.isOpen,
+				'is-focused': this.state.isFocused,
+				'is-loading': this.isLoading(),
+				'is-disabled': this.props.disabled,
+				'has-value': this.state.value
+			});
+			var value = [];
+			if (this.props.multi) {
+				this.state.values.forEach(function (val) {
+					var onOptionLabelClick = this.handleOptionLabelClick.bind(this, val);
+					var onRemove = this.removeValue.bind(this, val);
+					var valueComponent = React.createElement(this.props.valueComponent, {
+						key: val.value,
+						option: val,
+						renderer: this.props.valueRenderer,
+						optionLabelClick: !!this.props.onOptionLabelClick,
+						onOptionLabelClick: onOptionLabelClick,
+						onRemove: onRemove,
+						disabled: this.props.disabled
+					});
+					value.push(valueComponent);
+				}, this);
+			}
+
+			if (!this.state.inputValue && (!this.props.multi || !value.length)) {
+				var val = this.state.values[0] || null;
+				if (this.props.valueRenderer && !!this.state.values.length) {
+					value.push(React.createElement(Value, {
+						key: 0,
+						option: val,
+						renderer: this.props.valueRenderer,
+						disabled: this.props.disabled }));
+				} else {
+					var singleValueComponent = React.createElement(this.props.singleValueComponent, {
+						key: 'placeholder',
+						value: val,
+						placeholder: this.state.placeholder
+					});
+					value.push(singleValueComponent);
+				}
+			}
+
+			// loading spinner
+			var loading = this.isLoading() ? React.createElement(
+				'span',
+				{ className: 'Select-loading-zone', 'aria-hidden': 'true' },
+				React.createElement('span', { className: 'Select-loading' })
+			) : null;
+
+			// clear "x" button
+			var clear = this.props.clearable && this.state.value && !this.props.disabled && !this.isLoading() ? React.createElement(
+				'span',
+				{ className: 'Select-clear-zone', title: this.props.multi ? this.props.clearAllText : this.props.clearValueText, 'aria-label': this.props.multi ? this.props.clearAllText : this.props.clearValueText, onMouseDown: this.clearValue, onTouchEnd: this.clearValue, onClick: this.clearValue },
+				React.createElement('span', { className: 'Select-clear', dangerouslySetInnerHTML: { __html: '&times;' } })
+			) : null;
+
+			// indicator arrow
+			var arrow = React.createElement(
+				'span',
+				{ className: 'Select-arrow-zone', onMouseDown: this.handleMouseDownOnArrow },
+				React.createElement('span', { className: 'Select-arrow', onMouseDown: this.handleMouseDownOnArrow })
+			);
+
+			var menu;
+			var menuProps;
+			if (this.state.isOpen) {
+				menuProps = {
+					ref: 'menu',
+					className: 'Select-menu',
+					onMouseDown: this.handleMouseDownOnMenu
+				};
+				menu = React.createElement(
+					'div',
+					{ ref: 'selectMenuContainer', className: 'Select-menu-outer' },
+					React.createElement(
+						'div',
+						menuProps,
+						this.buildMenu()
+					)
+				);
+			}
+
+			var input;
+			var inputProps = {
+				ref: 'input',
+				className: 'Select-input ' + (this.props.inputProps.className || ''),
+				tabIndex: this.props.tabIndex || 0,
+				onFocus: this.handleInputFocus,
+				onBlur: this.handleInputBlur
+			};
+			for (var key in this.props.inputProps) {
+				if (this.props.inputProps.hasOwnProperty(key) && key !== 'className') {
+					inputProps[key] = this.props.inputProps[key];
+				}
+			}
+
+			if (!this.props.disabled) {
+				if (this.props.searchable) {
+					input = React.createElement(Input, _extends({ value: this.state.inputValue, onChange: this.handleInputChange, minWidth: '5' }, inputProps));
+				} else {
+					input = React.createElement(
+						'div',
+						inputProps,
+						' '
+					);
+				}
+			} else if (!this.props.multi || !this.state.values.length) {
+				input = React.createElement(
+					'div',
+					{ className: 'Select-input' },
+					' '
+				);
+			}
+
+			return React.createElement(
+				'div',
+				{ ref: 'wrapper', className: selectClass },
+				React.createElement('input', { type: 'hidden', ref: 'value', name: this.props.name, value: this.state.value, disabled: this.props.disabled }),
+				React.createElement(
+					'div',
+					{ className: 'Select-control', ref: 'control', onKeyDown: this.handleKeyDown, onMouseDown: this.handleMouseDown, onTouchEnd: this.handleMouseDown },
+					value,
+					input,
+					loading,
+					clear,
+					arrow
+				),
+				menu
+			);
+		}
+
+	});
+
+	module.exports = Select;
+
+/***/ },
+/* 169 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(3);
+	var classes = __webpack_require__(172);
+
+	var Value = React.createClass({
+
+		displayName: 'Value',
+
+		propTypes: {
+			disabled: React.PropTypes.bool, // disabled prop passed to ReactSelect
+			onOptionLabelClick: React.PropTypes.func, // method to handle click on value label
+			onRemove: React.PropTypes.func, // method to handle remove of that value
+			option: React.PropTypes.object.isRequired, // option passed to component
+			optionLabelClick: React.PropTypes.bool, // indicates if onOptionLabelClick should be handled
+			renderer: React.PropTypes.func // method to render option label passed to ReactSelect
+		},
+
+		blockEvent: function blockEvent(event) {
+			event.stopPropagation();
+		},
+
+		handleOnRemove: function handleOnRemove(event) {
+			if (!this.props.disabled) {
+				this.props.onRemove(event);
+			}
+		},
+
+		render: function render() {
+			var label = this.props.option.label;
+			if (this.props.renderer) {
+				label = this.props.renderer(this.props.option);
+			}
+
+			if (!this.props.onRemove && !this.props.optionLabelClick) {
+				return React.createElement(
+					'div',
+					{
+						className: classes('Select-value', this.props.option.className),
+						style: this.props.option.style,
+						title: this.props.option.title
+					},
+					label
+				);
+			}
+
+			if (this.props.optionLabelClick) {
+				label = React.createElement(
+					'a',
+					{ className: classes('Select-item-label__a', this.props.option.className),
+						onMouseDown: this.blockEvent,
+						onTouchEnd: this.props.onOptionLabelClick,
+						onClick: this.props.onOptionLabelClick,
+						style: this.props.option.style,
+						title: this.props.option.title },
+					label
+				);
+			}
+
+			return React.createElement(
+				'div',
+				{ className: classes('Select-item', this.props.option.className),
+					style: this.props.option.style,
+					title: this.props.option.title },
+				React.createElement(
+					'span',
+					{ className: 'Select-item-icon',
+						onMouseDown: this.blockEvent,
+						onClick: this.handleOnRemove,
+						onTouchEnd: this.handleOnRemove },
+					'×'
+				),
+				React.createElement(
+					'span',
+					{ className: 'Select-item-label' },
+					label
+				)
+			);
+		}
+
+	});
+
+	module.exports = Value;
+
+/***/ },
+/* 170 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(3);
+	var classes = __webpack_require__(172);
+
+	var SingleValue = React.createClass({
+		displayName: 'SingleValue',
+
+		propTypes: {
+			placeholder: React.PropTypes.string, // this is default value provided by React-Select based component
+			value: React.PropTypes.object // selected option
+		},
+		render: function render() {
+			var classNames = classes('Select-placeholder', this.props.value && this.props.value.className);
+			return React.createElement(
+				'div',
+				{
+					className: classNames,
+					style: this.props.value && this.props.value.style,
+					title: this.props.value && this.props.value.title
+				},
+				this.props.placeholder
+			);
+		}
+	});
+
+	module.exports = SingleValue;
+
+/***/ },
+/* 171 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var React = __webpack_require__(3);
+	var classes = __webpack_require__(172);
+
+	var Option = React.createClass({
+		displayName: 'Option',
+
+		propTypes: {
+			addLabelText: React.PropTypes.string, // string rendered in case of allowCreate option passed to ReactSelect
+			className: React.PropTypes.string, // className (based on mouse position)
+			mouseDown: React.PropTypes.func, // method to handle click on option element
+			mouseEnter: React.PropTypes.func, // method to handle mouseEnter on option element
+			mouseLeave: React.PropTypes.func, // method to handle mouseLeave on option element
+			option: React.PropTypes.object.isRequired, // object that is base for that option
+			renderFunc: React.PropTypes.func // method passed to ReactSelect component to render label text
+		},
+
+		blockEvent: function blockEvent(event) {
+			event.preventDefault();
+			if (event.target.tagName !== 'A' || !('href' in event.target)) {
+				return;
+			}
+
+			if (event.target.target) {
+				window.open(event.target.href);
+			} else {
+				window.location.href = event.target.href;
+			}
+		},
+
+		render: function render() {
+			var obj = this.props.option;
+			var renderedLabel = this.props.renderFunc(obj);
+			var optionClasses = classes(this.props.className, obj.className);
+
+			return obj.disabled ? React.createElement(
+				'div',
+				{ className: optionClasses,
+					onMouseDown: this.blockEvent,
+					onClick: this.blockEvent },
+				renderedLabel
+			) : React.createElement(
+				'div',
+				{ className: optionClasses,
+					style: obj.style,
+					onMouseEnter: this.props.mouseEnter,
+					onMouseLeave: this.props.mouseLeave,
+					onMouseDown: this.props.mouseDown,
+					onClick: this.props.mouseDown,
+					title: obj.title },
+				obj.create ? this.props.addLabelText.replace('{label}', obj.label) : renderedLabel
+			);
+		}
+	});
+
+	module.exports = Option;
+
+/***/ },
+/* 172 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __WEBPACK_AMD_DEFINE_RESULT__;/*!
+	  Copyright (c) 2015 Jed Watson.
+	  Licensed under the MIT License (MIT), see
+	  http://jedwatson.github.io/classnames
+	*/
+	/* global define */
+
+	(function () {
+		'use strict';
+
+		var hasOwn = {}.hasOwnProperty;
+
+		function classNames () {
+			var classes = '';
+
+			for (var i = 0; i < arguments.length; i++) {
+				var arg = arguments[i];
+				if (!arg) continue;
+
+				var argType = typeof arg;
+
+				if (argType === 'string' || argType === 'number') {
+					classes += ' ' + arg;
+				} else if (Array.isArray(arg)) {
+					classes += ' ' + classNames.apply(null, arg);
+				} else if (argType === 'object') {
+					for (var key in arg) {
+						if (hasOwn.call(arg, key) && arg[key]) {
+							classes += ' ' + key;
+						}
+					}
+				}
+			}
+
+			return classes.substr(1);
+		}
+
+		if (typeof module !== 'undefined' && module.exports) {
+			module.exports = classNames;
+		} else if (true) {
+			// register as 'classnames', consistent with npm package name
+			!(__WEBPACK_AMD_DEFINE_RESULT__ = function () {
+				return classNames;
+			}.call(exports, __webpack_require__, exports, module), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+		} else {
+			window.classNames = classNames;
+		}
+	}());
+
+
+/***/ },
+/* 173 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	var React = __webpack_require__(3);
+
+	var sizerStyle = { position: 'absolute', visibility: 'hidden', height: 0, width: 0, overflow: 'scroll', whiteSpace: 'nowrap' };
+
+	var AutosizeInput = React.createClass({
+		displayName: 'AutosizeInput',
+
+		propTypes: {
+			value: React.PropTypes.any, // field value
+			defaultValue: React.PropTypes.any, // default field value
+			onChange: React.PropTypes.func, // onChange handler: function(newValue) {}
+			style: React.PropTypes.object, // css styles for the outer element
+			className: React.PropTypes.string, // className for the outer element
+			minWidth: React.PropTypes.oneOfType([// minimum width for input element
+			React.PropTypes.number, React.PropTypes.string]),
+			inputStyle: React.PropTypes.object, // css styles for the input element
+			inputClassName: React.PropTypes.string // className for the input element
+		},
+		getDefaultProps: function getDefaultProps() {
+			return {
+				minWidth: 1
+			};
+		},
+		getInitialState: function getInitialState() {
+			return {
+				inputWidth: this.props.minWidth
+			};
+		},
+		componentDidMount: function componentDidMount() {
+			this.copyInputStyles();
+			this.updateInputWidth();
+		},
+		componentDidUpdate: function componentDidUpdate() {
+			this.updateInputWidth();
+		},
+		copyInputStyles: function copyInputStyles() {
+			if (!this.isMounted() || !window.getComputedStyle) {
+				return;
+			}
+			var inputStyle = window.getComputedStyle(this.refs.input);
+			var widthNode = this.refs.sizer;
+			widthNode.style.fontSize = inputStyle.fontSize;
+			widthNode.style.fontFamily = inputStyle.fontFamily;
+			widthNode.style.letterSpacing = inputStyle.letterSpacing;
+			if (this.props.placeholder) {
+				var placeholderNode = this.refs.placeholderSizer;
+				placeholderNode.style.fontSize = inputStyle.fontSize;
+				placeholderNode.style.fontFamily = inputStyle.fontFamily;
+				placeholderNode.style.letterSpacing = inputStyle.letterSpacing;
+			}
+		},
+		updateInputWidth: function updateInputWidth() {
+			if (!this.isMounted() || typeof this.refs.sizer.scrollWidth === 'undefined') {
+				return;
+			}
+			var newInputWidth;
+			if (this.props.placeholder) {
+				newInputWidth = Math.max(this.refs.sizer.scrollWidth, this.refs.placeholderSizer.scrollWidth) + 2;
+			} else {
+				newInputWidth = this.refs.sizer.scrollWidth + 2;
+			}
+			if (newInputWidth < this.props.minWidth) {
+				newInputWidth = this.props.minWidth;
+			}
+			if (newInputWidth !== this.state.inputWidth) {
+				this.setState({
+					inputWidth: newInputWidth
+				});
+			}
+		},
+		getInput: function getInput() {
+			return this.refs.input;
+		},
+		focus: function focus() {
+			this.refs.input.focus();
+		},
+		select: function select() {
+			this.refs.input.select();
+		},
+		render: function render() {
+			var escapedValue = (this.props.value || '').replace(/\&/g, '&amp;').replace(/ /g, '&nbsp;').replace(/\</g, '&lt;').replace(/\>/g, '&gt;');
+			var wrapperStyle = this.props.style || {};
+			if (!wrapperStyle.display) wrapperStyle.display = 'inline-block';
+			var inputStyle = _extends({}, this.props.inputStyle);
+			inputStyle.width = this.state.inputWidth;
+			inputStyle.boxSizing = 'content-box';
+			var placeholder = this.props.placeholder ? React.createElement(
+				'div',
+				{ ref: 'placeholderSizer', style: sizerStyle },
+				this.props.placeholder
+			) : null;
+			return React.createElement(
+				'div',
+				{ className: this.props.className, style: wrapperStyle },
+				React.createElement('input', _extends({}, this.props, { ref: 'input', className: this.props.inputClassName, style: inputStyle })),
+				React.createElement('div', { ref: 'sizer', style: sizerStyle, dangerouslySetInnerHTML: { __html: escapedValue } }),
+				placeholder
+			);
+		}
+	});
+
+	module.exports = AutosizeInput;
 
 /***/ }
 /******/ ])
