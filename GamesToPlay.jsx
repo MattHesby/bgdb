@@ -1,5 +1,17 @@
+/////// Figure out how to use this as a REQUIRE////
+var dataBlock = {
+    color: "green",
+}
+
+var container = {
+    border: "2px solid black",
+}
+/////////////////////////////////////////////
+
+
 'use strict'
-// var React = require('react')
+var React = require('react')
+var SelectPopover  = require("react-select-popover")
 module.exports = React.createClass({
     getInitialState: function() {
 

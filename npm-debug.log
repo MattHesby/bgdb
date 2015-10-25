@@ -1,29 +1,157 @@
 0 info it worked if it ends with ok
 1 verbose cli [ 'c:\\Program Files\\nodejs\\node.exe',
 1 verbose cli   'c:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js',
-1 verbose cli   'run',
-1 verbose cli   'dev' ]
+1 verbose cli   'install',
+1 verbose cli   'react-onclickoutside',
+1 verbose cli   '--save' ]
 2 info using npm@1.4.28
 3 info using node@v0.10.32
-4 verbose run-script [ 'predev', 'dev', 'postdev' ]
-5 info predev basic-property-grid@0.1.0
-6 info dev basic-property-grid@0.1.0
-7 verbose unsafe-perm in lifecycle true
-8 info basic-property-grid@0.1.0 Failed to exec dev script
-9 error basic-property-grid@0.1.0 dev: `./node_modules/webpack/bin/webpack.js --progress --colors --watch`
-9 error Exit status 1
-10 error Failed at the basic-property-grid@0.1.0 dev script.
-10 error This is most likely a problem with the basic-property-grid package,
-10 error not with npm itself.
-10 error Tell the author that this fails on your system:
-10 error     ./node_modules/webpack/bin/webpack.js --progress --colors --watch
-10 error You can get their info via:
-10 error     npm owner ls basic-property-grid
-10 error There is likely additional logging output above.
-11 error System Windows_NT 6.1.7601
-12 error command "c:\\Program Files\\nodejs\\node.exe" "c:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js" "run" "dev"
-13 error cwd c:\Users\Matthew Hesby\desktop\bgdb
-14 error node -v v0.10.32
-15 error npm -v 1.4.28
-16 error code ELIFECYCLE
-17 verbose exit [ 1, true ]
+4 warn package.json basic-property-grid@0.1.0 No repository field.
+5 verbose readDependencies using package.json deps
+6 verbose cache add [ 'react-onclickoutside', null ]
+7 verbose cache add name=undefined spec="react-onclickoutside" args=["react-onclickoutside",null]
+8 verbose parsed url { protocol: null,
+8 verbose parsed url   slashes: null,
+8 verbose parsed url   auth: null,
+8 verbose parsed url   host: null,
+8 verbose parsed url   port: null,
+8 verbose parsed url   hostname: null,
+8 verbose parsed url   hash: null,
+8 verbose parsed url   search: null,
+8 verbose parsed url   query: null,
+8 verbose parsed url   pathname: 'react-onclickoutside',
+8 verbose parsed url   path: 'react-onclickoutside',
+8 verbose parsed url   href: 'react-onclickoutside' }
+9 silly lockFile 8692f5d2-react-onclickoutside react-onclickoutside
+10 verbose lock react-onclickoutside C:\Users\Super\AppData\Roaming\npm-cache\8692f5d2-react-onclickoutside.lock
+11 silly lockFile 8692f5d2-react-onclickoutside react-onclickoutside
+12 silly lockFile 8692f5d2-react-onclickoutside react-onclickoutside
+13 verbose addNamed [ 'react-onclickoutside', '' ]
+14 verbose addNamed [ null, '*' ]
+15 silly lockFile 72e82dcc-react-onclickoutside react-onclickoutside@
+16 verbose lock react-onclickoutside@ C:\Users\Super\AppData\Roaming\npm-cache\72e82dcc-react-onclickoutside.lock
+17 silly addNameRange { name: 'react-onclickoutside', range: '*', hasData: false }
+18 verbose request where is /react-onclickoutside
+19 verbose request registry https://registry.npmjs.org/
+20 verbose request id f6531a6dc7df5d0b
+21 verbose url raw /react-onclickoutside
+22 verbose url resolving [ 'https://registry.npmjs.org/', './react-onclickoutside' ]
+23 verbose url resolved https://registry.npmjs.org/react-onclickoutside
+24 verbose request where is https://registry.npmjs.org/react-onclickoutside
+25 info trying registry request attempt 1 at 18:06:55
+26 verbose etag "A6C3UNCH9DRYHBXNOLTE42DQ5"
+27 http GET https://registry.npmjs.org/react-onclickoutside
+28 http 304 https://registry.npmjs.org/react-onclickoutside
+29 silly registry.get cb [ 304,
+29 silly registry.get   { date: 'Sun, 25 Oct 2015 01:07:03 GMT',
+29 silly registry.get     via: '1.1 varnish',
+29 silly registry.get     'cache-control': 'max-age=60',
+29 silly registry.get     etag: '"A6C3UNCH9DRYHBXNOLTE42DQ5"',
+29 silly registry.get     age: '0',
+29 silly registry.get     connection: 'keep-alive',
+29 silly registry.get     'x-served-by': 'cache-lax1425-LAX',
+29 silly registry.get     'x-cache': 'MISS',
+29 silly registry.get     'x-cache-hits': '0',
+29 silly registry.get     'x-timer': 'S1445735223.045975,VS0,VE199',
+29 silly registry.get     vary: 'Accept' } ]
+30 verbose etag https://registry.npmjs.org/react-onclickoutside from cache
+31 silly addNameRange number 2 { name: 'react-onclickoutside', range: '*', hasData: true }
+32 silly addNameRange versions [ 'react-onclickoutside',
+32 silly addNameRange   [ '0.0.1',
+32 silly addNameRange     '0.0.2',
+32 silly addNameRange     '0.0.3',
+32 silly addNameRange     '0.1.0',
+32 silly addNameRange     '0.1.1',
+32 silly addNameRange     '0.2.0',
+32 silly addNameRange     '0.2.1',
+32 silly addNameRange     '0.2.2',
+32 silly addNameRange     '0.2.3',
+32 silly addNameRange     '0.2.4',
+32 silly addNameRange     '0.2.5',
+32 silly addNameRange     '0.3.0',
+32 silly addNameRange     '0.3.1',
+32 silly addNameRange     '0.3.2',
+32 silly addNameRange     '0.3.3',
+32 silly addNameRange     '0.3.4',
+32 silly addNameRange     '0.4.0',
+32 silly addNameRange     '4.0.1' ] ]
+33 verbose addNamed [ 'react-onclickoutside', '4.0.1' ]
+34 verbose addNamed [ '4.0.1', '4.0.1' ]
+35 silly lockFile 119df50f-react-onclickoutside-4-0-1 react-onclickoutside@4.0.1
+36 verbose lock react-onclickoutside@4.0.1 C:\Users\Super\AppData\Roaming\npm-cache\119df50f-react-onclickoutside-4-0-1.lock
+37 silly lockFile 119df50f-react-onclickoutside-4-0-1 react-onclickoutside@4.0.1
+38 silly lockFile 119df50f-react-onclickoutside-4-0-1 react-onclickoutside@4.0.1
+39 silly lockFile 72e82dcc-react-onclickoutside react-onclickoutside@
+40 silly lockFile 72e82dcc-react-onclickoutside react-onclickoutside@
+41 silly resolved [ { name: 'react-onclickoutside',
+41 silly resolved     version: '4.0.1',
+41 silly resolved     description: 'An onClickOutside mixin for React components',
+41 silly resolved     main: 'index.js',
+41 silly resolved     homepage: 'https://github.com/Pomax/react-onclickoutside',
+41 silly resolved     authors: [ 'Pomax <pomax@nihongoresources.com>' ],
+41 silly resolved     keywords: [ 'react', 'onclick', 'outside', 'onclickoutside' ],
+41 silly resolved     license: 'MIT',
+41 silly resolved     repository:
+41 silly resolved      { type: 'git',
+41 silly resolved        url: 'git+https://github.com/Pomax/react-onclickoutside.git' },
+41 silly resolved     bugs: { url: 'https://github.com/Pomax/react-onclickoutside/issues' },
+41 silly resolved     gitHead: '3881471a4543706e7137b606161ffebfe8dd7807',
+41 silly resolved     _id: 'react-onclickoutside@4.0.1',
+41 silly resolved     scripts: {},
+41 silly resolved     _shasum: '4525fcc28a9fdccfa2a34313eec0d842e7c98e33',
+41 silly resolved     _from: 'react-onclickoutside@',
+41 silly resolved     _npmVersion: '2.14.4',
+41 silly resolved     _nodeVersion: '4.1.1',
+41 silly resolved     _npmUser: { name: 'pomax', email: 'pomax@nihongoresources.com' },
+41 silly resolved     maintainers: [ [Object] ],
+41 silly resolved     dist:
+41 silly resolved      { shasum: '4525fcc28a9fdccfa2a34313eec0d842e7c98e33',
+41 silly resolved        tarball: 'http://registry.npmjs.org/react-onclickoutside/-/react-onclickoutside-4.0.1.tgz' },
+41 silly resolved     directories: {},
+41 silly resolved     _resolved: 'https://registry.npmjs.org/react-onclickoutside/-/react-onclickoutside-4.0.1.tgz',
+41 silly resolved     readme: 'ERROR: No README data found!' } ]
+42 info install react-onclickoutside@4.0.1 into c:\Users\Super\desktop\bgdb
+43 info installOne react-onclickoutside@4.0.1
+44 verbose node_modules\react-onclickoutside unbuild
+45 info preuninstall react-onclickoutside@4.0.1
+46 info uninstall react-onclickoutside@4.0.1
+47 verbose true,c:\Users\Super\desktop\bgdb\node_modules,c:\Users\Super\desktop\bgdb\node_modules unbuild react-onclickoutside@4.0.1
+48 info postuninstall react-onclickoutside@4.0.1
+49 verbose tar unpack C:\Users\Super\AppData\Roaming\npm-cache\react-onclickoutside\4.0.1\package.tgz
+50 silly lockFile d28741b4-ode-modules-react-onclickoutside tar://c:\Users\Super\desktop\bgdb\node_modules\react-onclickoutside
+51 verbose lock tar://c:\Users\Super\desktop\bgdb\node_modules\react-onclickoutside C:\Users\Super\AppData\Roaming\npm-cache\d28741b4-ode-modules-react-onclickoutside.lock
+52 silly lockFile e3bda22b-onclickoutside-4-0-1-package-tgz tar://C:\Users\Super\AppData\Roaming\npm-cache\react-onclickoutside\4.0.1\package.tgz
+53 verbose lock tar://C:\Users\Super\AppData\Roaming\npm-cache\react-onclickoutside\4.0.1\package.tgz C:\Users\Super\AppData\Roaming\npm-cache\e3bda22b-onclickoutside-4-0-1-package-tgz.lock
+54 silly gunzTarPerm modes [ '777', '666' ]
+55 silly gunzTarPerm extractEntry package.json
+56 silly gunzTarPerm extractEntry README.md
+57 silly gunzTarPerm extractEntry index.js
+58 silly gunzTarPerm extractEntry bower.json
+59 silly lockFile d28741b4-ode-modules-react-onclickoutside tar://c:\Users\Super\desktop\bgdb\node_modules\react-onclickoutside
+60 silly lockFile d28741b4-ode-modules-react-onclickoutside tar://c:\Users\Super\desktop\bgdb\node_modules\react-onclickoutside
+61 silly lockFile e3bda22b-onclickoutside-4-0-1-package-tgz tar://C:\Users\Super\AppData\Roaming\npm-cache\react-onclickoutside\4.0.1\package.tgz
+62 silly lockFile e3bda22b-onclickoutside-4-0-1-package-tgz tar://C:\Users\Super\AppData\Roaming\npm-cache\react-onclickoutside\4.0.1\package.tgz
+63 info preinstall react-onclickoutside@4.0.1
+64 verbose readDependencies using package.json deps
+65 verbose readDependencies using package.json deps
+66 silly resolved []
+67 verbose about to build c:\Users\Super\desktop\bgdb\node_modules\react-onclickoutside
+68 info build c:\Users\Super\desktop\bgdb\node_modules\react-onclickoutside
+69 verbose linkStuff [ false,
+69 verbose linkStuff   false,
+69 verbose linkStuff   false,
+69 verbose linkStuff   'c:\\Users\\Super\\desktop\\bgdb\\node_modules' ]
+70 info linkStuff react-onclickoutside@4.0.1
+71 verbose linkBins react-onclickoutside@4.0.1
+72 verbose linkMans react-onclickoutside@4.0.1
+73 verbose rebuildBundles react-onclickoutside@4.0.1
+74 info install react-onclickoutside@4.0.1
+75 info postinstall react-onclickoutside@4.0.1
+76 error peerinvalid The package react does not satisfy its siblings' peerDependencies requirements!
+77 error System Windows_NT 6.1.7601
+78 error command "c:\\Program Files\\nodejs\\node.exe" "c:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js" "install" "react-onclickoutside" "--save"
+79 error cwd c:\Users\Super\desktop\bgdb
+80 error node -v v0.10.32
+81 error npm -v 1.4.28
+82 error code EPEERINVALID
+83 verbose exit [ 1, true ]
