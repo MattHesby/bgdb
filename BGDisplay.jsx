@@ -20,30 +20,33 @@ var container = {
 }
 /////////////////////////////////////////////
 
-
 'use strict'
 var React = require('react')
 var ReactDOM = require('react-dom')
 var Select = require('react-select');
 var SelectPopover  = require("react-select-popover")
+
+// REACT COMPONENTS //
 var GamesToPlay = require('./GamesToPlay.jsx')
 var ChooseLength = require('./ChooseLength.jsx')
 var ChooseGenre = require('./ChooseGenre.jsx')
 var ChooseDifficulty = require('./ChooseDifficulty.jsx')
 var ChoosePlayers = require('./ChoosePlayers.jsx')
+var ChooseMechanics = require('./ChooseMechanics.jsx');
 
 module.exports = React.createClass({
 
     getInitialState: function() {
         return {
-            gNumPlayers: "Any",
-            bgObj: boardGameObj,
-            gDifficulty: "Any",
-            gLength: "Any",
-            gGenre:"Any",
-            gMechanics:"Any",
+          bgObj: boardGameObj,
+          gNumPlayers: "Any",
+          gDifficulty: "Any",
+          gLength: "Any",
+          gGenre:"Any",
+          gMechanics:"Any",
         }
     },
+    // Handlers for each of the different values
     handlePlayers: function(e) {
         this.setState({gNumPlayers: e.target.value});
     },
@@ -62,7 +65,6 @@ module.exports = React.createClass({
     },
 
     render: function() {
-
         //sets up Genre Options
         var GENRES = ["Any"]
         for (var game in this.state.bgObj) {
@@ -74,7 +76,6 @@ module.exports = React.createClass({
         for (var i = 0; i < GENRES.length; i++) {
             GENRES[i] = <option value={GENRES[i]}> { GENRES[i] } </option>
         }
-
         // Sets up Mechanics Options
         var MECHANICS = [
             {label: "Any", value: "Any"},
@@ -82,7 +83,6 @@ module.exports = React.createClass({
             {label: "Worker Placement", value: "worker-placement"},
             {label: "Trading", value: "trading"},
         ];
-
         //
         // var MECHANICS = [{label: "Any", value: "Any"}];
         // for (var game in this.state.bgObj) {
@@ -95,9 +95,6 @@ module.exports = React.createClass({
         //     MECHANICS[i] = {label: {MECHANICS[i]}, value: [MECHANICS[i] }
         // }
 
-        var selectFieldName = "my-select";
-        var selectPlaceholder = "Choose Game Mechanics";
-
         return (
         <div>
           <div className="selection">
@@ -105,17 +102,7 @@ module.exports = React.createClass({
             <ChooseDifficulty gDifficulty={this.state.gDifficulty} handler={this.handleDifficulty} />
             <ChooseGenre GENRES={GENRES} gGenre={this.state.gGenre} handler={this.handleGenre} />
             <ChooseLength gLength={this.state.gLength} handler={this.handleLength} />
-
-            <div className="container">
-              <p> Mechanics? </p>
-              <Select
-              name="form-field-name"
-              value="Any"
-              options={MECHANICS}
-              onChange={this.handleMechanics}
-              multi={true}
-              />
-            </div>
+            <ChooseMechanics MECHANICS={MECHANICS} handler={this.handleMechanics} />
         </div>
             <div>
               <GamesToPlay bgObj={this.state.bgObj} genre={this.state.gGenre} mechanics={this.state.gMechanics}  players={this.state.gNumPlayers} difficulty={this.state.gDifficulty} gLength={this.state.gLength} />

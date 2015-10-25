@@ -84,25 +84,29 @@
 	var ReactDOM = __webpack_require__(2);
 	var Select = __webpack_require__(161);
 	var SelectPopover = __webpack_require__(160);
+
+	// REACT COMPONENTS //
 	var GamesToPlay = __webpack_require__(159);
 	var ChooseLength = __webpack_require__(174);
 	var ChooseGenre = __webpack_require__(175);
 	var ChooseDifficulty = __webpack_require__(176);
 	var ChoosePlayers = __webpack_require__(177);
+	var ChooseMechanics = __webpack_require__(178);
 
 	module.exports = React.createClass({
 	    displayName: 'exports',
 
 	    getInitialState: function getInitialState() {
 	        return {
-	            gNumPlayers: "Any",
 	            bgObj: boardGameObj,
+	            gNumPlayers: "Any",
 	            gDifficulty: "Any",
 	            gLength: "Any",
 	            gGenre: "Any",
 	            gMechanics: "Any"
 	        };
 	    },
+	    // Handlers for each of the different values
 	    handlePlayers: function handlePlayers(e) {
 	        this.setState({ gNumPlayers: e.target.value });
 	    },
@@ -121,7 +125,6 @@
 	    },
 
 	    render: function render() {
-
 	        //sets up Genre Options
 	        var GENRES = ["Any"];
 	        for (var game in this.state.bgObj) {
@@ -139,10 +142,8 @@
 	                ' '
 	            );
 	        }
-
 	        // Sets up Mechanics Options
 	        var MECHANICS = [{ label: "Any", value: "Any" }, { label: "Area Control", value: "area-control" }, { label: "Worker Placement", value: "worker-placement" }, { label: "Trading", value: "trading" }];
-
 	        //
 	        // var MECHANICS = [{label: "Any", value: "Any"}];
 	        // for (var game in this.state.bgObj) {
@@ -155,9 +156,6 @@
 	        //     MECHANICS[i] = {label: {MECHANICS[i]}, value: [MECHANICS[i] }
 	        // }
 
-	        var selectFieldName = "my-select";
-	        var selectPlaceholder = "Choose Game Mechanics";
-
 	        return React.createElement(
 	            'div',
 	            null,
@@ -168,22 +166,7 @@
 	                React.createElement(ChooseDifficulty, { gDifficulty: this.state.gDifficulty, handler: this.handleDifficulty }),
 	                React.createElement(ChooseGenre, { GENRES: GENRES, gGenre: this.state.gGenre, handler: this.handleGenre }),
 	                React.createElement(ChooseLength, { gLength: this.state.gLength, handler: this.handleLength }),
-	                React.createElement(
-	                    'div',
-	                    { className: 'container' },
-	                    React.createElement(
-	                        'p',
-	                        null,
-	                        ' Mechanics? '
-	                    ),
-	                    React.createElement(Select, {
-	                        name: 'form-field-name',
-	                        value: 'Any',
-	                        options: MECHANICS,
-	                        onChange: this.handleMechanics,
-	                        multi: true
-	                    })
-	                )
+	                React.createElement(ChooseMechanics, { MECHANICS: MECHANICS, handler: this.handleMechanics })
 	            ),
 	            React.createElement(
 	                'div',
@@ -19712,18 +19695,6 @@
 /* 159 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/////// Figure out how to use this as a REQUIRE////
-	"use strict";
-
-	var dataBlock = {
-	    color: "green"
-	};
-
-	var container = {
-	    border: "2px solid black"
-	};
-	/////////////////////////////////////////////
-
 	/*
 	 *
 	 * Props: bgObj, genre, mechanics, players, difficulty, gLength
@@ -19734,10 +19705,9 @@
 	var ReactDOM = __webpack_require__(2);
 	var SelectPopover = __webpack_require__(160);
 	module.exports = React.createClass({
-	    displayName: "exports",
+	    displayName: 'exports',
 
 	    getInitialState: function getInitialState() {
-
 	        return {};
 	    },
 	    render: function render() {
@@ -19769,32 +19739,31 @@
 	        }
 	        for (var i = 0; i < viableGameTitles.length; i++) {
 	            viableGameTitles[i] = React.createElement(
-	                "div",
-	                { className: "gameTitle" },
-	                "  ",
+	                'div',
+	                { className: 'gameTitle' },
+	                '  ',
 	                viableGameTitles[i],
-	                " "
+	                ' '
 	            );
 	            viableGameDescriptions[i] = React.createElement(
-	                "div",
-	                { className: "gameTitle" },
-	                "  ",
+	                'div',
+	                { className: 'gameTitle' },
+	                '  ',
 	                viableGameDescriptions[i],
-	                " "
+	                ' '
 	            );
 	        }
-
 	        return React.createElement(
-	            "div",
+	            'div',
 	            null,
 	            React.createElement(
-	                "div",
-	                { className: "column" },
+	                'div',
+	                { className: 'column' },
 	                viableGameTitles
 	            ),
 	            React.createElement(
-	                "div",
-	                { className: "column" },
+	                'div',
+	                { className: 'column' },
 	                viableGameDescriptions
 	            )
 	        );
@@ -21819,6 +21788,41 @@
 						' more '
 					)
 				)
+			);
+		}
+	});
+
+/***/ },
+/* 178 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	var React = __webpack_require__(3);
+	var ReactDOM = __webpack_require__(2);
+	var Select = __webpack_require__(161);
+	var SelectPopover = __webpack_require__(160);
+	var selectFieldName = "my-select";
+	var selectPlaceholder = "Choose Game Mechanics";
+
+	module.exports = React.createClass({
+		displayName: 'exports',
+
+		render: function render() {
+			return React.createElement(
+				'div',
+				{ className: 'container' },
+				React.createElement(
+					'p',
+					null,
+					' Mechanics? '
+				),
+				React.createElement(Select, {
+					name: 'form-field-name',
+					value: 'Any',
+					options: this.props.MECHANICS,
+					onChange: this.props.handler,
+					multi: true
+				})
 			);
 		}
 	});

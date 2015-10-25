@@ -1,14 +1,3 @@
-/////// Figure out how to use this as a REQUIRE////
-var dataBlock = {
-    color: "green",
-}
-
-var container = {
-    border: "2px solid black",
-}
-/////////////////////////////////////////////
-
-
 /*
  *
  * Props: bgObj, genre, mechanics, players, difficulty, gLength
@@ -20,8 +9,6 @@ var ReactDOM = require('react-dom')
 var SelectPopover  = require("react-select-popover")
 module.exports = React.createClass({
     getInitialState: function() {
-
-
         return{
         }
     },
@@ -56,7 +43,6 @@ module.exports = React.createClass({
             viableGameTitles[i] = <div className="gameTitle">  { viableGameTitles[i] } </div>
             viableGameDescriptions[i] = <div className="gameTitle">  { viableGameDescriptions[i] } </div>
         }
-
         return(<div>
                 <div className="column">
                   {viableGameTitles}
