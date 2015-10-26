@@ -16,7 +16,7 @@ module.exports = React.createClass({
 	value="Any"
 	options={this.props.MECHANICS}
 	onChange={this.props.handler}
-	multi={true}
+  multi={true}
 	/>
 </div>
 )
