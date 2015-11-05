@@ -23,7 +23,7 @@ var container = {
 'use strict'
 var React = require('react')
 var ReactDOM = require('react-dom')
-var Select = require('react-select');
+var Select = require('react-select')
 var SelectPopover  = require("react-select-popover")
 
 // REACT COMPONENTS //
@@ -77,7 +77,7 @@ module.exports = React.createClass({
             GENRES[i] = <option value={GENRES[i]}> { GENRES[i] } </option>
         }
         // Sets up Mechanics Options
-        var MECHANICS = [
+        var MECHANICS_OPTIONS = [
             {label: "Any", value: "Any"},
             {label: "Area Control", value: "area-control"},
             {label: "Worker Placement", value: "worker-placement"},
@@ -102,7 +102,7 @@ module.exports = React.createClass({
             <ChooseDifficulty gDifficulty={this.state.gDifficulty} handler={this.handleDifficulty} />
             <ChooseGenre GENRES={GENRES} gGenre={this.state.gGenre} handler={this.handleGenre} />
             <ChooseLength gLength={this.state.gLength} handler={this.handleLength} />
-            <ChooseMechanics MECHANICS={MECHANICS} handler={this.handleMechanics} />
+            <ChooseMechanics MECHANICS_OPTIONS={MECHANICS_OPTIONS} handler={this.handleMechanics} />
         </div>
             <div>
               <GamesToPlay bgObj={this.state.bgObj} genre={this.state.gGenre} mechanics={this.state.gMechanics}  players={this.state.gNumPlayers} difficulty={this.state.gDifficulty} gLength={this.state.gLength} />
