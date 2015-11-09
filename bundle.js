@@ -57,9 +57,16 @@
 
 	////// THIS WILL BE GRABBED FROM SERVER
 	// Add Description, minPlayer => minPlayers, difficulty is 1 - 5, length is in minutes, gameplay mechanics
-	'use strict';
+	// var BgArray = ['{"id":1,"title":"Carcassonne","info":{"difficulty":1,"description":"Carcassonne is a tile-placement game in which the players draw and place a tile with landscape on it.The player can then decide to place one of his meeples on one of the areas on it.","genre":"Abstract","mechanics":"placement, area control"},"players":{"min":2,"max":5},"time":{"minutes":120,"hours":2}}', '{"id":2,"title":"asdf","info":{"difficulty":5,"description":"asdf","genre":"asdf","mechanics":"asdf"},"players":{"min":2,"max":3},"time":{"minutes":60,"hours":1.0}}']
+	"use strict";
 
-	var BgArray = ['{"id":1,"title":"Carcassonne","info":{"difficulty":1,"description":"Carcassonne is a tile-placement game in which the players draw and place a tile with landscape on it.The player can then decide to place one of his meeples on one of the areas on it.","genre":"Abstract","mechanics":"placement, area control"},"players":{"min":2,"max":5},"time":{"minutes":120,"hours":2}}', '{"id":2,"title":"asdf","info":{"difficulty":5,"description":"asdf","genre":"asdf","mechanics":"asdf"},"players":{"min":2,"max":3},"time":{"minutes":60,"hours":1.0}}'];
+	var BgArray = [];
+
+	fetch('http://bgdb.herokuapp.com/games.json').then(function (response) {
+	  return response.json();
+	}).then(function (json) {
+	  BgArray = json;
+	});
 	// var incBgObj = '{"game1":{"title":"Catan","maxPlayers":2,"minPlayer":6,"difficulty":"medium","length":"normal"},"game2":{"title":"Galaxy","maxPlayers":4,"minPlayers":5,"difficulty":"hard","length":"long"},"game3":{"title":"Trucker","maxPlayers":2,"minPlayers":4,"difficulty":"medium","length":"normal"}}'
 
 	/////////// PARSES JSON FROM SERVER//////////////////
@@ -92,7 +99,7 @@
 	var ChooseMechanics = __webpack_require__(9);
 
 	module.exports = React.createClass({
-	  displayName: 'exports',
+	  displayName: "exports",
 
 	  getInitialState: function getInitialState() {
 	    return { bgObj: boardGameObj, gNumPlayers: "Any", gDifficulty: "Any", gLength: "Any", gGenre: "Any", gMechanics: "Any" };
@@ -126,7 +133,7 @@
 	    }
 	    for (var i = 0; i < GENRES.length; i++) {
 	      GENRES[i] = React.createElement(
-	        'option',
+	        "option",
 	        { value: GENRES[i] },
 	        GENRES[i]
 	      );
@@ -158,11 +165,11 @@
 	    // }
 
 	    return React.createElement(
-	      'div',
+	      "div",
 	      null,
 	      React.createElement(
-	        'div',
-	        { className: 'selection' },
+	        "div",
+	        { className: "selection" },
 	        React.createElement(ChoosePlayers, { gNumPlayers: this.state.gNumPlayers, handler: this.handlePlayers }),
 	        React.createElement(ChooseDifficulty, { gDifficulty: this.state.gDifficulty, handler: this.handleDifficulty }),
 	        React.createElement(ChooseGenre, { GENRES: GENRES, gGenre: this.state.gGenre, handler: this.handleGenre }),
@@ -170,7 +177,7 @@
 	        React.createElement(ChooseMechanics, { MECHANICS_OPTIONS: MECHANICS_OPTIONS, handler: this.handleMechanics })
 	      ),
 	      React.createElement(
-	        'div',
+	        "div",
 	        null,
 	        React.createElement(GamesToPlay, { bgObj: this.state.bgObj, genre: this.state.gGenre, mechanics: this.state.gMechanics, players: this.state.gNumPlayers, difficulty: this.state.gDifficulty, gLength: this.state.gLength })
 	      )
