@@ -6,25 +6,23 @@ var BgArray = ['{"id":1,"title":"Carcassonne","info":{"difficulty":1,"descriptio
 /////////// PARSES JSON FROM SERVER//////////////////
 var boardGameObj = [];
 for (var i = 0; i < BgArray.length; i++) {
-    boardGameObj.push(JSON.parse(BgArray[i]));
-    console.log(boardGameObj[i]);
+  boardGameObj.push(JSON.parse(BgArray[i]));
+  console.log(boardGameObj[i]);
 }
 /////////////////////////////////////////////
 
 /////// Figure out how to use this as a REQUIRE////
 var dataBlock = {
-    color: "green",
+  color: "green"
 }
 var container = {
-    border: "2px solid black",
+  border: "2px solid black"
 }
 /////////////////////////////////////////////
 
 'use strict'
 var React = require('react')
 var ReactDOM = require('react-dom')
-var Select = require('react-select')
-var SelectPopover  = require("react-select-popover")
 
 // REACT COMPONENTS //
 var GamesToPlay = require('./GamesToPlay.jsx')
@@ -36,78 +34,82 @@ var ChooseMechanics = require('./ChooseMechanics.jsx');
 
 module.exports = React.createClass({
 
-    getInitialState: function() {
-        return {
-          bgObj: boardGameObj,
-          gNumPlayers: "Any",
-          gDifficulty: "Any",
-          gLength: "Any",
-          gGenre:"Any",
-          gMechanics:"Any",
-        }
-    },
-    // Handlers for each of the different values
-    handlePlayers: function(e) {
-        this.setState({gNumPlayers: e.target.value});
-    },
-    handleDifficulty: function(e){
-        this.setState({gDifficulty: e.target.value});
-    },
-    handleLength: function(e){
-        this.setState({gLength: e.target.value})
-    },
-    handleGenre: function(e){
-        this.setState({gGenre: e.target.value})
-    },
-    handleMechanics: function(val){
+  getInitialState: function() {
+    return {bgObj: boardGameObj, gNumPlayers: "Any", gDifficulty: "Any", gLength: "Any", gGenre: "Any", gMechanics: "Any"}
+  },
+  // Handlers for each of the different values
+  handlePlayers: function(e) {
+    this.setState({gNumPlayers: e.target.value});
+  },
+  handleDifficulty: function(e) {
+    this.setState({gDifficulty: e.target.value});
+  },
+  handleLength: function(e) {
+    this.setState({gLength: e.target.value})
+  },
+  handleGenre: function(e) {
+    this.setState({gGenre: e.target.value})
+  },
+  handleMechanics: function(val) {
 
-            this.setState({gMechanics: val});
-    },
+    this.setState({gMechanics: val});
+  },
 
-    render: function() {
-        //sets up Genre Options
-        var GENRES = ["Any"]
-        for (var game in this.state.bgObj) {
-            if (boardGameObj.hasOwnProperty(game)) {
-                var curGame = boardGameObj[game];
-                GENRES.push(curGame.info.genre);
-            }
-        }
-        for (var i = 0; i < GENRES.length; i++) {
-            GENRES[i] = <option value={GENRES[i]}> { GENRES[i] } </option>
-        }
-        // Sets up Mechanics Options
-        var MECHANICS_OPTIONS = [
-            {label: "Any", value: "Any"},
-            {label: "Area Control", value: "area-control"},
-            {label: "Worker Placement", value: "worker-placement"},
-            {label: "Trading", value: "trading"},
-        ];
-        //
-        // var MECHANICS = [{label: "Any", value: "Any"}];
-        // for (var game in this.state.bgObj) {
-        //     if (boardGameObj.hasOwnProperty(game)) {
-        //         var curGame = boardGameObj[game];
-        //         MECHANICS.push(curGame.info.mechanics);
-        //     }
-        // }
-        // for (var i = 0; i < MECHANICS.length; i++) {
-        //     MECHANICS[i] = {label: {MECHANICS[i]}, value: [MECHANICS[i] }
-        // }
-
-        return (
-        <div>
-          <div className="selection">
-            <ChoosePlayers gNumPlayers={this.state.gNumPlayers} handler={this.handlePlayers} />
-            <ChooseDifficulty gDifficulty={this.state.gDifficulty} handler={this.handleDifficulty} />
-            <ChooseGenre GENRES={GENRES} gGenre={this.state.gGenre} handler={this.handleGenre} />
-            <ChooseLength gLength={this.state.gLength} handler={this.handleLength} />
-            <ChooseMechanics MECHANICS_OPTIONS={MECHANICS_OPTIONS} handler={this.handleMechanics} />
-        </div>
-            <div>
-              <GamesToPlay bgObj={this.state.bgObj} genre={this.state.gGenre} mechanics={this.state.gMechanics}  players={this.state.gNumPlayers} difficulty={this.state.gDifficulty} gLength={this.state.gLength} />
-            </div>
-      </div>
-        )
+  render: function() {
+    //sets up Genre Options
+    var GENRES = ["Any"]
+    for (var game in this.state.bgObj) {
+      if (boardGameObj.hasOwnProperty(game)) {
+        var curGame = boardGameObj[game];
+        GENRES.push(curGame.info.genre);
+      }
     }
+    for (var i = 0; i < GENRES.length; i++) {
+      GENRES[i] = <option value={GENRES[i]}>
+        {GENRES[i]}
+      </option>
+    }
+    // Sets up Mechanics Options
+    var MECHANICS_OPTIONS = [
+      {
+        label: "Any",
+        value: "Any"
+      }, {
+        label: "Area Control",
+        value: "area-control"
+      }, {
+        label: "Worker Placement",
+        value: "worker-placement"
+      }, {
+        label: "Trading",
+        value: "trading"
+      }
+    ];
+    //
+    // var MECHANICS = [{label: "Any", value: "Any"}];
+    // for (var game in this.state.bgObj) {
+    //     if (boardGameObj.hasOwnProperty(game)) {
+    //         var curGame = boardGameObj[game];
+    //         MECHANICS.push(curGame.info.mechanics);
+    //     }
+    // }
+    // for (var i = 0; i < MECHANICS.length; i++) {
+    //     MECHANICS[i] = {label: {MECHANICS[i]}, value: [MECHANICS[i] }
+    // }
+
+    return (
+      <div>
+        <div className="selection">
+          <ChoosePlayers gNumPlayers={this.state.gNumPlayers} handler={this.handlePlayers}/>
+          <ChooseDifficulty gDifficulty={this.state.gDifficulty} handler={this.handleDifficulty}/>
+          <ChooseGenre GENRES={GENRES} gGenre={this.state.gGenre} handler={this.handleGenre}/>
+          <ChooseLength gLength={this.state.gLength} handler={this.handleLength}/>
+          <ChooseMechanics MECHANICS_OPTIONS={MECHANICS_OPTIONS} handler={this.handleMechanics}/>
+        </div>
+        <div>
+          <GamesToPlay bgObj={this.state.bgObj} genre={this.state.gGenre} mechanics={this.state.gMechanics} players={this.state.gNumPlayers} difficulty={this.state.gDifficulty} gLength={this.state.gLength}/>
+        </div>
+      </div>
+    )
+  }
 });

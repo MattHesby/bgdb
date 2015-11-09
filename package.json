@@ -6,22 +6,19 @@
   "scripts": {
     "test": "run start",
     "start": "npm run serve | npm run dev",
-    "serve": "./node_modules/.bin/http-server -p 8080",
-    "dev": "./node_modules/webpack/bin/webpack.js --progress --colors --watch"
+    "serve": "http-server -p 8080",
+    "dev": "webpack --progress --colors --watch --optimize-dedupe"
   },
   "author": "MJH",
   "license": "ISC",
   "dependencies": {
-    "react-dom": "^0.14.0",
-    "react-select-popover": "0.0.4"
+    "babel-loader": "^5.3.2",
+    "babel-core": "^5.8.25",
+    "react": "^0.14.0",
+    "react-dom": "^0.14.0"
   },
   "devDependencies": {
     "http-server": "~0.7.1",
-    "babel-loader": "^5.3.2",
-    "babel-core": "^5.8.25",
-    "react-dom": "^0.14.0",
-    "react": "^0.14.0",
-    "react-onclickoutside": "^4.0.1",
     "webpack": "~1.4.4"
   }
 }
