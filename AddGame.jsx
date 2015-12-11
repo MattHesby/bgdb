@@ -4,35 +4,84 @@ var ReactDOM = require('react-dom')
 var LinkedStateMixin = require('react-addons-linked-state-mixin');
 
 module.exports = React.createClass({
-  mixins: [LinkedStateMixin],
   getInitialState: function() {
     return {
       id:  'id',
-      info: {description: 'description', difficulty: 'difficulty', genre: 'genre', mechanics: 'ignoreme'},
+      info: {description: 'description', difficulty: 'difficulty', genre: 'genre', mechanics: 'mechanics'},
       players: {max: 'max players', min: 'min players'},
       time: {hours: 'hours', minutes: 'minutes'},
       title: 'title'
     };
   },
   handleDescription: function(event) {
-    this.setState({value: event.target.value});
+    var info = this.state.info;
+    info.description = event.target.value;
+    console.log(this.state.info.description);
+    this.setState({info: info});
+  },
+  handleDifficulty: function(event) {
+    var info = this.state.info;
+    info.difficulty = event.target.value;
+    console.log(this.state.info.difficulty);
+    this.setState({info: info});
+  },
+  handleGenre: function(event) {
+    var info = this.state.info;
+    info.genre = event.target.value;
+    console.log(this.state.info.genre);
+    this.setState({info: info});
+  },
+  handleMechanics: function(event) {
+    var info = this.state.info;
+    info.mechanics = event.target.value;
+    console.log(this.state.info.mechanics);
+    this.setState({info: info});
+  },
+  handleMax: function(event) {
+    var players = this.state.players;
+    players.max = event.target.value;
+    console.log(this.state.players.max);
+    this.setState({players: players});
+  },
+  handleMin: function(event) {
+    var players = this.state.players;
+    players.min = event.target.value;
+    console.log(this.state.players.min);
+    this.setState({players: players});
+  },
+  handleTime: function(event) {
+    var time = this.state.time;
+    time.minutes = event.target.value;
+    time.hours = time.minutes / 60;
+    console.log(this.state.time.minutes);
+    this.setState({time: time});
+  },
+  handleTitle: function(evt){
+    this.setState({title: evt.target.value});
   },
   submitHandler: function(evt){
     console.log(this.state);
+    var data = JSON.stringify(this.state);
+    console.log(data);
+    $.ajax({
+      type: "POST",
+      url: 'http://localhost:3000/',
+      data: data
+    });
   },
   render: function() {
-    var value = this.state.value;
+    // var value = this.state.value;
     return(
       <div>
-        <input type="text" valueLink={this.linkState('title')} />
-        <input type="text" valueLink={this.linkState('info.description')} />
-        <input type="text" valueLink={this.linkState('info.difficulty')} />
-        <input type="text" valueLink={this.linkState('info.genre')} />
-        <input type="text" valueLink={this.linkState('info.mechanics')} />
-        <input type="text" valueLink={this.linkState('players.min')} />
-        <input type="text" valueLink={this.linkState('players.max')} />
-        <input type="text" valueLink={this.linkState('time.minutes')} />
-        <button onClick={this.submitHandler} > click me  </button>
+        <input type="text" value={this.state.title} onChange={this.handleTitle} />
+        <input type="text" value={this.state.info.description} onChange={this.handleDescription} />;
+        <input type="text" value={this.state.info.difficulty} onChange={this.handleDifficulty} />;
+        <input type="text" value={this.state.info.genre} onChange={this.handleGenre} />;
+        <input type="text" value={this.state.info.mechanics} onChange={this.handleMechanics} />;
+        <input type="text" value={this.state.players.max} onChange={this.handleMax} />;
+        <input type="text" value={this.state.players.min} onChange={this.handleMin} />;
+        <input type="text" value={this.state.time.minutes} onChange={this.handleTime} />;
+        <button onClick={this.submitHandler} > Add Game </button>
       </div>
     );
   }
