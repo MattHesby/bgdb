@@ -3,7 +3,11 @@ var app = express();
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 
+
+app.use(express.static('public'));
+
 mongoose.connect('mongodb://127.0.0.1:27017/test');
+app.use(bodyParser.json());
 
 // Enables CORS
 app.use(function(req, res, next) {
@@ -11,18 +15,16 @@ app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 
-  res.setHeader('Content-Type', 'text/plain')
-  res.write('you posted:\n')
-  res.end(JSON.stringify(req.body, null, 2))
-
-
-
+  // res.setHeader('Content-Type', 'text/plain')
+  // res.write('you posted:\n')
+  // res.end(JSON.stringify(req.body, null, 2))
 });
 // parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: false }))
+// app.use(bodyParser.urlencoded({ extended: false }))
 
 // parse application/json
-app.use(bodyParser.json());
+// app.use(express.bodyParser());
+
 var Schema = mongoose.Schema;
 
 var gameSchema = new Schema({
@@ -55,8 +57,12 @@ app.get('/games.json', function (req, res) {
 });
 
 app.post('/', function(req, res){
-  console.log(req);
-  // req.body.save();
+  console.log(req.body);
+  var tempGame = new GameModel(req.body);
+  tempGame.save(function(err){
+    if(err)console.log(err);
+    else console.log("Game Added To DB");
+  });
 })
 
 

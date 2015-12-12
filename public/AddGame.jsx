@@ -6,7 +6,7 @@ var LinkedStateMixin = require('react-addons-linked-state-mixin');
 module.exports = React.createClass({
   getInitialState: function() {
     return {
-      id:  'id',
+      // id:  'id',
       info: {description: 'description', difficulty: 'difficulty', genre: 'genre', mechanics: 'mechanics'},
       players: {max: 'max players', min: 'min players'},
       time: {hours: 'hours', minutes: 'minutes'},
@@ -66,7 +66,16 @@ module.exports = React.createClass({
     $.ajax({
       type: "POST",
       url: 'http://localhost:3000/',
-      data: data
+      dataType: 'json',
+      contentType : 'application/json',
+      processData: true,
+      data: data,
+      success: function(){
+        
+      },
+      error: function(){
+
+      }
     });
   },
   render: function() {
