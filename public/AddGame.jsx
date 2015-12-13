@@ -16,53 +16,55 @@ module.exports = React.createClass({
   handleDescription: function(event) {
     var info = this.state.info;
     info.description = event.target.value;
-    console.log(this.state.info.description);
+    // console.log(this.state.info.description);
     this.setState({info: info});
   },
   handleDifficulty: function(event) {
     var info = this.state.info;
     info.difficulty = event.target.value;
-    console.log(this.state.info.difficulty);
+    // console.log(this.state.info.difficulty);
     this.setState({info: info});
   },
   handleGenre: function(event) {
     var info = this.state.info;
     info.genre = event.target.value;
-    console.log(this.state.info.genre);
+    // console.log(this.state.info.genre);
     this.setState({info: info});
   },
   handleMechanics: function(event) {
     var info = this.state.info;
     info.mechanics = event.target.value;
-    console.log(this.state.info.mechanics);
+    // console.log(this.state.info.mechanics);
     this.setState({info: info});
   },
   handleMax: function(event) {
     var players = this.state.players;
     players.max = event.target.value;
-    console.log(this.state.players.max);
+    // console.log(this.state.players.max);
     this.setState({players: players});
   },
   handleMin: function(event) {
     var players = this.state.players;
     players.min = event.target.value;
-    console.log(this.state.players.min);
+    // console.log(this.state.players.min);
     this.setState({players: players});
   },
   handleTime: function(event) {
     var time = this.state.time;
     time.minutes = event.target.value;
     time.hours = time.minutes / 60;
-    console.log(this.state.time.minutes);
+    // console.log(this.state.time.minutes);
     this.setState({time: time});
   },
   handleTitle: function(evt){
     this.setState({title: evt.target.value});
   },
   submitHandler: function(evt){
-    console.log(this.state);
+    var _this = this;
+    // console.log(this.state);
     var data = JSON.stringify(this.state);
-    console.log(data);
+    // console.log(data);
+    evt.preventDefault();
     $.ajax({
       type: "POST",
       url: 'http://localhost:3000/',
@@ -70,13 +72,20 @@ module.exports = React.createClass({
       contentType : 'application/json',
       processData: true,
       data: data,
-      success: function(){
-        
+      complete: function(){
+        console.log("complete?");
+        _this.props.loadGamesFromServer();
       },
-      error: function(){
+      success: function(data){
+        console.log("success?");
 
+      },
+      error: function(err){
+
+        console.log(err);
       }
     });
+
   },
   render: function() {
     // var value = this.state.value;

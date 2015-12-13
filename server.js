@@ -62,7 +62,10 @@ app.post('/', function(req, res){
   tempGame.save(function(err){
     if(err)console.log(err);
     else console.log("Game Added To DB");
+    
+    res.end();
   });
+
 })
 
 

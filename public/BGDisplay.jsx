@@ -42,6 +42,7 @@ var ChooseGenre = require('./ChooseGenre.jsx')
 var ChooseDifficulty = require('./ChooseDifficulty.jsx')
 var ChoosePlayers = require('./ChoosePlayers.jsx')
 var ChooseMechanics = require('./ChooseMechanics.jsx');
+var AddGame = require('./AddGame.jsx');
 
 module.exports = React.createClass({
 
@@ -128,6 +129,7 @@ module.exports = React.createClass({
     return (
       <div>
         <div className="selection">
+          <AddGame  loadGamesFromServer={this.loadGamesFromServer}/>
           <ChoosePlayers gNumPlayers={this.state.gNumPlayers} handler={this.handlePlayers}/>
           <ChooseDifficulty gDifficulty={this.state.gDifficulty} handler={this.handleDifficulty}/>
           <ChooseGenre GENRES={GENRES} gGenre={this.state.gGenre} handler={this.handleGenre}/>
