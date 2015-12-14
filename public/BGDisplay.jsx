@@ -1,27 +1,4 @@
-////// THIS WILL BE GRABBED FROM SERVER
-// Add Description, minPlayer => minPlayers, difficulty is 1 - 5, length is in minutes, gameplay mechanics
-// var BgArray = ['{"id":1,"title":"Carcassonne","info":{"difficulty":1,"description":"Carcassonne is a tile-placement game in which the players draw and place a tile with landscape on it.The player can then decide to place one of his meeples on one of the areas on it.","genre":"Abstract","mechanics":"placement, area control"},"players":{"min":2,"max":5},"time":{"minutes":120,"hours":2}}', '{"id":2,"title":"asdf","info":{"difficulty":5,"description":"asdf","genre":"asdf","mechanics":"asdf"},"players":{"min":2,"max":3},"time":{"minutes":60,"hours":1.0}}']
-
-// var BgArray = [];
-var boardGameObj = [];
-// fetch('http://localhost:3000/games.json')
-//   .then(function(response) {
-//     console.log(response);
-//     return response.json();
-//   }).then(function(json) {
-//     console.log(module.exports());
-//     module.exports.setState({bgObj:[json]});
-//   });
-// var incBgObj = '{"game1":{"title":"Catan","maxPlayers":2,"minPlayer":6,"difficulty":"medium","length":"normal"},"game2":{"title":"Galaxy","maxPlayers":4,"minPlayers":5,"difficulty":"hard","length":"long"},"game3":{"title":"Trucker","maxPlayers":2,"minPlayers":4,"difficulty":"medium","length":"normal"}}'
-
-/////////// PARSES JSON FROM SERVER//////////////////
-// var boardGameObj = [];
-// for (var i = 0; i < BgArray.length; i++) {
-//   boardGameObj.push(JSON.parse(BgArray[i]));
-//   console.log(boardGameObj[i]);
-// }
-/////////////////////////////////////////////
-
+//* BGDisplay.jsx *//
 /////// Figure out how to use this as a REQUIRE////
 var dataBlock = {
   color: "green"
@@ -34,6 +11,7 @@ var container = {
 'use strict'
 var React = require('react')
 var ReactDOM = require('react-dom')
+var boardGameObj = [];
 
 // REACT COMPONENTS //
 var GamesToPlay = require('./GamesToPlay.jsx')

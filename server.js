@@ -60,9 +60,14 @@ app.post('/', function(req, res){
   console.log(req.body);
   var tempGame = new GameModel(req.body);
   tempGame.save(function(err){
-    if(err)console.log(err);
-    else console.log("Game Added To DB");
-    
+    if(err){
+      console.log(err);
+      res.sendStatus(500);
+    }
+    else {
+      res.sendStatus(200);
+      console.log("Game Added To DB");
+    }
     res.end();
   });
 

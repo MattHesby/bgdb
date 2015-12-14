@@ -1,3 +1,4 @@
+//* GamesToPlay.jsx *//
 /*
  *
  * Props: bgObj, genre, mechanics, players, difficulty, gLength
@@ -17,9 +18,9 @@ module.exports = React.createClass({
     for (var game in this.props.bgObj) {
       if (this.props.bgObj.hasOwnProperty(game)) {
         var curGame = this.props.bgObj[game];
-        console.log(curGame.time.minutes)
-        console.log(this.props.gLength)
-        console.log(curGame.time.minutes <= this.props.gLength + 20)
+        // console.log(curGame.time.minutes)
+        // console.log(this.props.gLength)
+        // console.log(curGame.time.minutes <= this.props.gLength + 20)
         // Handles Player #
         if ((curGame.players.min <= this.props.players && curGame.players.max >= this.props.players) || this.props.players === "Any") {
           // Handles Length

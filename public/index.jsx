@@ -1,3 +1,4 @@
+//* index.jsx *//
 'use strict';
 var React = require('react')
 var ReactDOM = require('react-dom')
@@ -5,4 +6,3 @@ var ReactDOM = require('react-dom')
 var BGDisplay = require('./BGDisplay.jsx')
 // var AddGame = require('./AddGame.jsx')
 ReactDOM.render(<BGDisplay/>, document.getElementById('content'))
-ReactDOM.render(<AddGame/>, document.getElementById('addgames'))
