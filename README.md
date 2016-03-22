@@ -1,7 +1,5 @@
 # Boardgame Database - Still in development
-npm install --dev
-
-npm run start
+node server.js
 
 # Upcoming Features
 - Front End Data Validation / UI Cleanup
