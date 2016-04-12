@@ -5,10 +5,43 @@
  *
  */
 'use strict'
-var React = require('react')
+var React = require('react');
+var bs = require('react-bootstrap');
 module.exports = React.createClass({
   getInitialState: function() {
     return {}
+  },
+  removeGamesFromServer(evt){
+
+
+    var _this = this;
+    this.state.type = "remove";
+    this.state.toRemove = evt.target.name;
+    var data = JSON.stringify(this.state);
+    evt.preventDefault();
+    $.ajax({
+      type: "POST",
+      url: 'http://localhost:3000/',
+      dataType: 'json',
+      contentType: 'application/json',
+      processData: true,
+      data: data,
+      complete: function() {
+        console.log("complete?");
+        this.state.type = "";
+        this.props.loadGamesFromServer();
+        this.render();
+        // _this.props.loadGamesFromServer();
+      },
+      success: function(data) {
+        console.log("success?");
+
+      },
+      error: function(err) {
+
+        console.log("error");
+      }
+    });
   },
   render: function() {
     var tempGames = JSON.parse(JSON.stringify(this.props.bgObj));
@@ -39,14 +72,8 @@ module.exports = React.createClass({
       }
     }
     for (var i = 0; i < viableGameTitles.length; i++) {
-      viableGameRow.push(<div className="row"> <div className="col-md-offset-2 col-md-1 "> <div className="well"> {viableGameTitles[i]} </div></div> <div className="col-md-7"> <div className="well"> {viableGameDescriptions[i]}</div> </div> </div> )
+      viableGameRow.push(<div className="row"> <div className="col-md-offset-2 col-md-2 "> <div className="well"> {viableGameTitles[i]} </div></div> <div className="col-md-6"> <div className="well"> {viableGameDescriptions[i]}</div> </div>  <bs.Button name={viableGameTitles[i]} onClick={this.removeGamesFromServer} className="height-center btn btn-lg btn-danger"> Remove </bs.Button> </div> )
 
-      // viableGameTitles[i] = <div className="gameTitle">
-      //   {viableGameTitles[i]}
-      // </div>
-      // viableGameDescriptions[i] = <div className="gameTitle">
-      //   {viableGameDescriptions[i]}
-      // </div>
     }
 
 // REMOVED TITLE + DESCRIPTOIN

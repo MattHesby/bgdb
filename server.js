@@ -28,48 +28,84 @@ app.use(function(req, res, next) {
 var Schema = mongoose.Schema;
 
 var gameSchema = new Schema({
-  id:  Number,
-  info: {description: String, difficulty: Number, genre: String, mechanics: Array},
-  players: {max: Number, min: Number},
-  time: {hours: Number, minutes: Number},
+  id: Number,
+  info: {
+    description: String,
+    difficulty: Number,
+    genre: String,
+    mechanics: Array
+  },
+  players: {
+    max: Number,
+    min: Number
+  },
+  time: {
+    hours: Number,
+    minutes: Number
+  },
   title: String
 });
 
 var GameModel = mongoose.model("gameModel", gameSchema);
 
-var carcassonne = new GameModel({"id":1,"title":"Carcassonne","info":{"difficulty":1,"description":"Carcassonne is a tile-placement game in which the players draw and place a tile with landscape on it.The player can then decide to place one of his meeples on one of the areas on it.","genre":"Abstract","mechanics":["placement, area control"]},"players":{"min":2,"max":5},"time":{"minutes":120,"hours":2}})
-console.log(carcassonne);
+// var carcassonne = new GameModel({
+//   "id": 1,
+//   "title": "Carcassonne",
+//   "info": {
+//     "difficulty": 1,
+//     "description": "Carcassonne is a tile-placement game in which the players draw and place a tile with landscape on it.The player can then decide to place one of his meeples on one of the areas on it.",
+//     "genre": "Abstract",
+//     "mechanics": ["placement, area control"]
+//   },
+//   "players": {
+//     "min": 2,
+//     "max": 5
+//   },
+//   "time": {
+//     "minutes": 120,
+//     "hours": 2
+//   }
+// })
+// console.log(carcassonne);
 
 
 
-app.get('/games.json', function (req, res) {
+app.get('/games.json', function(req, res) {
   console.log("derp" + req.url)
-  GameModel.find(function(err, games){
-    if(err) return console.log(err);
+  GameModel.find(function(err, games) {
+    if (err) return console.log(err);
     res.send(games);
   })
 });
 
-app.post('/', function(req, res){
-  console.log(req.body);
-  var tempGame = new GameModel(req.body);
-  tempGame.save(function(err){
-    if(err){
-      console.log(err);
-      res.sendStatus(500);
-    }
-    else {
-      res.sendStatus(200);
-      console.log("Game Added To DB");
-    }
-    res.end();
-  });
+app.post('/', function(req, res) {
+  console.log(req.body.type);
 
+  if(req.body.type === "remove"){
+    console.log("removing: " + req.body.toRemove);
+    GameModel.find({title:req.body.toRemove}).remove().exec();
+  }
+
+
+  if (req.body.type === "add") {
+    console.log("Adding: " + req.body.title);
+    var tempGame = new GameModel(req.body);
+    tempGame.save(function(err) {
+      if (err) {
+        console.log(err);
+        res.sendStatus(500);
+      } else {
+        res.sendStatus(200);
+        console.log("Game Added To DB");
+      }
+      res.end();
+    });
+  }
 })
 
 
 
-var server = app.listen(3000, function () {
+var server = app.listen(3000, function() {
   var host = server.address().address;
   var port = server.address().port;
 

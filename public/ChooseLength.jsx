@@ -15,19 +15,19 @@ module.exports = React.createClass({
             Any
           </option>
           <option value="30">
-            30min or less
+            30 Minutes or Less
           </option>
           <option value="60">
-            30min - 1hr
+            30 Minutes - 1 Hour
           </option>
           <option value="90">
-            1hr - 2hr
+            1 - 2 Hours
           </option>
           <option value="240">
-            2hr - 4hr
+            2 - 4 Hours
           </option>
           <option value="300">
-            4hr +
+            4+ Hours
           </option>
         </select>
       </div>

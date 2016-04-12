@@ -60,6 +60,7 @@ module.exports = React.createClass({
     });
   },
 
+
   componentDidMount: function(){
     this.loadGamesFromServer();
   },
@@ -113,7 +114,12 @@ module.exports = React.createClass({
     return (
       <div>
         <div className="selection">
-          <h1 className="title text-center"> Board Game Database </h1>
+          <div className="navbar navbar-default">
+              <a className="navbar-brand"> Board Game Database </a>
+          </div>
+
+
+
           <AddGame  loadGamesFromServer={this.loadGamesFromServer}/>
           <h1 className="title text-center"> What type of game do you want to play? </h1>
 
@@ -124,7 +130,7 @@ module.exports = React.createClass({
         </div>
         </div>
         <div>
-          <GamesToPlay bgObj={this.state.bgObj} genre={this.state.gGenre} mechanics={this.state.gMechanics} players={this.state.gNumPlayers} difficulty={this.state.gDifficulty} gLength={this.state.gLength}/>
+          <GamesToPlay loadGamesFromServer={this.state.loadGamesFromServer} bgObj={this.state.bgObj} genre={this.state.gGenre} mechanics={this.state.gMechanics} players={this.state.gNumPlayers} difficulty={this.state.gDifficulty} gLength={this.state.gLength}/>
         </div>
       </div>
     )

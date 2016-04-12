@@ -11,22 +11,23 @@ module.exports = React.createClass({
       // id:  'id',
       info: {
         description: 'description',
-        difficulty: 'difficulty',
+        difficulty: '1',
         genre: 'genre',
         mechanics: 'mechanics'
       },
       players: {
-        max: 'max players',
-        min: 'min players'
+        max: '1',
+        min: '1'
       },
       time: {
-        hours: 'hours',
-        minutes: 'minutes'
+        hours: '0.5',
+        minutes: '30'
       },
       title: 'title'
     };
   },
   handleDescription: function(event) {
+
     var info = this.state.info;
     info.description = event.target.value;
     // console.log(this.state.info.description);
@@ -51,18 +52,21 @@ module.exports = React.createClass({
     this.setState({info: info});
   },
   handleMax: function(event) {
+
     var players = this.state.players;
     players.max = event.target.value;
     // console.log(this.state.players.max);
     this.setState({players: players});
   },
   handleMin: function(event) {
+
     var players = this.state.players;
     players.min = event.target.value;
     // console.log(this.state.players.min);
     this.setState({players: players});
   },
   handleTime: function(event) {
+
     var time = this.state.time;
     time.minutes = event.target.value;
     time.hours = time.minutes / 60;
@@ -74,9 +78,8 @@ module.exports = React.createClass({
   },
   submitHandler: function(evt) {
     var _this = this;
-    // console.log(this.state);
+    this.state.type = "add";
     var data = JSON.stringify(this.state);
-    // console.log(data);
     evt.preventDefault();
     $.ajax({
       type: "POST",
@@ -109,33 +112,120 @@ module.exports = React.createClass({
 
     return (
       <div>
-      <h1 className="title text-center"> Add a Game! </h1>
+        <h1 className="title text-center">
+          Add a Game!
+        </h1>
         <div className="row">
-          <div className="col-md-offset-3 col-md-2">
-            <bs.Input type="text" placeholder={this.state.title}  onChange={this.handleTitle}/>
+          <div className="col-md-offset-2 col-md-3">
+            Game Title
+          </div>
+          <div className="col-md-1">
+            Difficulty
+          </div>
+          <div className="col-md-1">
+            Min Players
+          </div>
+          <div className="col-md-1">
+            Max Players
+          </div>
+          <div className="col-md-1">
+            Length
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-md-offset-2 col-md-3">
+            <bs.Input type="text" placeholder={this.state.title} onChange={this.handleTitle}/>
           </div>
 
           <div className="col-md-1">
-            <select className="form-control" placeholder={this.state.info.difficulty} onChange={this.handleDifficulty.bind(this)}>
-              <option value="1"> Very Easy </option>
-              <option value="2"> Easy </option>
-              <option value="3"> Medium </option>
-              <option value="4"> Hard </option>
-              <option value="5"> Very Hard </option>
+            <select className="form-control" value={this.state.info.difficulty} onChange={this.handleDifficulty}>
+              <option value="1">
+                Very Easy
+              </option>
+              <option value="2">
+                Easy
+              </option>
+              <option value="3">
+                Medium
+              </option>
+              <option value="4">
+                Hard
+              </option>
+              <option value="5">
+                Very Hard
+              </option>
             </select>
           </div>
 
           <div className="col-md-1">
 
-            <bs.Input type="text" placeholder={this.state.players.min} onChange={this.handleMin}/>
+            <select className="form-control" value={this.state.players.min} onChange={this.handleMin}>
+              <option value="1">
+                1
+              </option>
+              <option value="2">
+                2
+              </option>
+              <option value="3">
+                3
+              </option>
+              <option value="4">
+                4
+              </option>
+              <option value="5">
+                5
+              </option>
+              <option value="6">
+                6
+              </option>
+              <option value="7">
+                more
+              </option>
+            </select>
+
           </div>
           <div className="col-md-1">
 
-            <bs.Input type="text" placeholder={this.state.players.max} onChange={this.handleMax}/>
-          </div>
-          <div className="col-md-1">
+            <select className="form-control" type="text" value={this.state.players.max} onChange={this.handleMax}>
+              <option value="1">
+                1
+              </option>
+              <option value="2">
+                2
+              </option>
+              <option value="3">
+                3
+              </option>
+              <option value="4">
+                4
+              </option>
+              <option value="5">
+                5
+              </option>
 
-            <bs.Input type="text" placeholder={this.state.time.minutes} onChange={this.handleTime}/>
+              <option value="6">
+                6
+              </option>
+              <option value="7">
+                more
+              </option>
+            </select>
+          </div>
+          <div className="col-md-2">
+
+            <select className="form-control" type="text" value={this.state.time.minutes} onChange={this.handleTime}>
+              <option value ="29"> 30 Minutes or Less </option>
+              <option value ="50"> 30 Minutes - 1 Hour </option>
+              <option value ="90"> 1 - 2 Hours </option>
+              <option value ="180"> 2 - 4 Hours </option>
+              <option value ="250"> 4+ Hours </option>
+            </select>
+          </div>
+        </div>
+
+        <div className="row">
+          <div className="col-md-offset-3 col-md-2">
+            Description
           </div>
         </div>
 
