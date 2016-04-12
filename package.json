@@ -6,7 +6,7 @@
   "scripts": {
     "test": "run start",
     "start": "npm run build | npm run serve",
-    "serve": "nodemon server.js",
+    "serve": "server server.js",
     "build": "webpack --progress --colors --watch --optimize-dedupe"
   },
   "author": "MJH",
