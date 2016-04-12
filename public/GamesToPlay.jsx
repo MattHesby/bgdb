@@ -15,6 +15,7 @@ module.exports = React.createClass({
 
 
     var _this = this;
+    console.log(this);
     this.state.type = "remove";
     this.state.toRemove = evt.target.name;
     var data = JSON.stringify(this.state);
@@ -28,10 +29,8 @@ module.exports = React.createClass({
       data: data,
       complete: function() {
         console.log("complete?");
-        this.state.type = "";
-        this.props.loadGamesFromServer();
-        this.render();
-        // _this.props.loadGamesFromServer();
+        _this.props.loadGamesFromServer();
+        _this.render();
       },
       success: function(data) {
         console.log("success?");

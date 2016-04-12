@@ -130,7 +130,7 @@ module.exports = React.createClass({
         </div>
         </div>
         <div>
-          <GamesToPlay loadGamesFromServer={this.state.loadGamesFromServer} bgObj={this.state.bgObj} genre={this.state.gGenre} mechanics={this.state.gMechanics} players={this.state.gNumPlayers} difficulty={this.state.gDifficulty} gLength={this.state.gLength}/>
+          <GamesToPlay loadGamesFromServer={this.loadGamesFromServer} bgObj={this.state.bgObj} genre={this.state.gGenre} mechanics={this.state.gMechanics} players={this.state.gNumPlayers} difficulty={this.state.gDifficulty} gLength={this.state.gLength}/>
         </div>
       </div>
     )

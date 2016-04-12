@@ -78,12 +78,21 @@ app.get('/games.json', function(req, res) {
   })
 });
 
-app.post('/', function(req, res) {
+app.post('/', function(req, res, err) {
   console.log(req.body.type);
 
-  if(req.body.type === "remove"){
-    console.log("removing: " + req.body.toRemove);
-    GameModel.find({title:req.body.toRemove}).remove().exec();
+  if (req.body.type === "remove") {
+    // if (err) {
+    //   console.log(err)
+    //   res.sendStatus(500);
+    // } else {
+      console.log("removing: " + req.body.toRemove);
+      GameModel.find({
+        title: req.body.toRemove
+      }).remove().exec();
+    //   res.sendStatus(200);
+    // }
+    res.end();
   }
 
 
