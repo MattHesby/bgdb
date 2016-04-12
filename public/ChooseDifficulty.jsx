@@ -7,11 +7,11 @@ module.exports = React.createClass({
   render: function() {
     return (
 
-      <div className="container">
+      <div className="col-md-2">
         <p>
-          Complexity?
+          Difficulty?
         </p>
-        <select defaultValue={this.props.gDifficulty} onChange={this.props.handler}>
+        <select className="form-control" defaultValue={this.props.gDifficulty} onChange={this.props.handler}>
           <option value="Any">
             Any
           </option>

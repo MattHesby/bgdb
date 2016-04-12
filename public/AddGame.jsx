@@ -3,14 +3,26 @@
 var React = require('react')
 var ReactDOM = require('react-dom')
 var LinkedStateMixin = require('react-addons-linked-state-mixin');
+var bs = require('react-bootstrap')
 
 module.exports = React.createClass({
   getInitialState: function() {
     return {
       // id:  'id',
-      info: {description: 'description', difficulty: 'difficulty', genre: 'genre', mechanics: 'mechanics'},
-      players: {max: 'max players', min: 'min players'},
-      time: {hours: 'hours', minutes: 'minutes'},
+      info: {
+        description: 'description',
+        difficulty: 'difficulty',
+        genre: 'genre',
+        mechanics: 'mechanics'
+      },
+      players: {
+        max: 'max players',
+        min: 'min players'
+      },
+      time: {
+        hours: 'hours',
+        minutes: 'minutes'
+      },
       title: 'title'
     };
   },
@@ -57,10 +69,10 @@ module.exports = React.createClass({
     // console.log(this.state.time.minutes);
     this.setState({time: time});
   },
-  handleTitle: function(evt){
+  handleTitle: function(evt) {
     this.setState({title: evt.target.value});
   },
-  submitHandler: function(evt){
+  submitHandler: function(evt) {
     var _this = this;
     // console.log(this.state);
     var data = JSON.stringify(this.state);
@@ -70,18 +82,18 @@ module.exports = React.createClass({
       type: "POST",
       url: 'http://localhost:3000/',
       dataType: 'json',
-      contentType : 'application/json',
+      contentType: 'application/json',
       processData: true,
       data: data,
-      complete: function(){
+      complete: function() {
         console.log("complete?");
         _this.props.loadGamesFromServer();
       },
-      success: function(data){
+      success: function(data) {
         console.log("success?");
 
       },
-      error: function(err){
+      error: function(err) {
 
         console.log("error");
       }
@@ -90,17 +102,52 @@ module.exports = React.createClass({
   },
   render: function() {
     // var value = this.state.value;
-    return(
+
+    // removed genre and mechanics
+    // <input type="text" value={this.state.info.genre} onChange={this.handleGenre} />;
+    // <input type="text" value={this.state.info.mechanics} onChange={this.handleMechanics} />;
+
+    return (
       <div>
-        <input type="text" value={this.state.title} onChange={this.handleTitle} />
-        <input type="text" value={this.state.info.description} onChange={this.handleDescription} />;
-        <input type="text" value={this.state.info.difficulty} onChange={this.handleDifficulty} />;
-        <input type="text" value={this.state.info.genre} onChange={this.handleGenre} />;
-        <input type="text" value={this.state.info.mechanics} onChange={this.handleMechanics} />;
-        <input type="text" value={this.state.players.max} onChange={this.handleMax} />;
-        <input type="text" value={this.state.players.min} onChange={this.handleMin} />;
-        <input type="text" value={this.state.time.minutes} onChange={this.handleTime} />;
-        <button onClick={this.submitHandler} > Add Game </button>
+      <h1 className="title text-center"> Add a Game! </h1>
+        <div className="row">
+          <div className="col-md-offset-3 col-md-2">
+            <bs.Input type="text" placeholder={this.state.title}  onChange={this.handleTitle}/>
+          </div>
+
+          <div className="col-md-1">
+            <select className="form-control" placeholder={this.state.info.difficulty} onChange={this.handleDifficulty.bind(this)}>
+              <option value="1"> Very Easy </option>
+              <option value="2"> Easy </option>
+              <option value="3"> Medium </option>
+              <option value="4"> Hard </option>
+              <option value="5"> Very Hard </option>
+            </select>
+          </div>
+
+          <div className="col-md-1">
+
+            <bs.Input type="text" placeholder={this.state.players.min} onChange={this.handleMin}/>
+          </div>
+          <div className="col-md-1">
+
+            <bs.Input type="text" placeholder={this.state.players.max} onChange={this.handleMax}/>
+          </div>
+          <div className="col-md-1">
+
+            <bs.Input type="text" placeholder={this.state.time.minutes} onChange={this.handleTime}/>
+          </div>
+        </div>
+
+        <div className="row">
+          <div className="col-md-offset-3 col-md-4">
+            <bs.Input className="" type="text" placeholder={this.state.info.description} onChange={this.handleDescription}/>
+          </div>
+          <button className="btn btn-primary" onClick={this.submitHandler}>
+            Add Game
+          </button>
+        </div>
+
       </div>
     );
   }

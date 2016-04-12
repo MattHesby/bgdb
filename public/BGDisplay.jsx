@@ -21,6 +21,8 @@ var ChooseDifficulty = require('./ChooseDifficulty.jsx')
 var ChoosePlayers = require('./ChoosePlayers.jsx')
 var ChooseMechanics = require('./ChooseMechanics.jsx');
 var AddGame = require('./AddGame.jsx');
+var bs = require('react-bootstrap');
+
 
 module.exports = React.createClass({
 
@@ -104,15 +106,22 @@ module.exports = React.createClass({
     //     MECHANICS[i] = {label: {MECHANICS[i]}, value: [MECHANICS[i] }
     // }
 
+// Removed Mechanics and Genre
+// <ChooseMechanics MECHANICS_OPTIONS={MECHANICS_OPTIONS} handler={this.handleMechanics}/>
+// <ChooseGenre GENRES={GENRES} gGenre={this.state.gGenre} handler={this.handleGenre}/>
+
     return (
       <div>
         <div className="selection">
+          <h1 className="title text-center"> Board Game Database </h1>
           <AddGame  loadGamesFromServer={this.loadGamesFromServer}/>
+          <h1 className="title text-center"> What type of game do you want to play? </h1>
+
+        <div className="row">
           <ChoosePlayers gNumPlayers={this.state.gNumPlayers} handler={this.handlePlayers}/>
           <ChooseDifficulty gDifficulty={this.state.gDifficulty} handler={this.handleDifficulty}/>
-          <ChooseGenre GENRES={GENRES} gGenre={this.state.gGenre} handler={this.handleGenre}/>
           <ChooseLength gLength={this.state.gLength} handler={this.handleLength}/>
-          <ChooseMechanics MECHANICS_OPTIONS={MECHANICS_OPTIONS} handler={this.handleMechanics}/>
+        </div>
         </div>
         <div>
           <GamesToPlay bgObj={this.state.bgObj} genre={this.state.gGenre} mechanics={this.state.gMechanics} players={this.state.gNumPlayers} difficulty={this.state.gDifficulty} gLength={this.state.gLength}/>

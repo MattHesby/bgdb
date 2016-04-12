@@ -12,8 +12,9 @@ module.exports = React.createClass({
   },
   render: function() {
     var tempGames = JSON.parse(JSON.stringify(this.props.bgObj));
-    var viableGameTitles = ["Game"];
-    var viableGameDescriptions = ["Description"];
+    var viableGameTitles = [];
+    var viableGameDescriptions = [];
+    var viableGameRow = [];
 
     for (var game in this.props.bgObj) {
       if (this.props.bgObj.hasOwnProperty(game)) {
@@ -38,21 +39,35 @@ module.exports = React.createClass({
       }
     }
     for (var i = 0; i < viableGameTitles.length; i++) {
-      viableGameTitles[i] = <div className="gameTitle">
-        {viableGameTitles[i]}
-      </div>
-      viableGameDescriptions[i] = <div className="gameTitle">
-        {viableGameDescriptions[i]}
-      </div>
+      viableGameRow.push(<div className="row"> <div className="col-md-offset-2 col-md-1 "> <div className="well"> {viableGameTitles[i]} </div></div> <div className="col-md-7"> <div className="well"> {viableGameDescriptions[i]}</div> </div> </div> )
+
+      // viableGameTitles[i] = <div className="gameTitle">
+      //   {viableGameTitles[i]}
+      // </div>
+      // viableGameDescriptions[i] = <div className="gameTitle">
+      //   {viableGameDescriptions[i]}
+      // </div>
     }
+
+// REMOVED TITLE + DESCRIPTOIN
+    // <div className="row">
+    //   <div className="col-md-offset-2 col-md-1">
+    //     {viableGameTitles}
+    //   </div>
+    //   <div className="col-md-7 gameDescription">
+    //     {viableGameDescriptions}
+    //   </div>
+    // </div>
+
     return (
       <div>
-        <div className="column">
-          {viableGameTitles}
-        </div>
-        <div className="column">
-          {viableGameDescriptions}
-        </div>
+        <h1 className="text-center title">
+          Choose your Game!
+        </h1>
+
+        {viableGameRow}
+
+
       </div>
     )
   }

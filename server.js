@@ -41,12 +41,6 @@ var carcassonne = new GameModel({"id":1,"title":"Carcassonne","info":{"difficult
 console.log(carcassonne);
 
 
-// var kitty = new Cat({ name: 'Zildjian' });
-// kitty.save(function (err) {
-//   if (err) // ...
-//   console.log('meow');
-// });
-
 
 app.get('/games.json', function (req, res) {
   console.log("derp" + req.url)
