@@ -48,7 +48,7 @@ module.exports = React.createClass({
   },
   loadGamesFromServer: function() {
     $.ajax({
-      url: 'http://localhost:3000/games.json',
+      url: '/games.json',
       dataType: 'json',
       cache: false,
       success: function(data) {

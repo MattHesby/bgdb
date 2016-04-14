@@ -83,7 +83,7 @@ module.exports = React.createClass({
     evt.preventDefault();
     $.ajax({
       type: "POST",
-      url: 'http://localhost:3000/',
+      url: '/',
       dataType: 'json',
       contentType: 'application/json',
       processData: true,
