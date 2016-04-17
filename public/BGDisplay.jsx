@@ -112,13 +112,14 @@ module.exports = React.createClass({
 // <ChooseGenre GENRES={GENRES} gGenre={this.state.gGenre} handler={this.handleGenre}/>
 
     return (
-      <div className="container">
+      <div>
         <div className="selection">
           <div className="navbar navbar-default">
               <a className="navbar-brand"> Board Game Database </a>
           </div>
+        </div>
 
-
+        <div className="container">
 
           <AddGame  loadGamesFromServer={this.loadGamesFromServer}/>
           <h1 className="title text-center"> What type of game do you want to play? </h1>
@@ -128,10 +129,11 @@ module.exports = React.createClass({
           <ChooseDifficulty gDifficulty={this.state.gDifficulty} handler={this.handleDifficulty}/>
           <ChooseLength gLength={this.state.gLength} handler={this.handleLength}/>
         </div>
-        </div>
+
         <div>
           <GamesToPlay loadGamesFromServer={this.loadGamesFromServer} bgObj={this.state.bgObj} genre={this.state.gGenre} mechanics={this.state.gMechanics} players={this.state.gNumPlayers} difficulty={this.state.gDifficulty} gLength={this.state.gLength}/>
         </div>
+      </div>
       </div>
     )
   }
