@@ -112,7 +112,7 @@ module.exports = React.createClass({
 // <ChooseGenre GENRES={GENRES} gGenre={this.state.gGenre} handler={this.handleGenre}/>
 
     return (
-      <div>
+      <div className="container">
         <div className="selection">
           <div className="navbar navbar-default">
               <a className="navbar-brand"> Board Game Database </a>
