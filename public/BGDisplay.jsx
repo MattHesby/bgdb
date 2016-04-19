@@ -26,46 +26,46 @@ var bs = require('react-bootstrap');
 
 module.exports = React.createClass({
 
-  getInitialState: function() {
-    return {bgObj: boardGameObj, gNumPlayers: "Any", gDifficulty: "Any", gLength: "Any", gGenre: "Any", gMechanics: "Any"}
+  getInitialState: function () {
+    return { bgObj: boardGameObj, gNumPlayers: "Any", gDifficulty: "Any", gLength: "Any", gGenre: "Any", gMechanics: "Any" }
   },
   // Handlers for each of the different values
-  handlePlayers: function(e) {
-    this.setState({gNumPlayers: e.target.value});
+  handlePlayers: function (e) {
+    this.setState({ gNumPlayers: e.target.value });
   },
-  handleDifficulty: function(e) {
-    this.setState({gDifficulty: e.target.value});
+  handleDifficulty: function (e) {
+    this.setState({ gDifficulty: e.target.value });
   },
-  handleLength: function(e) {
-    this.setState({gLength: e.target.value})
+  handleLength: function (e) {
+    this.setState({ gLength: e.target.value })
   },
-  handleGenre: function(e) {
-    this.setState({gGenre: e.target.value})
+  handleGenre: function (e) {
+    this.setState({ gGenre: e.target.value })
   },
-  handleMechanics: function(val) {
+  handleMechanics: function (val) {
 
-    this.setState({gMechanics: val});
+    this.setState({ gMechanics: val });
   },
-  loadGamesFromServer: function() {
+  loadGamesFromServer: function () {
     $.ajax({
       url: '/games.json',
       dataType: 'json',
       cache: false,
-      success: function(data) {
-        this.setState({bgObj: data});
+      success: function (data) {
+        this.setState({ bgObj: data });
       }.bind(this),
-      error: function(xhr, status, err) {
+      error: function (xhr, status, err) {
         console.error(this.props.url, status, err.toString());
       }.bind(this)
     });
   },
 
 
-  componentDidMount: function(){
+  componentDidMount: function () {
     this.loadGamesFromServer();
   },
 
-  render: function() {
+  render: function () {
     //sets up Genre Options
     var GENRES = ["Any"]
     for (var game in this.state.bgObj) {
@@ -95,6 +95,19 @@ module.exports = React.createClass({
         value: "trading"
       }
     ];
+
+    var leftButton = {
+      float: "left",
+      display: "block",
+    }
+    var mainStyle = {
+      paddingTop: "50px",
+    }
+    
+    var addGameWidth = {
+      width: "400px",
+    }
+    
     //
     // var MECHANICS = [{label: "Any", value: "Any"}];
     // for (var game in this.state.bgObj) {
@@ -107,33 +120,59 @@ module.exports = React.createClass({
     //     MECHANICS[i] = {label: {MECHANICS[i]}, value: [MECHANICS[i] }
     // }
 
-// Removed Mechanics and Genre
-// <ChooseMechanics MECHANICS_OPTIONS={MECHANICS_OPTIONS} handler={this.handleMechanics}/>
-// <ChooseGenre GENRES={GENRES} gGenre={this.state.gGenre} handler={this.handleGenre}/>
+    // Removed Mechanics and Genre
+    // <ChooseMechanics MECHANICS_OPTIONS={MECHANICS_OPTIONS} handler={this.handleMechanics}/>
+    // <ChooseGenre GENRES={GENRES} gGenre={this.state.gGenre} handler={this.handleGenre}/>
+
+
+    // <div className="selection">
+    //   <div className="navbar navbar-default">
+    //       <a className="navbar-brand"> Board Game Database </a>
+    //   </div>
+    // </div>
+
+
 
     return (
-      <div>
-        <div className="selection">
-          <div className="navbar navbar-default">
-              <a className="navbar-brand"> Board Game Database </a>
-          </div>
-        </div>
 
+
+
+      <div>
         <div className="container">
 
-          <AddGame  loadGamesFromServer={this.loadGamesFromServer}/>
-          <h1 className="title text-center"> What type of game do you want to play? </h1>
 
-        <div className="row">
-          <ChoosePlayers gNumPlayers={this.state.gNumPlayers} handler={this.handlePlayers}/>
-          <ChooseDifficulty gDifficulty={this.state.gDifficulty} handler={this.handleDifficulty}/>
-          <ChooseLength gLength={this.state.gLength} handler={this.handleLength}/>
+          <nav style={addGameWidth} id="myNavmenu" className="navmenu navmenu-default navmenu-fixed-left offcanvas" role="navigation">
+
+            <ul className="nav navmenu-nav">
+              <AddGame  loadGamesFromServer={this.loadGamesFromServer}/>
+
+
+            </ul>
+          </nav>
+          <div className="navbar navbar-default navbar-fixed-top">
+            <button style={leftButton} type="button" className="navbar-toggle" data-toggle="offcanvas" data-target="#myNavmenu" data-canvas="body">
+              Add A Game
+
+            </button>
+          </div>
+
         </div>
 
-        <div>
-          <GamesToPlay loadGamesFromServer={this.loadGamesFromServer} bgObj={this.state.bgObj} genre={this.state.gGenre} mechanics={this.state.gMechanics} players={this.state.gNumPlayers} difficulty={this.state.gDifficulty} gLength={this.state.gLength}/>
+        <div className="container" style={mainStyle}>
+
+
+          <h1 className="title text-center"> What type of game do you want to play?</h1>
+
+          <div className="row">
+            <ChoosePlayers gNumPlayers={this.state.gNumPlayers} handler={this.handlePlayers}/>
+            <ChooseDifficulty gDifficulty={this.state.gDifficulty} handler={this.handleDifficulty}/>
+            <ChooseLength gLength={this.state.gLength} handler={this.handleLength}/>
+          </div>
+
+          <div>
+            <GamesToPlay loadGamesFromServer={this.loadGamesFromServer} bgObj={this.state.bgObj} genre={this.state.gGenre} mechanics={this.state.gMechanics} players={this.state.gNumPlayers} difficulty={this.state.gDifficulty} gLength={this.state.gLength}/>
+          </div>
         </div>
-      </div>
       </div>
     )
   }
