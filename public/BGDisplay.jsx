@@ -161,7 +161,7 @@ module.exports = React.createClass({
         <div className="container" style={mainStyle}>
 
 
-          <h1 className="title text-center"> What type of game do you want to play?</h1>
+          <h1 className="title text-center"> Choose your Boardgame Type</h1>
 
           <div className="row">
             <ChoosePlayers gNumPlayers={this.state.gNumPlayers} handler={this.handlePlayers}/>

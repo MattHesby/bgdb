@@ -88,7 +88,7 @@ module.exports = React.createClass({
     return (
       <div>
         <h1 className="text-center title">
-          Choose your Game!
+          Games That Match Your Needs!
         </h1>
 
         {viableGameRow}
