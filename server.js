@@ -3,9 +3,7 @@ var app = express();
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 
-
 app.use(express.static('public'));
-
 mongoose.connect('mongodb://127.0.0.1:27017/test');
 app.use(bodyParser.json());
 
@@ -14,21 +12,12 @@ app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
-
-  // res.setHeader('Content-Type', 'text/plain')
-  // res.write('you posted:\n')
-  // res.end(JSON.stringify(req.body, null, 2))
 });
-// parse application/x-www-form-urlencoded
-// app.use(bodyParser.urlencoded({ extended: false }))
 
-// parse application/json
-// app.use(express.bodyParser());
-
+// Creates Schema for mondodb
 var Schema = mongoose.Schema;
-
 var gameSchema = new Schema({
-  id: Number,
+  _id: String,
   info: {
     description: String,
     difficulty: Number,
@@ -48,36 +37,15 @@ var gameSchema = new Schema({
 
 var GameModel = mongoose.model("gameModel", gameSchema);
 
-// var carcassonne = new GameModel({
-//   "id": 1,
-//   "title": "Carcassonne",
-//   "info": {
-//     "difficulty": 1,
-//     "description": "Carcassonne is a tile-placement game in which the players draw and place a tile with landscape on it.The player can then decide to place one of his meeples on one of the areas on it.",
-//     "genre": "Abstract",
-//     "mechanics": ["placement, area control"]
-//   },
-//   "players": {
-//     "min": 2,
-//     "max": 5
-//   },
-//   "time": {
-//     "minutes": 120,
-//     "hours": 2
-//   }
-// })
-// console.log(carcassonne);
-
-
-
+// Sends current set of games
 app.get('/games.json', function(req, res) {
-  console.log("derp" + req.url)
   GameModel.find(function(err, games) {
     if (err) return console.log(err);
     res.send(games);
   })
 });
 
+// Handles removing and adding games
 app.post('/', function(req, res, err) {
   console.log(req.body.type);
 
@@ -88,7 +56,7 @@ app.post('/', function(req, res, err) {
     // } else {
       console.log("removing: " + req.body.toRemove);
       GameModel.find({
-        title: req.body.toRemove
+        _id: req.body.toRemove
       }).remove().exec();
     //   res.sendStatus(200);
     // }
@@ -98,6 +66,10 @@ app.post('/', function(req, res, err) {
 
   if (req.body.type === "add") {
     console.log("Adding: " + req.body.title);
+    
+    req.body._id = mongoose.Types.ObjectId();
+    
+    
     var tempGame = new GameModel(req.body);
     tempGame.save(function(err) {
       if (err) {
@@ -113,7 +85,7 @@ app.post('/', function(req, res, err) {
 })
 
 
-
+// sets the server to listen at port 3000
 var server = app.listen(3000, function() {
   var host = server.address().address;
   var port = server.address().port;

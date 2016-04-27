@@ -17,7 +17,7 @@ module.exports = React.createClass({
     var _this = this;
     console.log(this);
     this.state.type = "remove";
-    this.state.toRemove = evt.target.name;
+    this.state.toRemove = evt.target.dataset._id;
     var data = JSON.stringify(this.state);
     evt.preventDefault();
     $.ajax({
@@ -47,6 +47,7 @@ module.exports = React.createClass({
     var viableGameTitles = [];
     var viableGameDescriptions = [];
     var viableGameRow = [];
+    var viableGameId = [];
 
     for (var game in this.props.bgObj) {
       if (this.props.bgObj.hasOwnProperty(game)) {
@@ -64,6 +65,7 @@ module.exports = React.createClass({
               if (this.props.genre === curGame.info.genre || this.props.genre === 'Any') {
                 viableGameTitles.push(curGame.title);
                 viableGameDescriptions.push(curGame.info.description)
+                viableGameId.push(curGame._id);
               }
             }
           }
@@ -71,7 +73,7 @@ module.exports = React.createClass({
       }
     }
     for (var i = 0; i < viableGameTitles.length; i++) {
-      viableGameRow.push(<div className="row"> <div className="col-md-offset-2 col-md-2 "> <div className="well"> {viableGameTitles[i]} </div></div> <div className="col-md-6"> <div className="well"> {viableGameDescriptions[i]}</div> </div>  <bs.Button name={viableGameTitles[i]} onClick={this.removeGamesFromServer} className="height-center btn btn-lg btn-danger"> Remove </bs.Button> </div> )
+      viableGameRow.push(<div className="row"> <div className="col-md-offset-2 col-md-2 "> <div className="well"> {viableGameTitles[i]} </div></div> <div className="col-md-6"> <div className="well"> {viableGameDescriptions[i]}</div> </div>  <bs.Button data-_id={viableGameId[i]} name={viableGameTitles[i]} onClick={this.removeGamesFromServer} className="height-center btn btn-lg btn-danger"> Remove </bs.Button> </div> )
 
     }
 
