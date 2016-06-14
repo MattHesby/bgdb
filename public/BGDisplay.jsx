@@ -103,11 +103,11 @@ module.exports = React.createClass({
     var mainStyle = {
       paddingTop: "50px",
     }
-    
+
     var addGameWidth = {
       width: "400px",
     }
-    
+
     //
     // var MECHANICS = [{label: "Any", value: "Any"}];
     // for (var game in this.state.bgObj) {
