@@ -35,7 +35,31 @@ module.exports = React.createClass({
                     }
                 }
             })
-        }, 0);
+        }, 50);
+    },
+    componentDidUpdate: function(){
+      var _this = this;
+      function grab(cb) {
+          var theDivs = ReactDOM.findDOMNode(_this).getElementsByClassName("well");
+          cb(theDivs);
+      }
+
+      setTimeout(function() {
+          grab(function(items) {
+              for (var i = 0; i < items.length - 1; i+=2) {
+
+                  var leftHeight = items[i].clientHeight;
+                  var rightHeight = items[i + 1].clientHeight;
+                  console.log(items[i].clientHeight);
+                  // console.log(leftHeight);
+                  if (leftHeight > rightHeight) {
+                      items[i + 1].style.height = leftHeight + "px";
+                  } else {
+                      items[i].style.height = rightHeight + "px";
+                  }
+              }
+          })
+      }, 50);
     },
     removeGamesFromServer(evt) {
 
