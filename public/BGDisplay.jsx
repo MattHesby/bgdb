@@ -14,14 +14,15 @@ var ReactDOM = require('react-dom')
 var boardGameObj = [];
 
 // REACT COMPONENTS //
-var GamesToPlay = require('./GamesToPlay.jsx')
-var ChooseLength = require('./ChooseLength.jsx')
-var ChooseGenre = require('./ChooseGenre.jsx')
-var ChooseDifficulty = require('./ChooseDifficulty.jsx')
+var GamesToPlay = require('./GamesToPlay.jsx');
+var ChooseLength = require('./ChooseLength.jsx');
+var ChooseGenre = require('./ChooseGenre.jsx');
+var ChooseDifficulty = require('./ChooseDifficulty.jsx');
 var ChoosePlayers = require('./ChoosePlayers.jsx')
 var ChooseMechanics = require('./ChooseMechanics.jsx');
 var AddGame = require('./AddGame.jsx');
 var bs = require('react-bootstrap');
+var ChooseBGGUser = require('./ChooseBGGUser.jsx');
 
 
 module.exports = React.createClass({
@@ -132,6 +133,9 @@ module.exports = React.createClass({
     // </div>
 
 
+    var bggUserStyle = {
+      float:"right"
+    }
 
     return (
 
@@ -145,15 +149,19 @@ module.exports = React.createClass({
 
             <ul className="nav navmenu-nav">
               <AddGame  loadGamesFromServer={this.loadGamesFromServer}/>
-
-
             </ul>
+
           </nav>
+
           <div className="navbar navbar-default navbar-fixed-top">
             <button style={leftButton} type="button" className="navbar-toggle" data-toggle="offcanvas" data-target="#myNavmenu" data-canvas="body">
               Add A Game
 
             </button>
+
+            <ul style={bggUserStyle}>
+              <ChooseBGGUser loadGamesFromServer={this.loadGamesFromServer}/>
+              </ul>
           </div>
 
         </div>

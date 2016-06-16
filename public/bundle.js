@@ -19739,6 +19739,7 @@
 	var ChooseMechanics = __webpack_require__(420);
 	var AddGame = __webpack_require__(421);
 	var bs = __webpack_require__(163);
+	var ChooseBGGUser = __webpack_require__(426);
 
 	module.exports = React.createClass({
 	  displayName: "exports",
@@ -19846,6 +19847,10 @@
 	    //   </div>
 	    // </div>
 
+	    var bggUserStyle = {
+	      float: "right"
+	    };
+
 	    return React.createElement(
 	      "div",
 	      null,
@@ -19868,6 +19873,11 @@
 	            "button",
 	            { style: leftButton, type: "button", className: "navbar-toggle", "data-toggle": "offcanvas", "data-target": "#myNavmenu", "data-canvas": "body" },
 	            "Add A Game"
+	          ),
+	          React.createElement(
+	            "ul",
+	            { style: bggUserStyle },
+	            React.createElement(ChooseBGGUser, { loadGamesFromServer: this.loadGamesFromServer })
 	          )
 	        )
 	      ),
@@ -22661,7 +22671,7 @@
 
 /***/ },
 /* 214 */
-[426, 215],
+[427, 215],
 /* 215 */
 /***/ function(module, exports) {
 
@@ -32734,7 +32744,7 @@
 /* 364 */
 215,
 /* 365 */
-[426, 364],
+[427, 364],
 /* 366 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -38870,6 +38880,92 @@
 
 /***/ },
 /* 426 */
+/***/ function(module, exports, __webpack_require__) {
+
+	///* AddGame.jsx *///
+	'use strict';
+	var React = __webpack_require__(1);
+	var ReactDOM = __webpack_require__(158);
+	var LinkedStateMixin = __webpack_require__(422);
+	var bs = __webpack_require__(163);
+
+	module.exports = React.createClass({
+	    displayName: 'exports',
+
+	    getInitialState: function getInitialState() {
+	        return { bggUser: "None" };
+	    },
+	    handleBbgUser: function handleBbgUser(event) {
+
+	        var user = this.state.bggUser;
+	        user = event.target.value;
+	        this.setState({ bggUser: user });
+	    },
+	    submitHandler: function submitHandler(evt) {
+	        var _this = this;
+	        this.state.type = "bggUser";
+	        var data = JSON.stringify(this.state);
+	        console.log(data);
+	        evt.preventDefault();
+	        $.ajax({
+	            type: "POST",
+	            url: '/',
+	            dataType: 'json',
+	            contentType: 'application/json',
+	            processData: true,
+	            data: data,
+	            complete: function complete() {
+	                console.log("complete?");
+	                _this.props.loadGamesFromServer();
+	            },
+	            success: function success(data) {
+	                console.log(data);
+	                console.log("success?");
+	            },
+	            error: function error(err) {
+
+	                console.log("error");
+	            }
+	        });
+	    },
+	    render: function render() {
+	        // var value = this.state.value;
+
+	        // removed genre and mechanics
+	        // <input type="text" value={this.state.info.genre} onChange={this.handleGenre} />;
+	        // <input type="text" value={this.state.info.mechanics} onChange={this.handleMechanics} />;
+
+	        return React.createElement(
+	            'div',
+	            { className: 'container' },
+	            React.createElement(
+	                'div',
+	                { className: 'row' },
+	                React.createElement(
+	                    'div',
+	                    { className: 'col-md-offset-8 col-md-3 navbar-brand' },
+	                    React.createElement(
+	                        'div',
+	                        null,
+	                        React.createElement(bs.Input, { type: 'text', placeholder: 'Boardgamegeek Username', onChange: this.handleBbgUser })
+	                    )
+	                ),
+	                React.createElement(
+	                    'div',
+	                    { className: 'navbar-brand col-md-1' },
+	                    React.createElement(
+	                        'button',
+	                        { type: 'button', className: 'btn btn-primary', onClick: this.submitHandler },
+	                        'Submit'
+	                    )
+	                )
+	            )
+	        );
+	    }
+	});
+
+/***/ },
+/* 427 */
 /***/ function(module, exports, __webpack_require__, __webpack_module_template_argument_0__) {
 
 	'use strict';
