@@ -20074,8 +20074,8 @@
 	                ),
 	                React.createElement(
 	                    bs.Button,
-	                    { 'data-_id': viableGameId[i], name: viableGameTitles[i], onClick: this.removeGamesFromServer, className: 'height-center btn btn-lg btn-danger' },
-	                    'Remove'
+	                    { 'data-_id': viableGameId[i], name: viableGameTitles[i], onClick: this.removeGamesFromServer, className: 'vertical-center btn btn-danger' },
+	                    'X'
 	                )
 	            ));
 	        }

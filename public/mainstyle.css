@@ -1,8 +1,15 @@
 body{
-	background-color: cadetblue
+	background-color: white
 }
 
 
+.vertical-center {
+  /*min-height: 100%;  /* Fallback for browsers do NOT support vh unit */*/
+  /*min-height: 100vh; /* These two lines are counted as one :-)       */*/
+
+  display: flex;
+  align-items: center;
+}
 
 .row{
 	margin-right:0;
@@ -40,6 +47,10 @@ body{
   </div>
 </div>
 */
+
+
+
+
 
 /* content styles */
 

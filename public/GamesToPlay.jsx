@@ -149,8 +149,8 @@ module.exports = React.createClass({
                     <div style={box2} className="well col-md-6">
                         {viableGameDescriptions[i]}
                     </div>
-                    <bs.Button data-_id={viableGameId[i]} name={viableGameTitles[i]} onClick={this.removeGamesFromServer} className="height-center btn btn-lg btn-danger">
-                        Remove
+                    <bs.Button data-_id={viableGameId[i]} name={viableGameTitles[i]} onClick={this.removeGamesFromServer} className="vertical-center btn btn-danger">
+                        X
                     </bs.Button>
                 </div>
             )
