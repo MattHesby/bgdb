@@ -55,6 +55,11 @@ app.get('/games.json', function(req, res) {
     })
 });
 
+app.get('/*', function(req, res){
+  res.redirect('/')
+})
+
+
 // Adds games to the DB
 function removeFromDb(data, cb) {
     console.log("removing: " + data);
