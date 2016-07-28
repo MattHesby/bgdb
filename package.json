@@ -27,7 +27,7 @@
     "requestify": "^0.1.17",
     "webpack": "^1.4.15",
     "whatwg-fetch": "^0.10.1",
-    "xml2js": "^0.4.16",
+    "xml2js": "^0.4.17",
     "xoauth2": "^1.1.0"
   },
   "devDependencies": {

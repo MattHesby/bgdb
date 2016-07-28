@@ -10,6 +10,7 @@ var Promise = require('bluebird');
 var request = require('request');
 var util = require('util');
 var bbRequest = Promise.promisifyAll(require('request'));
+var parseString = require('xml2js').parseString;
 
 app.use(express.static('public'));
 mongoose.connect('mongodb://127.0.0.1:27017/test');
@@ -132,18 +133,54 @@ var gameMinPlayers = [];
 var gameMaxPlayers = [];
 var gameTime = []
 var gameDifficulty = [];
+var allGames = [];
 const MAX_RETRIES = 1;
 
 function processBgguser(attempt, type, user, cb) {
-    getUser(user, MAX_RETRIES).then(getIds).then(getAllGames).then(parseAllGames).then((v) => cb(v)).catch((err) => cb(undefined, err));
+    getUser(user, MAX_RETRIES).then(getIds).then(getAllGames).then(parseAllGames).then(addAllToDb).then((v) => cb(v)).catch((err) => cb(undefined, err));
+}
+
+function addAllToDb(data){
+  // console.log(data)
+  // for(var i = 0; i < allGames.length; i++){
+  //   allGames[i].save();
+  // }
 }
 
 function parseAllGames(data) {
-    // console.log(Object.keys(data['0'])[0] );
-    for(var i = 0; i < data.length; i++){
-      console.log(data[i])
-    }
-    return data;
+    // Parse Games
+      for(var game in data){
+        parseString(data[game], function(err, result){
+          var gameData = result.items.item[0]
+          var tempMinutes = parseInt(gameData.playingtime[0].$.value)
+          // To be used later
+          var tempThumbnail = gameData.thumbnail
+
+          // Creates temp game with data from parsed XML
+          var tempGame = {}
+          tempGame._id = mongoose.Types.ObjectId();
+
+          tempGame.info = {
+            description: gameData.description,
+            difficult: null,
+            genre: null,
+            mechanics: null
+          }
+          tempGame.players = {
+            max: parseInt(gameData.maxplayers[0].$.value),
+            min: parseInt(gameData.minplayers[0].$.value)
+          }
+          tempGame.time = {
+            hours: tempMinutes / 60,
+            minutes: tempMinutes
+          }
+          tempGame.title = gameData.name[0].$.value
+
+          // Create mongoose model and add to All games array
+          allGames.push(new GameModel(tempGame));
+        })
+      }
+      return allGames;
 }
 
 function sendGameInfo(data) {
@@ -161,8 +198,6 @@ function getAllGames(data, promise) {
 
 var totalResolved = 0;
 function getGame(game, maxRetries, wait, promise) {
-  // console.log('getting:'+game+'.');
-  // console.log('max retries: '+maxRetries);
     return new Promise((resolve, reject) => {
       setTimeout(()=>{
         request.get('https://www.boardgamegeek.com/xmlapi2/thing?id=' + game, function(error, response, body) {
