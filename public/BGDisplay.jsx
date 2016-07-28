@@ -140,22 +140,9 @@ module.exports = React.createClass({
 
       <div>
         <div className="container">
-          <nav style={addGameWidth} id="myNavmenu" className="navmenu navmenu-default navmenu-fixed-left offcanvas" role="navigation">
-            <ul className="nav navmenu-nav">
-              <AddGame  loadGamesFromServer={this.loadGamesFromServer}/>
-            </ul>
+          <nav id="myNavmenu" className="navmenu navmenu-default navmenu-fixed-left offcanvas" role="navigation">
+
           </nav>
-
-          <div className="navbar navbar-default navbar-fixed-top">
-
-            <button style={leftButton} type="button" className="navbar-toggle" data-toggle="offcanvas" data-target="#myNavmenu" data-canvas="body">
-              Add A Game
-            </button>
-
-            <ul style={bggUserStyle}>
-              <ChooseBGGUser loadGamesFromServer={this.loadGamesFromServer}/>
-            </ul>
-          </div>
         </div>
 
         <div className="container" style={mainStyle}>

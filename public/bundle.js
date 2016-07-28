@@ -25441,29 +25441,7 @@
 	      React.createElement(
 	        "div",
 	        { className: "container" },
-	        React.createElement(
-	          "nav",
-	          { style: addGameWidth, id: "myNavmenu", className: "navmenu navmenu-default navmenu-fixed-left offcanvas", role: "navigation" },
-	          React.createElement(
-	            "ul",
-	            { className: "nav navmenu-nav" },
-	            React.createElement(AddGame, { loadGamesFromServer: this.loadGamesFromServer })
-	          )
-	        ),
-	        React.createElement(
-	          "div",
-	          { className: "navbar navbar-default navbar-fixed-top" },
-	          React.createElement(
-	            "button",
-	            { style: leftButton, type: "button", className: "navbar-toggle", "data-toggle": "offcanvas", "data-target": "#myNavmenu", "data-canvas": "body" },
-	            "Add A Game"
-	          ),
-	          React.createElement(
-	            "ul",
-	            { style: bggUserStyle },
-	            React.createElement(ChooseBGGUser, { loadGamesFromServer: this.loadGamesFromServer })
-	          )
-	        )
+	        React.createElement("nav", { id: "myNavmenu", className: "navmenu navmenu-default navmenu-fixed-left offcanvas", role: "navigation" })
 	      ),
 	      React.createElement(
 	        "div",
@@ -25556,8 +25534,6 @@
 
 	                    var leftHeight = items[i].clientHeight;
 	                    var rightHeight = items[i + 1].clientHeight;
-	                    console.log(items[i].clientHeight);
-	                    // console.log(leftHeight);
 	                    if (leftHeight > rightHeight) {
 	                        items[i + 1].style.height = leftHeight + "px";
 	                    } else {

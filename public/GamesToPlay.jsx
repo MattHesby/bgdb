@@ -48,8 +48,6 @@ module.exports = React.createClass({
 
                   var leftHeight = items[i].clientHeight;
                   var rightHeight = items[i + 1].clientHeight;
-                  console.log(items[i].clientHeight);
-                  // console.log(leftHeight);
                   if (leftHeight > rightHeight) {
                       items[i + 1].style.height = leftHeight + "px";
                   } else {
