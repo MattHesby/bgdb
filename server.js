@@ -55,7 +55,6 @@ app.get('/games.json', function(req, res) {
     })
 });
 
-
 // Adds games to the DB
 function removeFromDb(data, cb) {
     console.log("removing: " + data);
@@ -135,16 +134,37 @@ var gameMaxPlayers = [];
 var gameTime = []
 var gameDifficulty = [];
 const MAX_RETRIES = 1;
+var totalResolved = 0;
 
 function processBgguser(attempt, type, user, cb) {
-    getUser(user, MAX_RETRIES).then(getIds).then(getAllGames).then(parseAllGames).then(addAllToDb).then((v) => cb(v)).catch((err) => cb(undefined, err));
+    getUser(user, MAX_RETRIES).then(getIds).then(getAllGames).then(parseAllGames).then(clearDb).then(addAllToDb).then(resetData).then((v) => cb(v)).catch((err) => cb(undefined, err));
+}
+
+function resetData(){
+  idArray.length = 0;
+  collectionArray.length = 0;
+  gameArray.length = 0;
+  wholeXml = "";
+  wholeBGXml.length = 0;
+  gameId.length = 0;
+  gameTitle.length = 0;
+  gameDescriptions.length = 0;
+  gameMinPlayers.length = 0;
+  gameMaxPlayers.length = 0;
+  gameTime.length = 0;
+  gameDifficulty.length = 0;
+  totalResolved = 0;
+}
+
+function clearDb(data){
+  GameModel.collection.drop();
+  return data;
 }
 
 function addAllToDb(data){
-  console.log(data)
-  for(var i = 0; i < data.length; i++){
-    data[i].save();
-  }
+    for(var i = 0; i < data.length; i++){
+      data[i].save();
+    }
 }
 
 function parseAllGames(data) {
@@ -198,7 +218,6 @@ function getAllGames(data, promise) {
     return Promise.all(gamePromises);
 }
 
-var totalResolved = 0;
 function getGame(game, maxRetries, wait, promise) {
     return new Promise((resolve, reject) => {
       setTimeout(()=>{
