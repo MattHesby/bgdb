@@ -138,44 +138,33 @@ module.exports = React.createClass({
 
     return (
 
-
-
       <div>
         <div className="container">
-
-
           <nav style={addGameWidth} id="myNavmenu" className="navmenu navmenu-default navmenu-fixed-left offcanvas" role="navigation">
-
             <ul className="nav navmenu-nav">
               <AddGame  loadGamesFromServer={this.loadGamesFromServer}/>
             </ul>
-
           </nav>
 
           <div className="navbar navbar-default navbar-fixed-top">
+
             <button style={leftButton} type="button" className="navbar-toggle" data-toggle="offcanvas" data-target="#myNavmenu" data-canvas="body">
               Add A Game
-
             </button>
 
             <ul style={bggUserStyle}>
               <ChooseBGGUser loadGamesFromServer={this.loadGamesFromServer}/>
-              </ul>
+            </ul>
           </div>
-
         </div>
 
         <div className="container" style={mainStyle}>
-
-
           <h1 className="title text-center"> Choose your Boardgame Type</h1>
-
           <div className="row">
             <ChoosePlayers gNumPlayers={this.state.gNumPlayers} handler={this.handlePlayers}/>
             <ChooseDifficulty gDifficulty={this.state.gDifficulty} handler={this.handleDifficulty}/>
             <ChooseLength gLength={this.state.gLength} handler={this.handleLength}/>
           </div>
-
           <div>
             <GamesToPlay loadGamesFromServer={this.loadGamesFromServer} bgObj={this.state.bgObj} genre={this.state.gGenre} mechanics={this.state.gMechanics} players={this.state.gNumPlayers} difficulty={this.state.gDifficulty} gLength={this.state.gLength}/>
           </div>

@@ -11,6 +11,7 @@ var request = require('request');
 var util = require('util');
 var bbRequest = Promise.promisifyAll(require('request'));
 var parseString = require('xml2js').parseString;
+var entities = require('entities');
 
 app.use(express.static('public'));
 mongoose.connect('mongodb://127.0.0.1:27017/test');
@@ -133,7 +134,6 @@ var gameMinPlayers = [];
 var gameMaxPlayers = [];
 var gameTime = []
 var gameDifficulty = [];
-var allGames = [];
 const MAX_RETRIES = 1;
 
 function processBgguser(attempt, type, user, cb) {
@@ -141,18 +141,20 @@ function processBgguser(attempt, type, user, cb) {
 }
 
 function addAllToDb(data){
-  // console.log(data)
-  // for(var i = 0; i < allGames.length; i++){
-  //   allGames[i].save();
-  // }
+  console.log(data)
+  for(var i = 0; i < data.length; i++){
+    data[i].save();
+  }
 }
 
 function parseAllGames(data) {
+    var allGames = [];
     // Parse Games
       for(var game in data){
         parseString(data[game], function(err, result){
           var gameData = result.items.item[0]
           var tempMinutes = parseInt(gameData.playingtime[0].$.value)
+          var tempDescription = entities.decodeHTML(gameData.description);
           // To be used later
           var tempThumbnail = gameData.thumbnail
 
@@ -161,7 +163,7 @@ function parseAllGames(data) {
           tempGame._id = mongoose.Types.ObjectId();
 
           tempGame.info = {
-            description: gameData.description,
+            description: tempDescription,
             difficult: null,
             genre: null,
             mechanics: null
@@ -318,3 +320,5 @@ var server = app.listen(3000, function() {
     var port = server.address().port;
     console.log('Example app listening at http://%s:%s', host, port);
 });
+
+// Helper Functions
