@@ -4,6 +4,10 @@ var React = require('react')
 var ReactDOM = require('react-dom')
 var LinkedStateMixin = require('react-addons-linked-state-mixin');
 var bs = require('react-bootstrap')
+var Router = require('react-router').Router
+var Route = require('react-router').Route
+var Link = require('react-router').Link
+import { browserHistory } from 'react-router'
 
 module.exports = React.createClass({
     getInitialState: function() {
@@ -31,6 +35,7 @@ module.exports = React.createClass({
             complete: function() {
                 console.log("complete?");
                 _this.props.loadGamesFromServer();
+                browserHistory.push('/see-games');
             },
             success: function(data) {
               console.log(data);
