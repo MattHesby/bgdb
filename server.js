@@ -46,7 +46,7 @@ var gameSchema = new Schema({
 });
 
 var GameModel = mongoose.model("gameModel", gameSchema);
-
+GameModel.collection.drop();
 // Sends current set of games
 app.get('/games.json', function(req, res) {
     GameModel.find(function(err, games) {
@@ -178,7 +178,7 @@ function parseAllGames(data) {
 
           // Creates temp game with data from parsed XML
           var tempGame = {}
-          tempGame._id = mongoose.Types.ObjectId();
+          tempGame._id = gameData.$.id;
 
           tempGame.info = {
             description: tempDescription,
@@ -209,6 +209,7 @@ function sendGameInfo(data) {
 
 function getAllGames(data, promise) {
     var gamePromises = [];
+    console.log(data);
     for (let i = 0; i < data.length; i++) {
       gamePromises.push(getGame(data[i], MAX_RETRIES, i * 1000));
     }
@@ -218,23 +219,30 @@ function getAllGames(data, promise) {
 
 function getGame(game, maxRetries, wait, promise) {
     return new Promise((resolve, reject) => {
-      setTimeout(()=>{
-        request.get('https://www.boardgamegeek.com/xmlapi2/thing?id=' + game, function(error, response, body) {
-            // if (error) return console.log(error);
-            if (!error && response.statusCode == 200) {
-              totalResolved += 1;
-              console.log('total resolved: '+ totalResolved);
-                wholeBGXml.push(body);
-                resolve(body);
-            } else if (maxRetries > 0) {
-                setTimeout(function() {
-                    getGame(game, maxRetries - 1).then((v) => resolve(v)).catch((err) => reject(err));
-                }, 60000)
-            } else {
-                reject('max attempts reached. Error:' + error + 'Body:' + body);
-            }
-        })
-      }, wait)
+      var gameQuery = GameModel.findOne({_id : game})
+      if(gameQuery){
+        wholeBGXml.push(gameQuery);
+        resolve(gameQuery);
+      }
+      else{
+        setTimeout(()=>{
+          request.get('https://www.boardgamegeek.com/xmlapi2/thing?id=' + game, function(error, response, body) {
+              // if (error) return console.log(error);
+              if (!error && response.statusCode == 200) {
+                totalResolved += 1;
+                console.log('total resolved: '+ totalResolved);
+                  wholeBGXml.push(body);
+                  resolve(body);
+              } else if (maxRetries > 0) {
+                  setTimeout(function() {
+                      getGame(game, maxRetries - 1).then((v) => resolve(v)).catch((err) => reject(err));
+                  }, 60000)
+              } else {
+                  reject('max attempts reached. Error:' + error + 'Body:' + body);
+              }
+          })
+        }, wait)
+      }
     })
 }
 
@@ -328,8 +336,6 @@ function parseGameInfo() {
     })
 }
 
-function addGameInfo() {
-}
 
 // sets the server to listen at port 3000
 var server = app.listen(3000, function() {
