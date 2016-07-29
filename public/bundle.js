@@ -25441,7 +25441,7 @@
 	                        React.createElement(
 	                            Link,
 	                            { to: "/", className: "navbar-brand", href: "#" },
-	                            "Boardgame Picker"
+	                            "Board Game Picker"
 	                        )
 	                    )
 	                )
@@ -25468,7 +25468,7 @@
 	                        React.createElement(
 	                            "p",
 	                            null,
-	                            "The list of games below will automatically update based on what games you own, and what restraints you select"
+	                            "The list of games below will automatically update based on what what restraints you select"
 	                        ),
 	                        React.createElement(
 	                            "p",
@@ -43698,7 +43698,7 @@
 	  render: function render() {
 	    return React.createElement(
 	      'div',
-	      { className: 'col-md-2 col-md-offset-3 ' },
+	      { className: 'col-md-2 col-md-offset-4 ' },
 	      React.createElement(
 	        'p',
 	        null,
@@ -44420,12 +44420,12 @@
 	                    React.createElement(
 	                        'h1',
 	                        null,
-	                        ' Welcome to Boardgame Picker '
+	                        ' Welcome to Board Game Picker '
 	                    ),
 	                    React.createElement(
 	                        'p',
 	                        null,
-	                        ' Boardgame Picker will help you determine which of your owned boardgames you want to play based on how many people you have with you and how much time you have available. '
+	                        ' Board Game Picker will help you determine which of your owned board games you want to play based on how many people you have with you and how much time you have available. '
 	                    ),
 	                    React.createElement(
 	                        'p',
@@ -44434,14 +44434,14 @@
 	                        React.createElement(
 	                            'a',
 	                            { href: 'https://boardgamegeek.com/' },
-	                            ' boardgame geek '
+	                            ' boardgamegeek '
 	                        ),
 	                        ' account with the games you own added to the account'
 	                    ),
 	                    React.createElement(
 	                        'p',
 	                        null,
-	                        ' If you\'re here to try it out, you can try the user \'necodamus\' for a longer load time or \'Coiote\' if you want a quicker load time'
+	                        ' If you\'re here to try it out, you can use \'necodamus\' for a longer load time or \'Coiote\' for a quicker load time'
 	                    ),
 	                    React.createElement(
 	                        'p',
@@ -44523,7 +44523,7 @@
 	            React.createElement(
 	              Link,
 	              { to: '/', className: 'navbar-brand', href: '#' },
-	              'Boardgame Picker'
+	              'Board Game Picker'
 	            )
 	          )
 	        )

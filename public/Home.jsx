@@ -31,7 +31,7 @@ module.exports = React.createClass({
         <div className="container-fluid">
           <div className="navbar-header">
             <Link to="/" className="navbar-brand" href="#">
-              Boardgame Picker
+              Board Game Picker
             </Link>
           </div>
         </div>

@@ -150,7 +150,7 @@ module.exports = React.createClass({
                     <div className="container-fluid">
                         <div className="navbar-header">
                             <Link to="/" className="navbar-brand" href="#">
-                                Boardgame Picker
+                                Board Game Picker
                             </Link>
                         </div>
                     </div>
@@ -166,7 +166,7 @@ module.exports = React.createClass({
                                 Select how many players you have with you, and how much time you have available
                             </p>
                             <p>
-                                The list of games below will automatically update based on what games you own, and what restraints you select
+                                The list of games below will automatically update based on what what restraints you select
                             </p>
                             <p>
                                 If you want to narrow down your list, remove a game by clicking on the red X
