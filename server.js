@@ -42,7 +42,7 @@ var gameSchema = new Schema({
         hours: Number,
         minutes: Number
     },
-    title: String
+    title: {type: String, unique: true}
 });
 
 var GameModel = mongoose.model("gameModel", gameSchema);

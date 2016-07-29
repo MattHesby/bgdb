@@ -14,7 +14,6 @@ module.exports = React.createClass({
         return {bggUser: "None"};
     },
     handleBbgUser: function(event) {
-
         var user = this.state.bggUser;
         user = event.target.value;
         this.setState({bggUser: user});
@@ -39,7 +38,7 @@ module.exports = React.createClass({
             },
             success: function(data) {
               console.log(data);
-                console.log("success?");
+              console.log("success?");
 
             },
             error: function(err) {

@@ -44370,7 +44370,6 @@
 	        return { bggUser: "None" };
 	    },
 	    handleBbgUser: function handleBbgUser(event) {
-
 	        var user = this.state.bggUser;
 	        user = event.target.value;
 	        this.setState({ bggUser: user });
