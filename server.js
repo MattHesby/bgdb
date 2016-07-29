@@ -60,7 +60,7 @@ app.get('/*', function(req, res){
 })
 
 
-// Adds games to the DB
+// Removes games to the DB
 function removeFromDb(data, cb) {
     console.log("removing: " + data);
     GameModel.find({
@@ -69,7 +69,7 @@ function removeFromDb(data, cb) {
     cb();
 }
 
-// Removes games from the DB
+// Adds games from the DB
 function addToDB(data, cb) {
     console.log("Adding: " + data.title);
 
@@ -99,7 +99,8 @@ app.post('/', function(req, res, err) {
         })
     }
     if (req.body.type === "bggUser") {
-        processBgguser(0, 'collection?username=', req.body.bggUser + '&own=1', (success, error) => {
+
+        var data = processBgguser(0, 'collection?username=', req.body.bggUser + '&own=1', (success, error) => {
             if (error) {
               console.log('error processing request. Sending status code 500. Error:', error)
                 res.status(500);
@@ -114,18 +115,7 @@ app.post('/', function(req, res, err) {
     }
 })
 
-// function processBggUser(type, item){
-//   var idArray = [];
-//   var collectionArray = [];
-//   var gameArray = [];
-//   var wholeXml;
-//   collectionRequest(type, item, function(){
-//     getIds(function(){
-//       boardgameRequest()
-//     })
-//   })
-// }
-
+// Lots of global variables TODO: fix it so they're not global
 var idArray = [];
 var collectionArray = [];
 var gameArray = [];
@@ -142,10 +132,10 @@ const MAX_RETRIES = 1;
 var totalResolved = 0;
 
 function processBgguser(attempt, type, user, cb) {
-    getUser(user, MAX_RETRIES).then(getIds).then(getAllGames).then(parseAllGames).then(clearDb).then(addAllToDb).then(resetData).then((v) => cb(v)).catch((err) => cb(undefined, err));
+    getUser(user, MAX_RETRIES).then(getIds).then(getAllGames).then(parseAllGames).then(addAllToDb).then(resetData).then((data) => { cb(data)} ).catch((err) => cb(undefined, err));
 }
 
-function resetData(){
+function resetData(data){
   idArray.length = 0;
   collectionArray.length = 0;
   gameArray.length = 0;
@@ -159,18 +149,20 @@ function resetData(){
   gameTime.length = 0;
   gameDifficulty.length = 0;
   totalResolved = 0;
-}
-
-function clearDb(data){
-  GameModel.collection.drop();
-  // res.send(data);
   return data;
 }
+
+// function sentToClient(data){
+//   GameModel.collection.drop();
+//   // res.send(data);
+//   return data;
+// }
 
 function addAllToDb(data){
     for(var i = 0; i < data.length; i++){
       data[i].save();
     }
+    return data;
 }
 
 function parseAllGames(data) {
