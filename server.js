@@ -161,21 +161,22 @@ function processBgguser(attempt, type, user, cb) {
     }).catch((err) => cb(undefined, err));
 }
 
-function resetData(data) {
-    processData.idArray.length = 0;
-    processData.collectionArray.length = 0;
-    processData.gameArray.length = 0;
-    processData.wholeXml = "";
-    wholeBGXml.length = 0;
-    processData.gameId.length = 0;
-    processData.gameTitle.length = 0;
-    processData.gameDescriptions.length = 0;
-    processData.gameMinPlayers.length = 0;
-    processData.gameMaxPlayers.length = 0;
-    processData.gameTime.length = 0;
-    processData.gameDifficulty.length = 0;
-    processData.totalResolved = 0;
-    return data;
+function resetData(passedData) {
+    var [data, processData] = passedData;
+    // processData.idArray.length = 0;
+    // processData.collectionArray.length = 0;
+    // processData.gameArray.length = 0;
+    // processData.wholeXml = "";
+    // processData.wholeBGXml.length = 0;
+    // processData.gameId.length = 0;
+    // processData.gameTitle.length = 0;
+    // processData.gameDescriptions.length = 0;
+    // processData.gameMinPlayers.length = 0;
+    // processData.gameMaxPlayers.length = 0;
+    // processData.gameTime.length = 0;
+    // processData.gameDifficulty.length = 0;
+    // processData.totalResolved = 0;
+    return [data, processData];
 }
 
 // function sentToClient(data){
@@ -184,14 +185,19 @@ function resetData(data) {
 //   return data;
 // }
 
-function addAllToDb(data) {
+function addAllToDb(passedData) {
+    var [data, processData] = passedData;
     for(var i = 0; i < data.length; i++){
         data[i].save();
     }
-    return data;
+    return [data, processData];
 }
 
-function parseAllGames(data) {
+
+function parseAllGames(passedData) {
+  // console.log(processData);
+    var processData = passedData[passedData.length - 1]
+    var data = passedData[passedData.length - 1].wholeBGXml;
     var allGames = [];
     // Parse Games
     for (var game in data) {
@@ -230,7 +236,7 @@ function parseAllGames(data) {
             })
         }
     }
-    return allGames;
+    return [allGames, processData];
 }
 
 function sendGameInfo(data) {
@@ -238,24 +244,26 @@ function sendGameInfo(data) {
 }
 
 // Data is the ID of each game to get
-function getAllGames(data, promise) {
+function getAllGames(passedData, promise) {
+    var [data, processData] = passedData;
+    // console.log(processData);
     var gamePromises = [];
     for (let i = 0; i < data.length; i++) {
-        gamePromises.push(getGame(data[i], MAX_RETRIES, i * 1000));
+        gamePromises.push(getGame(data[i], MAX_RETRIES, i * 1000, processData));
     }
     console.log("resolving all promises");
     return Promise.all(gamePromises);
 }
 
-function getGame(game, maxRetries, wait, promise) {
+function getGame(game, maxRetries, wait, processData, promise) {
     return new Promise((resolve, reject) => {
         var gameQuery = GameModel.findOne({
             _id: game
         }, (err, foundGame) => {
             if (foundGame) {
                 processData.totalResolved += 1;
-                wholeBGXml.push(foundGame);
-                resolve(foundGame)
+                processData.wholeBGXml.push(foundGame);
+                resolve(processData);
             } else {
                 setTimeout(() => {
                     request.get('https://www.boardgamegeek.com/xmlapi2/thing?id=' + game, function(error, response, body) {
@@ -264,10 +272,10 @@ function getGame(game, maxRetries, wait, promise) {
                             processData.totalResolved += 1;
                             console.log('total resolved: ' + processData.totalResolved);
                             processData.wholeBGXml.push(body);
-                            resolve(body);
+                            resolve(processData);
                         } else if (maxRetries > 0) {
                             setTimeout(function() {
-                                getGame(game, maxRetries - 1).then((v) => resolve(v)).catch((err) => reject(err));
+                                getGame(game, maxRetries - 1, processData).then((v) => resolve(v)).catch((err) => reject(err));
                             }, 60000)
                         } else {
                             reject('max attempts reached. Error:' + error + 'Body:' + body);
@@ -280,7 +288,8 @@ function getGame(game, maxRetries, wait, promise) {
     })
 }
 
-function getUser(user, maxRetries) {
+function getUser(user, maxRetries, processData) {
+  // console.log(processData);
     return new Promise((resolve, reject) => {
         console.log("doing request for: " + user);
         request.get('https://www.boardgamegeek.com/xmlapi2/' + 'collection?username=' + user, function(error, response, body) {
@@ -288,11 +297,11 @@ function getUser(user, maxRetries) {
             if (!error && response.statusCode == 200) {
                 processData.wholeXml = body;
                 console.log("finished CollectionRequest");
-                resolve(body);
+                resolve(processData);
             } else if (maxRetries > 0) {
                 console.log("retrying.  attemps left:" + maxRetries);
                 setTimeout(function() {
-                    getUser(user, maxRetries - 1).then((v) => resolve(v)).catch((err) => reject(err));
+                    getUser(user, maxRetries - 1, processData).then((v) => resolve(v)).catch((err) => reject(err));
                 }, 2500)
             } else {
                 console.log("final failure", arguments);
@@ -322,7 +331,8 @@ function collectionRequest(type, item) {
     })
 }
 
-function getIds() {
+function getIds(processData) {
+  // console.log("get Ids", processData);
     // var xml = "<root>Hello xml2js!</root>"
     return new Promise(function(resolve, reject) {
         parseString(processData.wholeXml, function(err, result) {
@@ -333,7 +343,7 @@ function getIds() {
             }
             // console.log(result.items.item[0].$.objectid)
             console.log("finished getIds");
-            resolve(processData.idArray);
+            resolve([processData.idArray, processData]);
         });
     })
 }
@@ -358,7 +368,7 @@ function boardgameRequest() {
 function parseGameInfo() {
     return new Promise(function(resolve, reject) {
         parseString(wholeBGXml, function(err, result) {
-            console.log(result);
+            // console.log(result);
             //NEED TO PULL OUT IDS HERE
             // console.log(util.inspect(result, false, null))
             for (var i = 0; i < 0; i++) {
