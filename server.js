@@ -42,7 +42,10 @@ var gameSchema = new Schema({
         hours: Number,
         minutes: Number
     },
-    title: {type: String, unique: true}
+    title: {
+        type: String,
+        unique: true
+    }
 });
 
 var GameModel = mongoose.model("gameModel", gameSchema);
@@ -55,8 +58,8 @@ app.get('/games.json', function(req, res) {
     })
 });
 
-app.get('/*', function(req, res){
-  res.redirect('/')
+app.get('/*', function(req, res) {
+    res.redirect('/')
 })
 
 
@@ -102,7 +105,7 @@ app.post('/', function(req, res, err) {
 
         var data = processBgguser(0, 'collection?username=', req.body.bggUser + '&own=1', (success, error) => {
             if (error) {
-              console.log('error processing request. Sending status code 500. Error:', error)
+                console.log('error processing request. Sending status code 500. Error:', error)
                 res.status(500);
                 res.send();
                 return res.end();
@@ -132,24 +135,26 @@ const MAX_RETRIES = 1;
 var totalResolved = 0;
 
 function processBgguser(attempt, type, user, cb) {
-    getUser(user, MAX_RETRIES).then(getIds).then(getAllGames).then(parseAllGames).then(addAllToDb).then(resetData).then((data) => { cb(data)} ).catch((err) => cb(undefined, err));
+    getUser(user, MAX_RETRIES).then(getIds).then(getAllGames).then(parseAllGames).then(addAllToDb).then(resetData).then((data) => {
+        cb(data)
+    }).catch((err) => cb(undefined, err));
 }
 
-function resetData(data){
-  idArray.length = 0;
-  collectionArray.length = 0;
-  gameArray.length = 0;
-  wholeXml = "";
-  wholeBGXml.length = 0;
-  gameId.length = 0;
-  gameTitle.length = 0;
-  gameDescriptions.length = 0;
-  gameMinPlayers.length = 0;
-  gameMaxPlayers.length = 0;
-  gameTime.length = 0;
-  gameDifficulty.length = 0;
-  totalResolved = 0;
-  return data;
+function resetData(data) {
+    idArray.length = 0;
+    collectionArray.length = 0;
+    gameArray.length = 0;
+    wholeXml = "";
+    wholeBGXml.length = 0;
+    gameId.length = 0;
+    gameTitle.length = 0;
+    gameDescriptions.length = 0;
+    gameMinPlayers.length = 0;
+    gameMaxPlayers.length = 0;
+    gameTime.length = 0;
+    gameDifficulty.length = 0;
+    totalResolved = 0;
+    return data;
 }
 
 // function sentToClient(data){
@@ -158,9 +163,9 @@ function resetData(data){
 //   return data;
 // }
 
-function addAllToDb(data){
+function addAllToDb(data) {
     for(var i = 0; i < data.length; i++){
-      data[i].save();
+        data[i].save();
     }
     return data;
 }
@@ -168,50 +173,54 @@ function addAllToDb(data){
 function parseAllGames(data) {
     var allGames = [];
     // Parse Games
-      for(var game in data){
-        parseString(data[game], function(err, result){
-          var gameData = result.items.item[0]
-          var tempMinutes = parseInt(gameData.playingtime[0].$.value)
-          var tempDescription = entities.decodeHTML(gameData.description);
-          // To be used later
-          var tempThumbnail = gameData.thumbnail
+    for (var game in data) {
+        if (data[game].constructor.name === "model") {
+            allGames.push(data[game]);
+        } else {
+            parseString(data[game], function(err, result) {
+                var gameData = result.items.item[0]
+                var tempMinutes = parseInt(gameData.playingtime[0].$.value)
+                var tempDescription = entities.decodeHTML(gameData.description);
+                // To be used later
+                var tempThumbnail = gameData.thumbnail
 
-          // Creates temp game with data from parsed XML
-          var tempGame = {}
-          tempGame._id = gameData.$.id;
+                // Creates temp game with data from parsed XML
+                var tempGame = {}
+                tempGame._id = gameData.$.id;
 
-          tempGame.info = {
-            description: tempDescription,
-            difficult: null,
-            genre: null,
-            mechanics: null
-          }
-          tempGame.players = {
-            max: parseInt(gameData.maxplayers[0].$.value),
-            min: parseInt(gameData.minplayers[0].$.value)
-          }
-          tempGame.time = {
-            hours: tempMinutes / 60,
-            minutes: tempMinutes
-          }
-          tempGame.title = gameData.name[0].$.value
+                tempGame.info = {
+                    description: tempDescription,
+                    difficult: null,
+                    genre: null,
+                    mechanics: null
+                }
+                tempGame.players = {
+                    max: parseInt(gameData.maxplayers[0].$.value),
+                    min: parseInt(gameData.minplayers[0].$.value)
+                }
+                tempGame.time = {
+                    hours: tempMinutes / 60,
+                    minutes: tempMinutes
+                }
+                tempGame.title = gameData.name[0].$.value
 
-          // Create mongoose model and add to All games array
-          allGames.push(new GameModel(tempGame));
-        })
-      }
-      return allGames;
+                // Create mongoose model and add to All games array
+                allGames.push(new GameModel(tempGame));
+            })
+        }
+    }
+    return allGames;
 }
 
 function sendGameInfo(data) {
 
 }
 
+// Data is the ID of each game to get
 function getAllGames(data, promise) {
     var gamePromises = [];
-    console.log(data);
     for (let i = 0; i < data.length; i++) {
-      gamePromises.push(getGame(data[i], MAX_RETRIES, i * 1000));
+        gamePromises.push(getGame(data[i], MAX_RETRIES, i * 1000));
     }
     console.log("resolving all promises");
     return Promise.all(gamePromises);
@@ -219,30 +228,34 @@ function getAllGames(data, promise) {
 
 function getGame(game, maxRetries, wait, promise) {
     return new Promise((resolve, reject) => {
-      var gameQuery = GameModel.findOne({_id : game})
-      if(gameQuery){
-        wholeBGXml.push(gameQuery);
-        resolve(gameQuery);
-      }
-      else{
-        setTimeout(()=>{
-          request.get('https://www.boardgamegeek.com/xmlapi2/thing?id=' + game, function(error, response, body) {
-              // if (error) return console.log(error);
-              if (!error && response.statusCode == 200) {
+        var gameQuery = GameModel.findOne({
+            _id: game
+        }, (err, foundGame) => {
+            if (foundGame) {
                 totalResolved += 1;
-                console.log('total resolved: '+ totalResolved);
-                  wholeBGXml.push(body);
-                  resolve(body);
-              } else if (maxRetries > 0) {
-                  setTimeout(function() {
-                      getGame(game, maxRetries - 1).then((v) => resolve(v)).catch((err) => reject(err));
-                  }, 60000)
-              } else {
-                  reject('max attempts reached. Error:' + error + 'Body:' + body);
-              }
-          })
-        }, wait)
-      }
+                wholeBGXml.push(foundGame);
+                resolve(foundGame)
+            } else {
+                setTimeout(() => {
+                    request.get('https://www.boardgamegeek.com/xmlapi2/thing?id=' + game, function(error, response, body) {
+                        // if (error) return console.log(error);
+                        if (!error && response.statusCode == 200) {
+                            totalResolved += 1;
+                            console.log('total resolved: ' + totalResolved);
+                            wholeBGXml.push(body);
+                            resolve(body);
+                        } else if (maxRetries > 0) {
+                            setTimeout(function() {
+                                getGame(game, maxRetries - 1).then((v) => resolve(v)).catch((err) => reject(err));
+                            }, 60000)
+                        } else {
+                            reject('max attempts reached. Error:' + error + 'Body:' + body);
+                        }
+                    })
+                }, wait)
+            }
+        })
+
     })
 }
 
