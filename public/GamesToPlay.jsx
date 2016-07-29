@@ -11,7 +11,7 @@ import Dimensions from 'react-dimensions';
 import ReactDOM from 'react-dom';
 module.exports = React.createClass({
     getInitialState: function() {
-        return {}
+        return {tempGames: undefined}
     },
     componentDidMount: function() {
         var _this = this;
@@ -36,6 +36,7 @@ module.exports = React.createClass({
         }, 50);
     },
     componentDidUpdate: function(){
+      if(!this.state.tempGames) this.state.tempGames = this.props.bgObj
       var _this = this;
       function grab(cb) {
           var theDivs = ReactDOM.findDOMNode(_this).getElementsByClassName("well");
@@ -57,60 +58,61 @@ module.exports = React.createClass({
           })
       }, 50);
     },
-    removeGamesFromServer(evt) {
-
-        var _this = this;
-        // console.log(this);
-        this.state.type = "remove";
-        this.state.toRemove = evt.target.dataset._id;
-        var data = JSON.stringify(this.state);
-        evt.preventDefault();
-        $.ajax({
-            type: "POST",
-            url: '/',
-            dataType: 'json',
-            contentType: 'application/json',
-            processData: true,
-            data: data,
-            complete: function() {
-                console.log("complete?");
-                _this.props.loadGamesFromServer();
-                _this.render();
-            },
-            success: function(data) {
-                console.log("success?");
-
-            },
-            error: function(err) {
-
-                console.log("error");
-            }
-        });
+    removeGamesFromList(evt) {
+      var updateTo = this.state.tempGames;
+      for(var game in updateTo){
+        if(updateTo[game].title === evt.target.name){
+          delete updateTo[game];
+        }
+      }
+      this.setState({tempGames: updateTo});
+        // var _this = this;
+        // // console.log(this);
+        // this.state.type = "remove";
+        // this.state.toRemove = evt.target.dataset._id;
+        // var data = JSON.stringify(this.state);
+        // evt.preventDefault();
+        // $.ajax({
+        //     type: "POST",
+        //     url: '/',
+        //     dataType: 'json',
+        //     contentType: 'application/json',
+        //     processData: true,
+        //     data: data,
+        //     complete: function() {
+        //         console.log("complete?");
+        //         _this.props.loadGamesFromServer();
+        //         _this.render();
+        //     },
+        //     success: function(data) {
+        //         console.log("success?");
+        //
+        //     },
+        //     error: function(err) {
+        //
+        //         console.log("error");
+        //     }
+        // });
     },
     render : function() {
-        var tempGames = JSON.parse(JSON.stringify(this.props.bgObj));
+        console.log("rendering", this.state.tempGames);
+        var gamesToDisplay = this.state.tempGames || this.props.bgObj;
+        console.log("gamesToPlay", gamesToDisplay)
         var viableGameTitles = [];
         var viableGameDescriptions = [];
         var viableGameRow = [];
         var viableGameId = [];
 
         var containerOfBoxes = {
-            // height:"400px",
-
         }
         var box1 = {
           "marginRight": "40px"
-            // overflow: "hidden"
-        }
+      }
         var box2 = {
-
-
-            // overflow: "hidden"
         }
-
-        for (var game in this.props.bgObj) {
-            if (this.props.bgObj.hasOwnProperty(game)) {
-                var curGame = this.props.bgObj[game];
+        for (var game in gamesToDisplay) {
+            if (gamesToDisplay.hasOwnProperty(game)) {
+                var curGame = gamesToDisplay[game];
                 // console.log(curGame.time.minutes)
                 // console.log(this.props.gLength)
                 // console.log(curGame.time.minutes <= this.props.gLength + 20)
@@ -145,7 +147,7 @@ module.exports = React.createClass({
                     <div style={box2} className="well col-md-6">
                         {viableGameDescriptions[i]}
                     </div>
-                    <bs.Button data-_id={viableGameId[i]} name={viableGameTitles[i]} onClick={this.removeGamesFromServer} className="vertical-center btn btn-danger">
+                    <bs.Button data-_id={viableGameId[i]} name={viableGameTitles[i]} onClick={this.removeGamesFromList} className="vertical-center btn btn-danger">
                         X
                     </bs.Button>
                 </div>
