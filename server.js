@@ -163,6 +163,7 @@ function resetData(){
 
 function clearDb(data){
   GameModel.collection.drop();
+  // res.send(data);
   return data;
 }
 

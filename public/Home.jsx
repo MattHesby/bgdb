@@ -24,40 +24,30 @@ module.exports = React.createClass({
   },
   render: function() {
 
-    var leftButton = {
-      float: "left",
-      display: "block",
-    }
-    var mainStyle = {
-      paddingTop: "50px",
-    }
-
-    var addGameWidth = {
-      width: "400px",
-    }
-    var bggUserStyle = {
-      float:"right"
-    }
-
     return (
-      <div className="container">
-        <nav style={addGameWidth} id="myNavmenu" className="navmenu navmenu-default navmenu-fixed-left offcanvas" role="navigation">
-          <ul className="nav navmenu-nav">
-            <AddGame  loadGamesFromServer={this.loadGamesFromServer}/>
-          </ul>
-        </nav>
+      <div>
 
-        <div className="navbar navbar-default navbar-fixed-top">
-
-          <Link to="/see-games" style={leftButton} type="button" className="navbar-toggle" data-toggle="offcanvas" data-target="#myNavmenu" data-canvas="body">
-            Add A Game
-          </Link>
-
-          <ul style={bggUserStyle}>
-            <ChooseBGGUser loadGamesFromServer={this.loadGamesFromServer}/>
-          </ul>
+      <nav className="navbar navbar-default">
+        <div className="container-fluid">
+          <div className="navbar-header">
+            <Link to="/" className="navbar-brand" href="#">
+              Boardgame Picker
+            </Link>
+          </div>
         </div>
+      </nav>
+
+
+
+      <ChooseBGGUser loadGamesFromServer={this.loadGamesFromServer}/>
+
+
       </div>
     )
   }
 })
+
+
+          // <Link to="/see-games" style={leftButton} type="button" className="navbar-toggle" data-toggle="offcanvas" data-target="#myNavmenu" data-canvas="body">
+          //   Add A Game
+          // </Link>

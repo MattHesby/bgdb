@@ -164,11 +164,13 @@ module.exports = React.createClass({
         // </div>
 
         return (
-            <div>
-                <h1 className="text-center title">
-                    Games That Match Your Needs!
+            <div className="container">
+              <div className="row">
+                <h1 className="col-md-8 col-md-offset-2 ">
+                    Games
                 </h1>
 
+                </div>
                 {viableGameRow}
 
             </div>

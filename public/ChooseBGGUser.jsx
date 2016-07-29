@@ -58,8 +58,18 @@ module.exports = React.createClass({
 
         return (
             <div className="container">
+
+              <div className="row">
+              <div className="col-md-8 col-md-offset-2">
+                <h1> Welcome to Boardgame Picker </h1>
+                <p> Boardgame Picker will help you determine which of your owned boardgames you want to play based on how many people you have with you and how much time you have available. </p>
+                <p> You will need a <a href="https://boardgamegeek.com/"> boardgame geek </a> account with the games you own added to the account</p>
+                <p> If you're here to try it out, you can try the user 'necodamus' for a longer load time or 'Coiote' if you want a quicker load time</p>
+                <p> Enter your username below and click Submit.  If you have a lot of games, it may take a while. </p>
+                </div>
+              </div>
                 <div className="row">
-                    <div className="col-md-offset-8 col-md-3 navbar-brand">
+                    <div className="col-md-offset-2 col-md-3 navbar-brand">
                         <div>
                             <bs.Input type="text" placeholder="Boardgamegeek Username" onChange={this.handleBbgUser}/>
                         </div>

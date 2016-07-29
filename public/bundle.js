@@ -89,25 +89,6 @@
 	  React.createElement(Route, { path: '/see-games', component: BGDisplay })
 	), document.getElementById('content'));
 
-	// //* index.jsx *//
-	// 'use strict';
-	// var React = require('react')
-	// var ReactDOM = require('react-dom')
-	// var Router = require('react-router').Router
-	// var Route = require('react-router').Route
-	// var Link = require('react-router').Link
-	//
-	// // window.ReactDOM = ReactDOM;
-	// var BGDisplay = require('./BGDisplay.jsx');
-	// var Home = require('./Home.jsx');
-	// // var AddGame = require('./AddGame.jsx')
-	// ReactDOM.render((
-	//   <Router>
-	//     <Route path='/' component={Home} />
-	//
-	//   </Router> ),
-	//   document.getElementById('content'))
-
 /***/ },
 /* 1 */
 /***/ function(module, exports, __webpack_require__) {
@@ -25302,10 +25283,10 @@
 	"use strict";
 
 	var dataBlock = {
-	  color: "green"
+	    color: "green"
 	};
 	var container = {
-	  border: "2px solid black"
+	    border: "2px solid black"
 	};
 	/////////////////////////////////////////////
 
@@ -25313,6 +25294,9 @@
 	var React = __webpack_require__(3);
 	var ReactDOM = __webpack_require__(221);
 	var boardGameObj = [];
+	var Router = __webpack_require__(1).Router;
+	var Route = __webpack_require__(1).Route;
+	var Link = __webpack_require__(1).Link;
 
 	// REACT COMPONENTS //
 	var GamesToPlay = __webpack_require__(223);
@@ -25326,147 +25310,192 @@
 	var ChooseBGGUser = __webpack_require__(487);
 
 	module.exports = React.createClass({
-	  displayName: "exports",
+	    displayName: "exports",
 
-	  getInitialState: function getInitialState() {
-	    return { bgObj: boardGameObj, gNumPlayers: "Any", gDifficulty: "Any", gLength: "Any", gGenre: "Any", gMechanics: "Any" };
-	  },
-	  // Handlers for each of the different values
-	  handlePlayers: function handlePlayers(e) {
-	    this.setState({ gNumPlayers: e.target.value });
-	  },
-	  handleDifficulty: function handleDifficulty(e) {
-	    this.setState({ gDifficulty: e.target.value });
-	  },
-	  handleLength: function handleLength(e) {
-	    this.setState({ gLength: e.target.value });
-	  },
-	  handleGenre: function handleGenre(e) {
-	    this.setState({ gGenre: e.target.value });
-	  },
-	  handleMechanics: function handleMechanics(val) {
+	    getInitialState: function getInitialState() {
+	        return {
+	            bgObj: boardGameObj,
+	            gNumPlayers: "Any",
+	            gDifficulty: "Any",
+	            gLength: "Any",
+	            gGenre: "Any",
+	            gMechanics: "Any"
+	        };
+	    },
+	    // Handlers for each of the different values
+	    handlePlayers: function handlePlayers(e) {
+	        this.setState({ gNumPlayers: e.target.value });
+	    },
+	    handleDifficulty: function handleDifficulty(e) {
+	        this.setState({ gDifficulty: e.target.value });
+	    },
+	    handleLength: function handleLength(e) {
+	        this.setState({ gLength: e.target.value });
+	    },
+	    handleGenre: function handleGenre(e) {
+	        this.setState({ gGenre: e.target.value });
+	    },
+	    handleMechanics: function handleMechanics(val) {
 
-	    this.setState({ gMechanics: val });
-	  },
-	  loadGamesFromServer: function loadGamesFromServer() {
-	    $.ajax({
-	      url: '/games.json',
-	      dataType: 'json',
-	      cache: false,
-	      success: (function (data) {
-	        this.setState({ bgObj: data });
-	      }).bind(this),
-	      error: (function (xhr, status, err) {
-	        console.error(this.props.url, status, err.toString());
-	      }).bind(this)
-	    });
-	  },
+	        this.setState({ gMechanics: val });
+	    },
+	    loadGamesFromServer: function loadGamesFromServer() {
+	        $.ajax({
+	            url: '/games.json',
+	            dataType: 'json',
+	            cache: false,
+	            success: (function (data) {
+	                this.setState({ bgObj: data });
+	            }).bind(this),
+	            error: (function (xhr, status, err) {
+	                console.error(this.props.url, status, err.toString());
+	            }).bind(this)
+	        });
+	    },
 
-	  componentDidMount: function componentDidMount() {
-	    this.loadGamesFromServer();
-	  },
+	    componentDidMount: function componentDidMount() {
+	        this.loadGamesFromServer();
+	    },
 
-	  render: function render() {
-	    //sets up Genre Options
-	    var GENRES = ["Any"];
-	    for (var game in this.state.bgObj) {
-	      if (boardGameObj.hasOwnProperty(game)) {
-	        var curGame = boardGameObj[game];
-	        GENRES.push(curGame.info.genre);
-	      }
+	    render: function render() {
+	        //sets up Genre Options
+	        var GENRES = ["Any"];
+	        for (var game in this.state.bgObj) {
+	            if (boardGameObj.hasOwnProperty(game)) {
+	                var curGame = boardGameObj[game];
+	                GENRES.push(curGame.info.genre);
+	            }
+	        }
+	        for (var i = 0; i < GENRES.length; i++) {
+	            GENRES[i] = React.createElement(
+	                "option",
+	                { value: GENRES[i] },
+	                GENRES[i]
+	            );
+	        }
+	        // Sets up Mechanics Options
+	        var MECHANICS_OPTIONS = [{
+	            label: "Any",
+	            value: "Any"
+	        }, {
+	            label: "Area Control",
+	            value: "area-control"
+	        }, {
+	            label: "Worker Placement",
+	            value: "worker-placement"
+	        }, {
+	            label: "Trading",
+	            value: "trading"
+	        }];
+
+	        var leftButton = {
+	            float: "left",
+	            display: "block"
+	        };
+	        var mainStyle = {
+	            paddingTop: "50px"
+	        };
+
+	        var addGameWidth = {
+	            width: "400px"
+	        };
+
+	        //
+	        // var MECHANICS = [{label: "Any", value: "Any"}];
+	        // for (var game in this.state.bgObj) {
+	        //     if (boardGameObj.hasOwnProperty(game)) {
+	        //         var curGame = boardGameObj[game];
+	        //         MECHANICS.push(curGame.info.mechanics);
+	        //     }
+	        // }
+	        // for (var i = 0; i < MECHANICS.length; i++) {
+	        //     MECHANICS[i] = {label: {MECHANICS[i]}, value: [MECHANICS[i] }
+	        // }
+
+	        // Removed Mechanics and Genre
+	        // <ChooseMechanics MECHANICS_OPTIONS={MECHANICS_OPTIONS} handler={this.handleMechanics}/>
+	        // <ChooseGenre GENRES={GENRES} gGenre={this.state.gGenre} handler={this.handleGenre}/>
+
+	        // <div className="selection">
+	        //   <div className="navbar navbar-default">
+	        //       <a className="navbar-brand"> Board Game Database </a>
+	        //   </div>
+	        // </div>
+
+	        var bggUserStyle = {
+	            float: "right"
+	        };
+
+	        return React.createElement(
+	            "div",
+	            null,
+	            React.createElement(
+	                "nav",
+	                { className: "navbar navbar-default" },
+	                React.createElement(
+	                    "div",
+	                    { className: "container-fluid" },
+	                    React.createElement(
+	                        "div",
+	                        { className: "navbar-header" },
+	                        React.createElement(
+	                            Link,
+	                            { to: "/", className: "navbar-brand", href: "#" },
+	                            "Boardgame Picker"
+	                        )
+	                    )
+	                )
+	            ),
+	            React.createElement(
+	                "div",
+	                { className: "container" },
+	                React.createElement(
+	                    "div",
+	                    { className: "row" },
+	                    React.createElement(
+	                        "div",
+	                        { className: "col-md-8 col-md-offset-2" },
+	                        React.createElement(
+	                            "h1",
+	                            null,
+	                            "Determine what game to play"
+	                        ),
+	                        React.createElement(
+	                            "p",
+	                            null,
+	                            "Select how many players you have with you, and how much time you have available"
+	                        ),
+	                        React.createElement(
+	                            "p",
+	                            null,
+	                            "The list of games below will automatically update based on what games you own, and what restraints you select"
+	                        ),
+	                        React.createElement(
+	                            "p",
+	                            null,
+	                            "If you want to narrow down your list, remove a game by clicking on the red X"
+	                        )
+	                    )
+	                ),
+	                React.createElement("br", null)
+	            ),
+	            React.createElement(
+	                "div",
+	                { className: "row" },
+	                React.createElement(ChoosePlayers, { gNumPlayers: this.state.gNumPlayers, handler: this.handlePlayers }),
+	                React.createElement(ChooseLength, { gLength: this.state.gLength, handler: this.handleLength })
+	            ),
+	            React.createElement("br", null),
+	            React.createElement(
+	                "div",
+	                { className: "container" },
+	                React.createElement(GamesToPlay, { loadGamesFromServer: this.loadGamesFromServer, bgObj: this.state.bgObj, genre: this.state.gGenre, mechanics: this.state.gMechanics, players: this.state.gNumPlayers, difficulty: this.state.gDifficulty, gLength: this.state.gLength })
+	            )
+	        );
 	    }
-	    for (var i = 0; i < GENRES.length; i++) {
-	      GENRES[i] = React.createElement(
-	        "option",
-	        { value: GENRES[i] },
-	        GENRES[i]
-	      );
-	    }
-	    // Sets up Mechanics Options
-	    var MECHANICS_OPTIONS = [{
-	      label: "Any",
-	      value: "Any"
-	    }, {
-	      label: "Area Control",
-	      value: "area-control"
-	    }, {
-	      label: "Worker Placement",
-	      value: "worker-placement"
-	    }, {
-	      label: "Trading",
-	      value: "trading"
-	    }];
-
-	    var leftButton = {
-	      float: "left",
-	      display: "block"
-	    };
-	    var mainStyle = {
-	      paddingTop: "50px"
-	    };
-
-	    var addGameWidth = {
-	      width: "400px"
-	    };
-
-	    //
-	    // var MECHANICS = [{label: "Any", value: "Any"}];
-	    // for (var game in this.state.bgObj) {
-	    //     if (boardGameObj.hasOwnProperty(game)) {
-	    //         var curGame = boardGameObj[game];
-	    //         MECHANICS.push(curGame.info.mechanics);
-	    //     }
-	    // }
-	    // for (var i = 0; i < MECHANICS.length; i++) {
-	    //     MECHANICS[i] = {label: {MECHANICS[i]}, value: [MECHANICS[i] }
-	    // }
-
-	    // Removed Mechanics and Genre
-	    // <ChooseMechanics MECHANICS_OPTIONS={MECHANICS_OPTIONS} handler={this.handleMechanics}/>
-	    // <ChooseGenre GENRES={GENRES} gGenre={this.state.gGenre} handler={this.handleGenre}/>
-
-	    // <div className="selection">
-	    //   <div className="navbar navbar-default">
-	    //       <a className="navbar-brand"> Board Game Database </a>
-	    //   </div>
-	    // </div>
-
-	    var bggUserStyle = {
-	      float: "right"
-	    };
-
-	    return React.createElement(
-	      "div",
-	      null,
-	      React.createElement(
-	        "div",
-	        { className: "container" },
-	        React.createElement("nav", { id: "myNavmenu", className: "navmenu navmenu-default navmenu-fixed-left offcanvas", role: "navigation" })
-	      ),
-	      React.createElement(
-	        "div",
-	        { className: "container", style: mainStyle },
-	        React.createElement(
-	          "h1",
-	          { className: "title text-center" },
-	          " Choose your Boardgame Type"
-	        ),
-	        React.createElement(
-	          "div",
-	          { className: "row" },
-	          React.createElement(ChoosePlayers, { gNumPlayers: this.state.gNumPlayers, handler: this.handlePlayers }),
-	          React.createElement(ChooseDifficulty, { gDifficulty: this.state.gDifficulty, handler: this.handleDifficulty }),
-	          React.createElement(ChooseLength, { gLength: this.state.gLength, handler: this.handleLength })
-	        ),
-	        React.createElement(
-	          "div",
-	          null,
-	          React.createElement(GamesToPlay, { loadGamesFromServer: this.loadGamesFromServer, bgObj: this.state.bgObj, genre: this.state.gGenre, mechanics: this.state.gMechanics, players: this.state.gNumPlayers, difficulty: this.state.gDifficulty, gLength: this.state.gLength })
-	        )
-	      )
-	    );
-	  }
 	});
+
+	// <ChooseDifficulty gDifficulty={this.state.gDifficulty} handler={this.handleDifficulty}/>
 
 /***/ },
 /* 223 */
@@ -25650,11 +25679,15 @@
 
 	        return React.createElement(
 	            'div',
-	            null,
+	            { className: 'container' },
 	            React.createElement(
-	                'h1',
-	                { className: 'text-center title' },
-	                'Games That Match Your Needs!'
+	                'div',
+	                { className: 'row' },
+	                React.createElement(
+	                    'h1',
+	                    { className: 'col-md-8 col-md-offset-2 ' },
+	                    'Games'
+	                )
 	            ),
 	            viableGameRow
 	        );
@@ -44383,7 +44416,46 @@
 	                { className: 'row' },
 	                React.createElement(
 	                    'div',
-	                    { className: 'col-md-offset-8 col-md-3 navbar-brand' },
+	                    { className: 'col-md-8 col-md-offset-2' },
+	                    React.createElement(
+	                        'h1',
+	                        null,
+	                        ' Welcome to Boardgame Picker '
+	                    ),
+	                    React.createElement(
+	                        'p',
+	                        null,
+	                        ' Boardgame Picker will help you determine which of your owned boardgames you want to play based on how many people you have with you and how much time you have available. '
+	                    ),
+	                    React.createElement(
+	                        'p',
+	                        null,
+	                        ' You will need a ',
+	                        React.createElement(
+	                            'a',
+	                            { href: 'https://boardgamegeek.com/' },
+	                            ' boardgame geek '
+	                        ),
+	                        ' account with the games you own added to the account'
+	                    ),
+	                    React.createElement(
+	                        'p',
+	                        null,
+	                        ' If you\'re here to try it out, you can try the user \'necodamus\' for a longer load time or \'Coiote\' if you want a quicker load time'
+	                    ),
+	                    React.createElement(
+	                        'p',
+	                        null,
+	                        ' Enter your username below and click Submit.  If you have a lot of games, it may take a while. '
+	                    )
+	                )
+	            ),
+	            React.createElement(
+	                'div',
+	                { className: 'row' },
+	                React.createElement(
+	                    'div',
+	                    { className: 'col-md-offset-2 col-md-3 navbar-brand' },
 	                    React.createElement(
 	                        'div',
 	                        null,
@@ -44436,50 +44508,34 @@
 	  },
 	  render: function render() {
 
-	    var leftButton = {
-	      float: "left",
-	      display: "block"
-	    };
-	    var mainStyle = {
-	      paddingTop: "50px"
-	    };
-
-	    var addGameWidth = {
-	      width: "400px"
-	    };
-	    var bggUserStyle = {
-	      float: "right"
-	    };
-
 	    return React.createElement(
 	      'div',
-	      { className: 'container' },
+	      null,
 	      React.createElement(
 	        'nav',
-	        { style: addGameWidth, id: 'myNavmenu', className: 'navmenu navmenu-default navmenu-fixed-left offcanvas', role: 'navigation' },
+	        { className: 'navbar navbar-default' },
 	        React.createElement(
-	          'ul',
-	          { className: 'nav navmenu-nav' },
-	          React.createElement(AddGame, { loadGamesFromServer: this.loadGamesFromServer })
+	          'div',
+	          { className: 'container-fluid' },
+	          React.createElement(
+	            'div',
+	            { className: 'navbar-header' },
+	            React.createElement(
+	              Link,
+	              { to: '/', className: 'navbar-brand', href: '#' },
+	              'Boardgame Picker'
+	            )
+	          )
 	        )
 	      ),
-	      React.createElement(
-	        'div',
-	        { className: 'navbar navbar-default navbar-fixed-top' },
-	        React.createElement(
-	          Link,
-	          { to: '/see-games', style: leftButton, type: 'button', className: 'navbar-toggle', 'data-toggle': 'offcanvas', 'data-target': '#myNavmenu', 'data-canvas': 'body' },
-	          'Add A Game'
-	        ),
-	        React.createElement(
-	          'ul',
-	          { style: bggUserStyle },
-	          React.createElement(ChooseBGGUser, { loadGamesFromServer: this.loadGamesFromServer })
-	        )
-	      )
+	      React.createElement(ChooseBGGUser, { loadGamesFromServer: this.loadGamesFromServer })
 	    );
 	  }
 	});
+
+	// <Link to="/see-games" style={leftButton} type="button" className="navbar-toggle" data-toggle="offcanvas" data-target="#myNavmenu" data-canvas="body">
+	//   Add A Game
+	// </Link>
 
 /***/ },
 /* 489 */

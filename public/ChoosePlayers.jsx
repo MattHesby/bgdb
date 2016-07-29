@@ -6,7 +6,7 @@ var ReactDOM = require('react-dom')
 module.exports = React.createClass({
   render: function() {
     return (
-
+    
       <div className="col-md-2 col-md-offset-3 ">
         <p>
           How Many Players?
@@ -38,6 +38,7 @@ module.exports = React.createClass({
           </option>
         </select>
       </div>
+
 
     )
   }
