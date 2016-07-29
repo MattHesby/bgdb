@@ -44442,12 +44442,18 @@
 	                    React.createElement(
 	                        'p',
 	                        null,
-	                        ' If you\'re here to try it out, you can use \'necodamus\' for a longer load time or \'Coiote\' for a quicker load time'
+	                        ' If you\'re here to try it out, you can use \'necodamus\' or look for a random account on ',
+	                        React.createElement(
+	                            'a',
+	                            { href: 'https://boardgamegeek.com/' },
+	                            ' boardgamegeek '
+	                        ),
+	                        ' to see how the website handles longer load times when pulling games from the xml data instead of finding them already stored in the database '
 	                    ),
 	                    React.createElement(
 	                        'p',
 	                        null,
-	                        ' Enter your username below and click Submit.  If you have a lot of games, it may take a while. '
+	                        ' Enter your username below and click Submit.  If you have a lot of games, it may take a while depending on what is already stored in the database '
 	                    )
 	                )
 	            ),

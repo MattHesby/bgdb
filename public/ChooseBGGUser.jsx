@@ -63,8 +63,8 @@ module.exports = React.createClass({
                 <h1> Welcome to Board Game Picker </h1>
                 <p> Board Game Picker will help you determine which of your owned board games you want to play based on how many people you have with you and how much time you have available. </p>
                 <p> You will need a <a href="https://boardgamegeek.com/"> boardgamegeek </a> account with the games you own added to the account</p>
-                <p> If you're here to try it out, you can use 'necodamus' for a longer load time or 'Coiote' for a quicker load time</p>
-                <p> Enter your username below and click Submit.  If you have a lot of games, it may take a while. </p>
+                <p> If you're here to try it out, you can use 'necodamus' or look for a random account on <a href="https://boardgamegeek.com/"> boardgamegeek </a> to see how the website handles longer load times when pulling games from the xml data instead of finding them already stored in the database </p>
+                <p> Enter your username below and click Submit.  If you have a lot of games, it may take a while depending on what is already stored in the database </p>
                 </div>
               </div>
                 <div className="row">

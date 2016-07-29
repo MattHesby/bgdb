@@ -50,7 +50,8 @@ var gameSchema = new Schema({
 
 var GameModel = mongoose.model("gameModel", gameSchema);
 GameModel.collection.drop();
-// Sends current set of games
+
+// Sends current set of games - No Longer used
 app.get('/games.json', function(req, res) {
     GameModel.find(function(err, games) {
         if (err) return console.log(err);
@@ -63,7 +64,7 @@ app.get('/*', function(req, res) {
 })
 
 
-// Removes games to the DB
+// Removes games to the DB - No Longer used
 function removeFromDb(data, cb) {
     console.log("removing: " + data);
     GameModel.find({
@@ -72,7 +73,7 @@ function removeFromDb(data, cb) {
     cb();
 }
 
-// Adds games from the DB
+// Adds games from the DB - No Longer used
 function addToDB(data, cb) {
     console.log("Adding: " + data.title);
 
@@ -85,10 +86,12 @@ function addToDB(data, cb) {
 // Handles removing and adding games
 app.post('/', function(req, res, err) {
 
+    // - No Longer used
     if (req.body.type === "remove") {
         removeFromDb(req.body.toRemove, res.end.bind(res));
     }
 
+    // - No Longer used
     if (req.body.type === "add") {
         addToDB(req.body, function(err) {
             if (err) {
@@ -101,6 +104,8 @@ app.post('/', function(req, res, err) {
             res.end();
         })
     }
+
+
     if (req.body.type === "bggUser") {
 
         var data = processBgguser(0, 'collection?username=', req.body.bggUser + '&own=1', (success, error) => {
@@ -119,41 +124,57 @@ app.post('/', function(req, res, err) {
 })
 
 // Lots of global variables TODO: fix it so they're not global
-var idArray = [];
-var collectionArray = [];
-var gameArray = [];
-var wholeXml;
-var wholeBGXml = [];
-var gameId = [];
-var gameTitle = [];
-var gameDescriptions = [];
-var gameMinPlayers = [];
-var gameMaxPlayers = [];
-var gameTime = []
-var gameDifficulty = [];
+// var idArray = [];
+// var collectionArray = [];
+// var gameArray = [];
+// var wholeXml;
+// var wholeBGXml = [];
+// var gameId = [];
+// var gameTitle = [];
+// var gameDescriptions = [];
+// var gameMinPlayers = [];
+// var gameMaxPlayers = [];
+// var gameTime = []
+// var gameDifficulty = [];
 const MAX_RETRIES = 1;
-var totalResolved = 0;
+// var processData.totalResolved = 0;
 
 function processBgguser(attempt, type, user, cb) {
-    getUser(user, MAX_RETRIES).then(getIds).then(getAllGames).then(parseAllGames).then(addAllToDb).then(resetData).then((data) => {
+  var processData = {
+    idArray: [],
+    collectionArray: [],
+    gameArray: [],
+    wholeXml: String,
+    wholeBGXml: [],
+    gameId: [],
+    gameTitle: [],
+    gameDescription: [],
+    gameMinPlayers: [],
+    gameMaxPlayers: [],
+    gameTime: [],
+    gameDifficulty: [],
+    totalResolved: 0
+  }
+
+    getUser(user, MAX_RETRIES, processData).then(getIds).then(getAllGames).then(parseAllGames).then(addAllToDb).then(resetData).then((data) => {
         cb(data)
     }).catch((err) => cb(undefined, err));
 }
 
 function resetData(data) {
-    idArray.length = 0;
-    collectionArray.length = 0;
-    gameArray.length = 0;
-    wholeXml = "";
+    processData.idArray.length = 0;
+    processData.collectionArray.length = 0;
+    processData.gameArray.length = 0;
+    processData.wholeXml = "";
     wholeBGXml.length = 0;
-    gameId.length = 0;
-    gameTitle.length = 0;
-    gameDescriptions.length = 0;
-    gameMinPlayers.length = 0;
-    gameMaxPlayers.length = 0;
-    gameTime.length = 0;
-    gameDifficulty.length = 0;
-    totalResolved = 0;
+    processData.gameId.length = 0;
+    processData.gameTitle.length = 0;
+    processData.gameDescriptions.length = 0;
+    processData.gameMinPlayers.length = 0;
+    processData.gameMaxPlayers.length = 0;
+    processData.gameTime.length = 0;
+    processData.gameDifficulty.length = 0;
+    processData.totalResolved = 0;
     return data;
 }
 
@@ -232,7 +253,7 @@ function getGame(game, maxRetries, wait, promise) {
             _id: game
         }, (err, foundGame) => {
             if (foundGame) {
-                totalResolved += 1;
+                processData.totalResolved += 1;
                 wholeBGXml.push(foundGame);
                 resolve(foundGame)
             } else {
@@ -240,9 +261,9 @@ function getGame(game, maxRetries, wait, promise) {
                     request.get('https://www.boardgamegeek.com/xmlapi2/thing?id=' + game, function(error, response, body) {
                         // if (error) return console.log(error);
                         if (!error && response.statusCode == 200) {
-                            totalResolved += 1;
-                            console.log('total resolved: ' + totalResolved);
-                            wholeBGXml.push(body);
+                            processData.totalResolved += 1;
+                            console.log('total resolved: ' + processData.totalResolved);
+                            processData.wholeBGXml.push(body);
                             resolve(body);
                         } else if (maxRetries > 0) {
                             setTimeout(function() {
@@ -265,7 +286,7 @@ function getUser(user, maxRetries) {
         request.get('https://www.boardgamegeek.com/xmlapi2/' + 'collection?username=' + user, function(error, response, body) {
             // if (error) return console.log(error);
             if (!error && response.statusCode == 200) {
-                wholeXml = body;
+                processData.wholeXml = body;
                 console.log("finished CollectionRequest");
                 resolve(body);
             } else if (maxRetries > 0) {
@@ -291,7 +312,7 @@ function collectionRequest(type, item) {
         request.get('https://www.boardgamegeek.com/xmlapi2/' + type + item, function(error, response, body) {
             // if (error) return console.log(error);
             if (!error && response.statusCode == 200) {
-                wholeXml = body;
+                processData.wholeXml = body;
                 console.log("finished CollectionRequest");
                 resolve();
             } else {
@@ -304,24 +325,24 @@ function collectionRequest(type, item) {
 function getIds() {
     // var xml = "<root>Hello xml2js!</root>"
     return new Promise(function(resolve, reject) {
-        parseString(wholeXml, function(err, result) {
+        parseString(processData.wholeXml, function(err, result) {
             //NEED TO PULL OUT IDS HERE
             // console.log(util.inspect(result, false, null))
             for (var i = 0; i < result.items.item.length; i++) {
-                idArray.push(result.items.item[i].$.objectid);
+                processData.idArray.push(result.items.item[i].$.objectid);
             }
             // console.log(result.items.item[0].$.objectid)
             console.log("finished getIds");
-            resolve(idArray);
+            resolve(processData.idArray);
         });
     })
 }
 
 function boardgameRequest() {
     return new Promise(function(resolve, reject) {
-        for (var i = 0; i < idArray.length; i++) {
+        for (var i = 0; i < processData.idArray.length; i++) {
             console.log("getting boardgame")
-            request.get('https://www.boardgamegeek.com/xmlapi2/thing?id=' + idArray[i],
+            request.get('https://www.boardgamegeek.com/xmlapi2/thing?id=' + processData.idArray[i],
                 function(error, response, body) {
                     // if (error) return console.log(error);
                     if (!error && response.statusCode == 200) {
