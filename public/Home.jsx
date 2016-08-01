@@ -20,11 +20,18 @@ module.exports = React.createClass({
       this.setState({bggUser: user});
   },
   submitHandler: function(evt) {
+      var chooser = document.getElementById("choosebgguserdiv");
+      var displayer = document.getElementById('bgdisplaydiv');
+      var spinner = document.getElementById("meepleLoader")
+
+
+
       var _this = this;
       this.state.type = "bggUser";
       var data = JSON.stringify(this.state);
       console.log(data);
       evt.preventDefault();
+      spinner.className += "spinner"
       $.ajax({
           type: "POST",
           url: '/',
@@ -34,13 +41,13 @@ module.exports = React.createClass({
           data: data,
           complete: function() {
               console.log("complete?");
-
+              spinner.className = ""
           },
           success: function(data) {
               console.log(data);
               _this.setState({bgObj: data[0]});
-              document.getElementById("choosebgguserdiv").className = "hidden";
-              document.getElementById('bgdisplaydiv').className = "";
+              chooser.className = "hidden";
+              displayer.className = "";
               console.log("success?");
               console.log("state: ", _this.state.bgObj)
           },
@@ -56,13 +63,11 @@ module.exports = React.createClass({
 
         <Navbar/>
         <ChooseBGGUser bggUserHandler={this.bggUserHandler} submitHandler={this.submitHandler}/>
+        <div id="meepleContainer">
+          <img id="meeple" src="images/black-meeple.png" id="meepleLoader" />
+        </div>
         <BGDisplay bgObj={this.state.bgObj} />
       </div>
     )
   }
 })
-
-
-          // <Link to="/see-games" style={leftButton} type="button" className="navbar-toggle" data-toggle="offcanvas" data-target="#myNavmenu" data-canvas="body">
-          //   Add A Game
-          // </Link>

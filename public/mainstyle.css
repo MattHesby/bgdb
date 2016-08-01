@@ -1,3 +1,74 @@
+#meepleLoader{
+	height: 50px
+}
+
+#meepleContainer{
+	margin-top: 50px;
+	text-align:center;
+}
+
+@-moz-keyframes spin {
+    from { -moz-transform: rotate(0deg); }
+    to { -moz-transform: rotate(360deg); }
+}
+@-webkit-keyframes spin {
+    from { -webkit-transform: rotate(0deg); }
+    to { -webkit-transform: rotate(360deg); }
+}
+@keyframes spin {
+    from {transform:rotate(0deg);}
+    to {transform:rotate(360deg);}
+}
+
+.spinner{
+	animation: spin 2.5s infinite linear;
+	-webkit-animation: spin 2.5s infinite linear;
+	-moz-animation: spin 2.5s infinite linear;
+	-ms-animation: spin 2.5s infinite linear;
+}
+
+@-moz-keyframes disappear {
+    from { -moz-display: inline; }
+    to { -moz-display: none; }
+}
+@-webkit-keyframes disappear {
+    from { -webkit-display: inline; }
+    to { -webkit-display: none; }
+}
+@keyframes disappear {
+    from {display: inline;}
+    to {display:none;}
+}
+
+
+.disappearer{
+	animation: disappear 1s linear;
+	-webkit-animation: disappear 1s linear;
+	-moz-animation: disappear 1s linear;
+	-ms-animation: disappear 1s linear;
+}
+
+@-moz-keyframes appear {
+	from { -moz-display: none; }
+	to { -moz-display: inline; }
+}
+@-webkit-keyframes appear {
+    from { -webkit-display:none; }
+    to { -webkit-display:inline; }
+}
+@keyframes appear {
+    from {display:none;}
+    to {display: inline;}
+}
+
+.appearer{
+	animation: appear 1s linear;
+	-webkit-animation: appear 1s linear;
+	-moz-animation: appear 1s linear;
+	-ms-animation: appear 1s linear;
+}
+
+
 body{
 	background-color: white
 }

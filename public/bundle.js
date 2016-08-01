@@ -39018,62 +39018,69 @@
 	var Navbar = __webpack_require__(490);
 
 	module.exports = React.createClass({
-	    displayName: 'exports',
+	  displayName: 'exports',
 
-	    getInitialState: function getInitialState() {
-	        return {
-	            bggUser: "None"
-	        };
-	    },
-	    bggUserHandler: function bggUserHandler(event) {
-	        var user = this.state.bggUser;
-	        user = event.target.value;
-	        this.setState({ bggUser: user });
-	    },
-	    submitHandler: function submitHandler(evt) {
-	        var _this = this;
-	        this.state.type = "bggUser";
-	        var data = JSON.stringify(this.state);
+	  getInitialState: function getInitialState() {
+	    return {
+	      bggUser: "None"
+	    };
+	  },
+	  bggUserHandler: function bggUserHandler(event) {
+	    var user = this.state.bggUser;
+	    user = event.target.value;
+	    this.setState({ bggUser: user });
+	  },
+	  submitHandler: function submitHandler(evt) {
+	    var chooser = document.getElementById("choosebgguserdiv");
+	    var displayer = document.getElementById('bgdisplaydiv');
+	    var spinner = document.getElementById("meepleLoader");
+
+	    var _this = this;
+	    this.state.type = "bggUser";
+	    var data = JSON.stringify(this.state);
+	    console.log(data);
+	    evt.preventDefault();
+	    spinner.className += "spinner";
+	    $.ajax({
+	      type: "POST",
+	      url: '/',
+	      dataType: 'json',
+	      contentType: 'application/json',
+	      processData: true,
+	      data: data,
+	      complete: function complete() {
+	        console.log("complete?");
+	        spinner.className = "";
+	      },
+	      success: function success(data) {
 	        console.log(data);
-	        evt.preventDefault();
-	        $.ajax({
-	            type: "POST",
-	            url: '/',
-	            dataType: 'json',
-	            contentType: 'application/json',
-	            processData: true,
-	            data: data,
-	            complete: function complete() {
-	                console.log("complete?");
-	            },
-	            success: function success(data) {
-	                console.log(data);
-	                _this.setState({ bgObj: data[0] });
-	                document.getElementById("choosebgguserdiv").className = "hidden";
-	                document.getElementById('bgdisplaydiv').className = "";
-	                console.log("success?");
-	                console.log("state: ", _this.state.bgObj);
-	            },
-	            error: function error(err) {
-	                console.log("error");
-	            }
-	        });
-	    },
-	    render: function render() {
+	        _this.setState({ bgObj: data[0] });
+	        chooser.className = "hidden";
+	        displayer.className = "";
+	        console.log("success?");
+	        console.log("state: ", _this.state.bgObj);
+	      },
+	      error: function error(err) {
+	        console.log("error");
+	      }
+	    });
+	  },
+	  render: function render() {
 
-	        return React.createElement(
-	            'div',
-	            null,
-	            React.createElement(Navbar, null),
-	            React.createElement(ChooseBGGUser, { bggUserHandler: this.bggUserHandler, submitHandler: this.submitHandler }),
-	            React.createElement(BGDisplay, { bgObj: this.state.bgObj })
-	        );
-	    }
+	    return React.createElement(
+	      'div',
+	      null,
+	      React.createElement(Navbar, null),
+	      React.createElement(ChooseBGGUser, { bggUserHandler: this.bggUserHandler, submitHandler: this.submitHandler }),
+	      React.createElement(
+	        'div',
+	        { id: 'meepleContainer' },
+	        React.createElement('img', { id: 'meeple', src: 'images/black-meeple.png', id: 'meepleLoader' })
+	      ),
+	      React.createElement(BGDisplay, { bgObj: this.state.bgObj })
+	    );
+	  }
 	});
-
-	// <Link to="/see-games" style={leftButton} type="button" className="navbar-toggle" data-toggle="offcanvas" data-target="#myNavmenu" data-canvas="body">
-	//   Add A Game
-	// </Link>
 
 /***/ },
 /* 489 */
