@@ -27,11 +27,13 @@ var AddGame = require('./AddGame.jsx');
 var bs = require('react-bootstrap');
 var ChooseBGGUser = require('./ChooseBGGUser.jsx');
 
+
+
 module.exports = React.createClass({
 
     getInitialState: function() {
         return {
-            bgObj: boardGameObj,
+            bgObj: this.props.params.bjObj,
             gNumPlayers: "Any",
             gDifficulty: "Any",
             gLength: "Any",
@@ -57,18 +59,19 @@ module.exports = React.createClass({
         this.setState({gMechanics: val});
     },
     loadGamesFromServer: function() {
-        $.ajax({
-            url: '/games.json',
-            dataType: 'json',
-            cache: false,
-            success: function(data) {
-                this.setState({bgObj: data});
-            }.bind(this),
-            error: function(xhr, status, err) {
-                console.error(this.props.url, status, err.toString());
-            }.bind(this)
-        });
+        // $.ajax({
+        //     url: '/games.json',
+        //     dataType: 'json',
+        //     cache: false,
+        //     success: function(data) {
+        //         this.setState({bgObj: data});
+        //     }.bind(this),
+        //     error: function(xhr, status, err) {
+        //         console.error(this.props.url, status, err.toString());
+        //     }.bind(this)
+        // });
     },
+
 
     componentDidMount: function() {
         this.loadGamesFromServer();

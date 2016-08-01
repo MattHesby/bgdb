@@ -13,8 +13,10 @@ var BGDisplay = require('./BGDisplay.jsx')
 var Home = require('./Home.jsx')
 // var AddGame = require('./AddGame.jsx')
 ReactDOM.render(
-  <Router history={browserHistory} >
-    <Route path="/" component={Home}/>
-    <Route path="/see-games" component={BGDisplay} />
+
+<Router history={browserHistory} >
+    <Route path="/" component={Home}>
+      <Route path="see-games" component={BGDisplay} />
+    </Route>
   </Router>
     , document.getElementById('content'))

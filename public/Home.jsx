@@ -11,15 +11,15 @@ var ChooseBGGUser = require('./ChooseBGGUser.jsx');
 module.exports = React.createClass({
   loadGamesFromServer: function () {
     $.ajax({
-      url: '/games.json',
-      dataType: 'json',
-      cache: false,
-      success: function (data) {
-        this.setState({ bgObj: data });
-      }.bind(this),
-      error: function (xhr, status, err) {
-        console.error(this.props.url, status, err.toString());
-      }.bind(this)
+      // url: '/games.json',
+      // dataType: 'json',
+      // cache: false,
+      // success: function (data) {
+      //   this.setState({ bgObj: data });
+      // }.bind(this),
+      // error: function (xhr, status, err) {
+      //   console.error(this.props.url, status, err.toString());
+      // }.bind(this)
     });
   },
   render: function() {
@@ -36,11 +36,11 @@ module.exports = React.createClass({
           </div>
         </div>
       </nav>
+        <ChooseBGGUser loadGamesFromServer={this.loadGamesFromServer}/>
 
-
-
-      <ChooseBGGUser loadGamesFromServer={this.loadGamesFromServer}/>
-
+        <div>
+        {this.props.children && React.cloneElement(this.props.children)}
+        </div>
 
       </div>
     )

@@ -1,8 +1,6 @@
 //* GamesToPlay.jsx *//
 /*
- *
  * Props: bgObj, genre, mechanics, players, difficulty, gLength
- *
  */
 'use strict'
 var React = require('react');
@@ -22,7 +20,7 @@ module.exports = React.createClass({
 
         setTimeout(function() {
             grab(function(items) {
-                for (var i = 0; i < items.length - 1; i+=2) {
+                for (var i = 0; i < items.length - 1; i += 2) {
 
                     var leftHeight = items[i].clientHeight;
                     var rightHeight = items[i + 1].clientHeight;
@@ -35,37 +33,38 @@ module.exports = React.createClass({
             })
         }, 50);
     },
-    componentDidUpdate: function(){
-      if(!this.state.tempGames) this.state.tempGames = this.props.bgObj
-      var _this = this;
-      function grab(cb) {
-          var theDivs = ReactDOM.findDOMNode(_this).getElementsByClassName("well");
-          cb(theDivs);
-      }
+    componentDidUpdate: function() {
+        if (!this.state.tempGames)
+            this.state.tempGames = this.props.bgObj
+        var _this = this;
+        function grab(cb) {
+            var theDivs = ReactDOM.findDOMNode(_this).getElementsByClassName("well");
+            cb(theDivs);
+        }
 
-      setTimeout(function() {
-          grab(function(items) {
-              for (var i = 0; i < items.length - 1; i+=2) {
+        setTimeout(function() {
+            grab(function(items) {
+                for (var i = 0; i < items.length - 1; i += 2) {
 
-                  var leftHeight = items[i].clientHeight;
-                  var rightHeight = items[i + 1].clientHeight;
-                  if (leftHeight > rightHeight) {
-                      items[i + 1].style.height = leftHeight + "px";
-                  } else {
-                      items[i].style.height = rightHeight + "px";
-                  }
-              }
-          })
-      }, 50);
+                    var leftHeight = items[i].clientHeight;
+                    var rightHeight = items[i + 1].clientHeight;
+                    if (leftHeight > rightHeight) {
+                        items[i + 1].style.height = leftHeight + "px";
+                    } else {
+                        items[i].style.height = rightHeight + "px";
+                    }
+                }
+            })
+        }, 50);
     },
     removeGamesFromList(evt) {
-      var updateTo = this.state.tempGames;
-      for(var game in updateTo){
-        if(updateTo[game].title === evt.target.name){
-          delete updateTo[game];
+        var updateTo = this.state.tempGames;
+        for (var game in updateTo) {
+            if (updateTo[game].title === evt.target.name) {
+                delete updateTo[game];
+            }
         }
-      }
-      this.setState({tempGames: updateTo});
+        this.setState({tempGames: updateTo});
         // var _this = this;
         // // console.log(this);
         // this.state.type = "remove";
@@ -94,28 +93,20 @@ module.exports = React.createClass({
         //     }
         // });
     },
-    render : function() {
-        console.log("rendering", this.state.tempGames);
+    render: function() {
         var gamesToDisplay = this.state.tempGames || this.props.bgObj;
-        console.log("gamesToPlay", gamesToDisplay)
         var viableGameTitles = [];
         var viableGameDescriptions = [];
         var viableGameRow = [];
         var viableGameId = [];
-
-        var containerOfBoxes = {
-        }
+        var containerOfBoxes = {};
         var box1 = {
-          "marginRight": "40px"
-      }
-        var box2 = {
+            "marginRight": "40px"
         }
+        var box2 = {}
         for (var game in gamesToDisplay) {
             if (gamesToDisplay.hasOwnProperty(game)) {
                 var curGame = gamesToDisplay[game];
-                // console.log(curGame.time.minutes)
-                // console.log(this.props.gLength)
-                // console.log(curGame.time.minutes <= this.props.gLength + 20)
                 // Handles Player #
                 if ((curGame.players.min <= this.props.players && curGame.players.max >= this.props.players) || this.props.players === "Any") {
                     // Handles Length
@@ -134,15 +125,12 @@ module.exports = React.createClass({
             }
         }
         for (var i = 0; i < viableGameTitles.length; i++) {
-            // console.log(Dimensions.get(this.refs.test).height);
             viableGameRow.push(
                 <div className="row" style={containerOfBoxes}>
 
                     <div ref="joy" style={box1} className="col-md-offset-2 col-md-2 well">
                         {viableGameTitles[i]}
                     </div>
-
-
 
                     <div style={box2} className="well col-md-6">
                         {viableGameDescriptions[i]}
@@ -155,26 +143,14 @@ module.exports = React.createClass({
 
         }
 
-        // REMOVED TITLE + DESCRIPTOIN
-        // <div className="row">
-        //   <div className="col-md-offset-2 col-md-1">
-        //     {viableGameTitles}
-        //   </div>
-        //   <div className="col-md-7 gameDescription">
-        //     {viableGameDescriptions}
-        //   </div>
-        // </div>
-
         return (
             <div className="container">
-              <div className="row">
-                <h1 className="col-md-8 col-md-offset-2 ">
-                    Games
-                </h1>
-
+                <div className="row">
+                    <h1 className="col-md-8 col-md-offset-2 ">
+                        Games
+                    </h1>
                 </div>
                 {viableGameRow}
-
             </div>
         )
     }

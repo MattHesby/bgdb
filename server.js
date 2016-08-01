@@ -123,22 +123,7 @@ app.post('/', function(req, res, err) {
     }
 })
 
-// Lots of global variables TODO: fix it so they're not global
-// var idArray = [];
-// var collectionArray = [];
-// var gameArray = [];
-// var wholeXml;
-// var wholeBGXml = [];
-// var gameId = [];
-// var gameTitle = [];
-// var gameDescriptions = [];
-// var gameMinPlayers = [];
-// var gameMaxPlayers = [];
-// var gameTime = []
-// var gameDifficulty = [];
 const MAX_RETRIES = 1;
-// var processData.totalResolved = 0;
-
 function processBgguser(attempt, type, user, cb) {
   var processData = {
     idArray: [],
@@ -163,19 +148,19 @@ function processBgguser(attempt, type, user, cb) {
 
 function resetData(passedData) {
     var [data, processData] = passedData;
-    // processData.idArray.length = 0;
-    // processData.collectionArray.length = 0;
-    // processData.gameArray.length = 0;
-    // processData.wholeXml = "";
-    // processData.wholeBGXml.length = 0;
-    // processData.gameId.length = 0;
-    // processData.gameTitle.length = 0;
-    // processData.gameDescriptions.length = 0;
-    // processData.gameMinPlayers.length = 0;
-    // processData.gameMaxPlayers.length = 0;
-    // processData.gameTime.length = 0;
-    // processData.gameDifficulty.length = 0;
-    // processData.totalResolved = 0;
+    processData.idArray.length = 0;
+    processData.collectionArray.length = 0;
+    processData.gameArray.length = 0;
+    processData.wholeXml = "";
+    processData.wholeBGXml.length = 0;
+    processData.gameId.length = 0;
+    processData.gameTitle.length = 0;
+    processData.gameDescription.length = 0;
+    processData.gameMinPlayers.length = 0;
+    processData.gameMaxPlayers.length = 0;
+    processData.gameTime.length = 0;
+    processData.gameDifficulty.length = 0;
+    processData.totalResolved = 0;
     return [data, processData];
 }
 

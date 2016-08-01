@@ -85,11 +85,8 @@
 	ReactDOM.render(React.createElement(
 	  Router,
 	  { history: _reactRouter.browserHistory },
-	  React.createElement(
-	    Route,
-	    { path: '/', component: Home },
-	    React.createElement(Route, { path: 'see-games', component: BGDisplay })
-	  )
+	  React.createElement(Route, { path: '/', component: Home }),
+	  React.createElement(Route, { path: '/see-games', component: BGDisplay })
 	), document.getElementById('content'));
 
 /***/ },
@@ -25317,7 +25314,7 @@
 
 	    getInitialState: function getInitialState() {
 	        return {
-	            bgObj: this.props.params.bjObj,
+	            bgObj: boardGameObj,
 	            gNumPlayers: "Any",
 	            gDifficulty: "Any",
 	            gLength: "Any",
@@ -25343,17 +25340,17 @@
 	        this.setState({ gMechanics: val });
 	    },
 	    loadGamesFromServer: function loadGamesFromServer() {
-	        // $.ajax({
-	        //     url: '/games.json',
-	        //     dataType: 'json',
-	        //     cache: false,
-	        //     success: function(data) {
-	        //         this.setState({bgObj: data});
-	        //     }.bind(this),
-	        //     error: function(xhr, status, err) {
-	        //         console.error(this.props.url, status, err.toString());
-	        //     }.bind(this)
-	        // });
+	        $.ajax({
+	            url: '/games.json',
+	            dataType: 'json',
+	            cache: false,
+	            success: (function (data) {
+	                this.setState({ bgObj: data });
+	            }).bind(this),
+	            error: (function (xhr, status, err) {
+	                console.error(this.props.url, status, err.toString());
+	            }).bind(this)
+	        });
 	    },
 
 	    componentDidMount: function componentDidMount() {
@@ -44334,14 +44331,8 @@
 /* 487 */
 /***/ function(module, exports, __webpack_require__) {
 
-	///* ChooseBGGUser.jsx *///
+	///* AddGame.jsx *///
 	'use strict';
-
-	// var Router = require('react-router').Router
-	// var Route = require('react-router').Route
-	// var Link = require('react-router').Link
-	// import { browserHistory, router, withRouter } from 'react-router'
-	// var router = require('react-router').router;
 
 	var _reactRouter = __webpack_require__(1);
 
@@ -44349,16 +44340,15 @@
 	var ReactDOM = __webpack_require__(221);
 	var LinkedStateMixin = __webpack_require__(483);
 	var bs = __webpack_require__(226);
+	var Router = __webpack_require__(1).Router;
+	var Route = __webpack_require__(1).Route;
+	var Link = __webpack_require__(1).Link;
 
-	module.exports = (0, _reactRouter.withRouter)(React.createClass({
+	module.exports = React.createClass({
+	    displayName: 'exports',
+
 	    getInitialState: function getInitialState() {
-	        return {
-	            bggUser: "None",
-	            bgObj: {}
-	        };
-	    },
-	    contextTypes: {
-	        router: React.PropTypes.object.isRequired
+	        return { bggUser: "None" };
 	    },
 	    handleBbgUser: function handleBbgUser(event) {
 	        var user = this.state.bggUser;
@@ -44380,12 +44370,11 @@
 	            data: data,
 	            complete: function complete() {
 	                console.log("complete?");
+	                // _this.props.loadGamesFromServer();
+	                _reactRouter.browserHistory.push('/see-games');
 	            },
 	            success: function success(data) {
 	                console.log(data);
-	                _this.setState({ bgObj: data });
-	                // this.context.router.push({pathname: '/see-games', bgObj: data});
-	                // browserHistory.push('see-games');
 	                console.log("success?");
 	            },
 	            error: function error(err) {
@@ -44466,7 +44455,7 @@
 	            )
 	        );
 	    }
-	}));
+	});
 
 /***/ },
 /* 488 */
@@ -44487,15 +44476,15 @@
 
 	  loadGamesFromServer: function loadGamesFromServer() {
 	    $.ajax({
-	      // url: '/games.json',
-	      // dataType: 'json',
-	      // cache: false,
-	      // success: function (data) {
-	      //   this.setState({ bgObj: data });
-	      // }.bind(this),
-	      // error: function (xhr, status, err) {
-	      //   console.error(this.props.url, status, err.toString());
-	      // }.bind(this)
+	      url: '/games.json',
+	      dataType: 'json',
+	      cache: false,
+	      success: (function (data) {
+	        this.setState({ bgObj: data });
+	      }).bind(this),
+	      error: (function (xhr, status, err) {
+	        console.error(this.props.url, status, err.toString());
+	      }).bind(this)
 	    });
 	  },
 	  render: function render() {
@@ -44520,12 +44509,7 @@
 	          )
 	        )
 	      ),
-	      React.createElement(ChooseBGGUser, { loadGamesFromServer: this.loadGamesFromServer }),
-	      React.createElement(
-	        'div',
-	        null,
-	        this.props.children && React.cloneElement(this.props.children)
-	      )
+	      React.createElement(ChooseBGGUser, { loadGamesFromServer: this.loadGamesFromServer })
 	    );
 	  }
 	});
