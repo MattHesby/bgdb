@@ -12,9 +12,6 @@ var container = {
 var React = require('react')
 var ReactDOM = require('react-dom')
 var boardGameObj = [];
-var Router = require('react-router').Router
-var Route = require('react-router').Route
-var Link = require('react-router').Link
 
 // REACT COMPONENTS //
 var GamesToPlay = require('./GamesToPlay.jsx');
@@ -33,7 +30,6 @@ module.exports = React.createClass({
 
     getInitialState: function() {
         return {
-            bgObj: this.props.params.bjObj,
             gNumPlayers: "Any",
             gDifficulty: "Any",
             gLength: "Any",
@@ -58,21 +54,6 @@ module.exports = React.createClass({
 
         this.setState({gMechanics: val});
     },
-    loadGamesFromServer: function() {
-        // $.ajax({
-        //     url: '/games.json',
-        //     dataType: 'json',
-        //     cache: false,
-        //     success: function(data) {
-        //         this.setState({bgObj: data});
-        //     }.bind(this),
-        //     error: function(xhr, status, err) {
-        //         console.error(this.props.url, status, err.toString());
-        //     }.bind(this)
-        // });
-    },
-
-
     componentDidMount: function() {
         this.loadGamesFromServer();
     },
@@ -80,7 +61,7 @@ module.exports = React.createClass({
     render: function() {
         //sets up Genre Options
         var GENRES = ["Any"]
-        for (var game in this.state.bgObj) {
+        for (var game in this.props.bgObj) {
             if (boardGameObj.hasOwnProperty(game)) {
                 var curGame = boardGameObj[game];
                 GENRES.push(curGame.info.genre);
@@ -145,20 +126,10 @@ module.exports = React.createClass({
         var bggUserStyle = {
             float: "right"
         }
-
+        console.log(this.props.bgObj);
         return (
 
-            <div>
-                <nav className="navbar navbar-default">
-                    <div className="container-fluid">
-                        <div className="navbar-header">
-                            <Link to="/" className="navbar-brand" href="#">
-                                Board Game Picker
-                            </Link>
-                        </div>
-                    </div>
-                </nav>
-
+            <div id="bgdisplaydiv" className="hidden">
                 <div className="container">
                     <div className="row">
                         <div className="col-md-8 col-md-offset-2">
@@ -187,7 +158,7 @@ module.exports = React.createClass({
                 </div>
                 <br/>
                 <div className="container">
-                    <GamesToPlay loadGamesFromServer={this.loadGamesFromServer} bgObj={this.state.bgObj} genre={this.state.gGenre} mechanics={this.state.gMechanics} players={this.state.gNumPlayers} difficulty={this.state.gDifficulty} gLength={this.state.gLength}/>
+                    <GamesToPlay loadGamesFromServer={this.loadGamesFromServer} bgObj={this.props.bgObj} genre={this.state.gGenre} mechanics={this.state.gMechanics} players={this.state.gNumPlayers} difficulty={this.state.gDifficulty} gLength={this.state.gLength}/>
                 </div>
             </div>
 

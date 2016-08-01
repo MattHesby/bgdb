@@ -3,45 +3,60 @@
 var React = require('react')
 var ReactDOM = require('react-dom')
 var AddGame = require('./AddGame.jsx');
-var Router = require('react-router').Router
-var Route = require('react-router').Route
-var Link = require('react-router').Link
 var ChooseBGGUser = require('./ChooseBGGUser.jsx');
+var BGDisplay = require('./BGDisplay.jsx');
+var Navbar = require('./Navbar.jsx')
+
 
 module.exports = React.createClass({
-  loadGamesFromServer: function () {
-    $.ajax({
-      // url: '/games.json',
-      // dataType: 'json',
-      // cache: false,
-      // success: function (data) {
-      //   this.setState({ bgObj: data });
-      // }.bind(this),
-      // error: function (xhr, status, err) {
-      //   console.error(this.props.url, status, err.toString());
-      // }.bind(this)
-    });
+  getInitialState: function(){
+    return {
+      bggUser: "None",
+    }
+  },
+  bggUserHandler: function(event) {
+      var user = this.state.bggUser;
+      user = event.target.value;
+      this.setState({bggUser: user});
+  },
+  submitHandler: function(evt) {
+      var _this = this;
+      this.state.type = "bggUser";
+      var data = JSON.stringify(this.state);
+      console.log(data);
+      evt.preventDefault();
+      $.ajax({
+          type: "POST",
+          url: '/',
+          dataType: 'json',
+          contentType: 'application/json',
+          processData: true,
+          data: data,
+          complete: function() {
+              console.log("complete?");
+
+          },
+          success: function(data) {
+              console.log(data);
+              _this.setState({bgObj: data[0]});
+              document.getElementById("choosebgguserdiv").className = "hidden";
+              document.getElementById('bgdisplaydiv').className = "";
+              console.log("success?");
+              console.log("state: ", _this.state.bgObj)
+          },
+          error: function(err) {
+              console.log("error");
+          }
+      });
   },
   render: function() {
 
     return (
       <div>
 
-      <nav className="navbar navbar-default">
-        <div className="container-fluid">
-          <div className="navbar-header">
-            <Link to="/" className="navbar-brand" href="#">
-              Board Game Picker
-            </Link>
-          </div>
-        </div>
-      </nav>
-        <ChooseBGGUser loadGamesFromServer={this.loadGamesFromServer}/>
-
-        <div>
-        {this.props.children && React.cloneElement(this.props.children)}
-        </div>
-
+        <Navbar/>
+        <ChooseBGGUser bggUserHandler={this.bggUserHandler} submitHandler={this.submitHandler}/>
+        <BGDisplay bgObj={this.state.bgObj} />
       </div>
     )
   }
