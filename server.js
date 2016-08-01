@@ -49,7 +49,7 @@ var gameSchema = new Schema({
 });
 
 var GameModel = mongoose.model("gameModel", gameSchema);
-GameModel.collection.drop();
+// GameModel.collection.drop();
 
 // Sends current set of games - No Longer used
 app.get('/games.json', function(req, res) {
