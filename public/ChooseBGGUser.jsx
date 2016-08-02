@@ -18,11 +18,7 @@ module.exports = React.createClass({
                             Board Game Picker will help you determine which of your owned board games you want to play based on how many people you have with you and how much time you have available.
                         </p>
                         <p>
-                            You will need a
-                            <a href="https://boardgamegeek.com/">
-                                boardgamegeek
-                            </a>
-                            account with the games you own added to the account</p>
+                            You will need a <a href="https://boardgamegeek.com/"> boardgamegeek </a> account with the games you own added to the account</p>
                         <p>
                             If you're here to try it out, you can use 'necodamus' or look for a random account on
                             <a href="https://boardgamegeek.com/">
