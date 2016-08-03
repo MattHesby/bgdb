@@ -1,3 +1,5 @@
+// NOT USED //
+
 ///* AddGame.jsx *///
 'use strict'
 var React = require('react')
@@ -147,7 +149,7 @@ module.exports = React.createClass({
               </option>
             </select>
           </div>
-          
+
           <div className="text-center col-md-offset-1 col-md-10">
             Min Players
           </div>

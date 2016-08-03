@@ -73,9 +73,7 @@
 	var ReactDOM = __webpack_require__(158);
 
 	// window.ReactDOM = ReactDOM;
-	var BGDisplay = __webpack_require__(159);
 	var Home = __webpack_require__(427);
-	var AddGame = __webpack_require__(421);
 	ReactDOM.render(React.createElement(Home, null), document.getElementById('content'));
 
 /***/ },
@@ -19772,10 +19770,6 @@
 
 	        this.setState({ gMechanics: val });
 	    },
-	    componentDidMount: function componentDidMount() {
-	        this.loadGamesFromServer();
-	    },
-
 	    render: function render() {
 	        //sets up Genre Options
 	        var GENRES = ["Any"];
@@ -19844,7 +19838,6 @@
 	        var bggUserStyle = {
 	            float: "right"
 	        };
-	        console.log(this.props.bgObj);
 	        return React.createElement(
 	            "div",
 	            { id: "bgdisplaydiv", className: "hidden" },
@@ -19891,7 +19884,7 @@
 	            React.createElement(
 	                "div",
 	                { className: "container" },
-	                React.createElement(GamesToPlay, { loadGamesFromServer: this.loadGamesFromServer, bgObj: this.props.bgObj, genre: this.state.gGenre, mechanics: this.state.gMechanics, players: this.state.gNumPlayers, difficulty: this.state.gDifficulty, gLength: this.state.gLength })
+	                React.createElement(GamesToPlay, { bgObj: this.props.bgObj, genre: this.state.gGenre, mechanics: this.state.gMechanics, players: this.state.gNumPlayers, difficulty: this.state.gDifficulty, gLength: this.state.gLength })
 	            )
 	        );
 	    }
@@ -38291,6 +38284,8 @@
 /* 421 */
 /***/ function(module, exports, __webpack_require__) {
 
+	// NOT USED //
+
 	///* AddGame.jsx *///
 	'use strict';
 	var React = __webpack_require__(1);
@@ -38947,7 +38942,7 @@
 /* 427 */
 /***/ function(module, exports, __webpack_require__) {
 
-	//* ChooseGenre.jsx *//
+	//* Home.jsx *//
 	'use strict';
 	var React = __webpack_require__(1);
 	var ReactDOM = __webpack_require__(158);
@@ -38977,7 +38972,6 @@
 	    var _this = this;
 	    this.state.type = "bggUser";
 	    var data = JSON.stringify(this.state);
-	    console.log(data);
 	    evt.preventDefault();
 	    spinner.className += "spinner";
 	    $.ajax({
@@ -38988,19 +38982,16 @@
 	      processData: true,
 	      data: data,
 	      complete: function complete() {
-	        console.log("complete?");
+	        console.log("complete");
 	        spinner.className = "";
 	      },
 	      success: function success(data) {
-	        console.log(data);
 	        _this.setState({ bgObj: data[0] });
 	        chooser.className = "hidden";
 	        displayer.className = "";
-	        console.log("success?");
-	        console.log("state: ", _this.state.bgObj);
 	      },
 	      error: function error(err) {
-	        console.log("error");
+	        console.log("error: ", err);
 	      }
 	    });
 	  },

@@ -1,4 +1,4 @@
-//* ChooseGenre.jsx *//
+//* Home.jsx *//
 'use strict'
 var React = require('react')
 var ReactDOM = require('react-dom')
@@ -29,7 +29,6 @@ module.exports = React.createClass({
       var _this = this;
       this.state.type = "bggUser";
       var data = JSON.stringify(this.state);
-      console.log(data);
       evt.preventDefault();
       spinner.className += "spinner"
       $.ajax({
@@ -40,19 +39,16 @@ module.exports = React.createClass({
           processData: true,
           data: data,
           complete: function() {
-              console.log("complete?");
+              console.log("complete");
               spinner.className = ""
           },
           success: function(data) {
-              console.log(data);
               _this.setState({bgObj: data[0]});
               chooser.className = "hidden";
               displayer.className = "";
-              console.log("success?");
-              console.log("state: ", _this.state.bgObj)
           },
           error: function(err) {
-              console.log("error");
+              console.log("error: ", err);
           }
       });
   },

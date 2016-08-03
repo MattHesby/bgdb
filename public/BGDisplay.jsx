@@ -54,10 +54,6 @@ module.exports = React.createClass({
 
         this.setState({gMechanics: val});
     },
-    componentDidMount: function() {
-        this.loadGamesFromServer();
-    },
-
     render: function() {
         //sets up Genre Options
         var GENRES = ["Any"]
@@ -126,7 +122,6 @@ module.exports = React.createClass({
         var bggUserStyle = {
             float: "right"
         }
-        console.log(this.props.bgObj);
         return (
 
             <div id="bgdisplaydiv" className="hidden">
@@ -158,7 +153,7 @@ module.exports = React.createClass({
                 </div>
                 <br/>
                 <div className="container">
-                    <GamesToPlay loadGamesFromServer={this.loadGamesFromServer} bgObj={this.props.bgObj} genre={this.state.gGenre} mechanics={this.state.gMechanics} players={this.state.gNumPlayers} difficulty={this.state.gDifficulty} gLength={this.state.gLength}/>
+                    <GamesToPlay bgObj={this.props.bgObj} genre={this.state.gGenre} mechanics={this.state.gMechanics} players={this.state.gNumPlayers} difficulty={this.state.gDifficulty} gLength={this.state.gLength}/>
                 </div>
             </div>
 
