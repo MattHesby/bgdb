@@ -123,7 +123,7 @@ app.post('/', function(req, res, err) {
     }
 })
 
-const MAX_RETRIES = 1;
+const MAX_RETRIES = 6;
 function processBgguser(attempt, type, user, cb) {
   var processData = {
     idArray: [],
@@ -234,7 +234,8 @@ function getAllGames(passedData, promise) {
     // console.log(processData);
     var gamePromises = [];
     for (let i = 0; i < data.length; i++) {
-        gamePromises.push(getGame(data[i], MAX_RETRIES, i * 1000, processData));
+	//console.log(processData);
+        gamePromises.push(getGame(data[i], MAX_RETRIES, i * 10, processData));
     }
     console.log("resolving all promises");
     return Promise.all(gamePromises);
@@ -246,6 +247,7 @@ function getGame(game, maxRetries, wait, processData, promise) {
             _id: game
         }, (err, foundGame) => {
             if (foundGame) {
+  		console.log('from db');
                 processData.totalResolved += 1;
                 processData.wholeBGXml.push(foundGame);
                 resolve(processData);
@@ -259,9 +261,9 @@ function getGame(game, maxRetries, wait, processData, promise) {
                             processData.wholeBGXml.push(body);
                             resolve(processData);
                         } else if (maxRetries > 0) {
-                            setTimeout(function() {
-                                getGame(game, maxRetries - 1, processData).then((v) => resolve(v)).catch((err) => reject(err));
-                            }, 60000)
+                            setTimeout(() => {
+                                getGame(game, maxRetries - 1, wait, processData).then((v) => resolve(v)).catch((err) => reject(err));
+                            }, 10000)
                         } else {
                             reject('max attempts reached. Error:' + error + 'Body:' + body);
                         }
@@ -372,5 +374,6 @@ var server = app.listen(3000, function() {
     var port = server.address().port;
     console.log('Example app listening at http://%s:%s', host, port);
 });
+server.timeout = 5*60*1000
 
 // Helper Functions

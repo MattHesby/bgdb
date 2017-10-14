@@ -7,7 +7,7 @@
     "test": "run start",
     "start": "npm run build | npm run serve",
     "serve": "node server.js",
-    "build": "webpack --progress --colors --watch --optimize-dedupe"
+    "build": "webpack --progress --colors --optimize-dedupe"
   },
   "author": "MJH",
   "license": "ISC",
